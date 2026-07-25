@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.name }}{% endblock %}
+{% block content %}
+<p class="eyebrow">Topic &middot; unofficial category</p>
+<h1 class="hero">{{ topic.name }}</h1>
+<p class="dek">{{ topic.entries | length }} agenda items, {{ topic.voted }} with recorded roll calls.
+This category was assigned by this site, not by the Town of Vienna &mdash;
+the full mapping is <a href="{{ repo }}/blob/main/categories.csv">public and correctable</a>.</p>
+
+<table class="votes-table">
+  <thead>
+    <tr><th>Date</th><th>Item</th><th>Tally</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for entry in topic.entries %}
+    <tr>
+      <td class="nowrap" data-label="Date"><a href="../meeting/{{ entry.meeting.slug }}.html"><time>{{ entry.meeting.date }}</time></a></td>
+      <td data-label="Item"><a href="../item/{{ entry.item.EventItemId }}.html">{{ entry.item.EventItemTitle or "(untitled item)" }}</a></td>
+      <td class="nowrap muted" data-label="Tally">{% if entry.votes %}{{ entry.tally }}{% else %}<span class="muted">no roll call</span>{% endif %}</td>
+      <td><a class="source-link" href="{{ entry.source_url }}">source</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

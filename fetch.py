@@ -6,7 +6,7 @@ Skips any call whose cache file already exists. Never renders anything.
 import json
 import sys
 import time
-from datetime import date, datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -16,7 +16,8 @@ BASE = f"https://webapi.legistar.com/v1/{CLIENT}"
 COUNCIL_BODY_NAME = "Town Council Meeting"
 DATA = Path(__file__).parent / "data"
 SLEEP_SECONDS = 0.1
-MONTHS_BACK_DATE = (date.today() - timedelta(days=365)).isoformat()
+# Vienna's Legistar history begins 2013-10-28; this captures all of it.
+START_DATE = "2013-01-01"
 
 session = requests.Session()
 session.headers["Accept"] = "application/json"
@@ -46,13 +47,14 @@ def main():
     print(f"        {COUNCIL_BODY_NAME} -> BodyId {body_id}")
 
     get_cached("persons.json", "/persons")
+    get_cached(f"officerecords_{body_id}.json", f"/bodies/{body_id}/officerecords")
 
     events = get_cached(
         "events.json",
         "/events",
-        {"$filter": f"EventBodyId eq {body_id} and EventDate ge datetime'{MONTHS_BACK_DATE}'"},
+        {"$filter": f"EventBodyId eq {body_id} and EventDate ge datetime'{START_DATE}'"},
     )
-    print(f"        {len(events)} events since {MONTHS_BACK_DATE}")
+    print(f"        {len(events)} events since {START_DATE}")
 
     n_items = 0
     n_votes = 0
@@ -70,7 +72,7 @@ def main():
             {
                 "client": CLIENT,
                 "body_id": body_id,
-                "events_since": MONTHS_BACK_DATE,
+                "events_since": START_DATE,
                 "fetched_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             },
             indent=2,

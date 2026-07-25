@@ -13,6 +13,7 @@
   {% if entry.item.EventItemConsent %}<dt>Consent</dt><dd>Part of a consent motion</dd>{% endif %}
   {% if entry.item.EventItemMover %}<dt>Moved by</dt><dd>{{ entry.item.EventItemMover }}</dd>{% endif %}
   {% if entry.item.EventItemSeconder %}<dt>Seconded by</dt><dd>{{ entry.item.EventItemSeconder }}</dd>{% endif %}
+  {% if entry.category %}<dt>Topic</dt><dd><a href="../topic/{{ entry.category_slug }}.html">{{ entry.category }}</a> <span class="muted">(unofficial category, assigned by this site)</span></dd>{% endif %}
 </dl>
 
 {% if entry.item.EventItemActionText %}

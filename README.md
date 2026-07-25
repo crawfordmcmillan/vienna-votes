@@ -3,8 +3,8 @@
 **Live site: https://crawfordmcmillan.github.io/vienna-votes/**
 
 A static site showing how every Town of Vienna (VA) Council member voted on every
-recorded item in the last 12 months. Data comes from the Town of Vienna's public
-Legistar records via the Granicus Legistar Web API.
+recorded item since the town's Legistar records begin in October 2013. Data comes
+from the Town of Vienna's public Legistar records via the Granicus Legistar Web API.
 
 ## Publishing
 
@@ -45,6 +45,25 @@ python build.py   # renders static HTML from data/ into site/ (no network)
 Open `site/index.html` in a browser.
 
 Dependencies: `pip install requests jinja2`
+
+## Topic categories (unofficial)
+
+Vienna applies no topic tags in Legistar (38 index labels are defined in the
+system but attached to zero matters), so `categorize.py` maintains this site's
+own topical layer:
+
+- Transparent title-pattern rules in `categorize.py`, plus exact-title
+  assignments in `topic_assignments.json`, regenerate `categories.csv` in full
+  on every run — the complete item-to-topic mapping is in that one reviewable
+  file, and corrections belong in the rules or assignments, then regenerate.
+- The site labels these categories "unofficial" everywhere they appear. They
+  never alter or interpret the vote records themselves.
+
+## Member profiles
+
+Member pages show title, service history, and (for current members) official
+town email — all taken verbatim from the Legistar `officerecords` and `persons`
+endpoints. No authored biographical content.
 
 ## Notes
 

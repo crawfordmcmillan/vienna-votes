@@ -1,16 +1,35 @@
 {% extends "base.html" %}
 {% block title %}{{ member.name }}{% endblock %}
 {% block content %}
-<p class="eyebrow">Council member</p>
+<p class="eyebrow">{{ member.current_title or "Former council member" }}</p>
 <h1 class="hero">{{ member.name }}</h1>
-<p class="dek">{{ member.votes | length }} recorded votes between {{ date_range[0] }} and {{ date_range[1] }}.</p>
+<p class="dek">{{ member.votes | length }} recorded votes between {{ member.first_vote }} and {{ member.last_vote }}.</p>
 
+{% if member.terms or member.email %}
+<dl class="meta">
+  {% if member.terms %}
+  <dt>Service</dt>
+  <dd>
+    {% for t in member.terms %}
+    {{ t.title }}, {{ t.start[:4] }}&ndash;{{ t.end[:4] }}{% if not loop.last %}<br>{% endif %}
+    {% endfor %}
+  </dd>
+  {% endif %}
+  {% if member.is_current and member.email %}
+  <dt>Contact</dt><dd><a href="mailto:{{ member.email }}">{{ member.email }}</a></dd>
+  {% endif %}
+</dl>
+<p class="muted">Service record and contact from the Town of Vienna&rsquo;s Legistar system.</p>
+{% endif %}
+
+{% for year, votes in member.votes_by_year %}
+<h2>{{ year }} <span class="muted">&middot; {{ votes | length }} recorded votes</span></h2>
 <table class="votes-table">
   <thead>
     <tr><th>Date</th><th>Item</th><th>Vote</th><th>Tally</th><th></th></tr>
   </thead>
   <tbody>
-  {% for v in member.votes %}
+  {% for v in votes %}
     <tr>
       <td class="nowrap" data-label="Date"><a href="../meeting/{{ v.entry.meeting.slug }}.html"><time>{{ v.entry.meeting.date }}</time></a></td>
       <td data-label="Item"><a href="../item/{{ v.entry.item.EventItemId }}.html">{{ v.entry.item.EventItemTitle or "(untitled item)" }}</a>
@@ -22,4 +41,5 @@
   {% endfor %}
   </tbody>
 </table>
+{% endfor %}
 {% endblock %}

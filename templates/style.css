@@ -139,6 +139,16 @@ code { font-size: 0.85em; }
   letter-spacing: -0.01em;
   line-height: 1.15;
 }
+.member-role {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
 .member-count {
   display: block;
   margin-top: 0.35rem;
@@ -150,8 +160,37 @@ code { font-size: 0.85em; }
   color: var(--muted);
 }
 
+/* Topic + former-member lists */
+.topic-list, .former-list { list-style: none; padding: 0; margin: 0; }
+.topic-list li, .former-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.topic-list a, .former-list a {
+  font-family: var(--display);
+  font-weight: 700;
+  text-decoration: none;
+}
+.topic-list a:hover, .former-list a:hover { color: var(--accent-ink); }
+
+/* Year accordions (native details/summary, no JS) */
+details.year-group { border-bottom: 1px solid var(--rule); }
+details.year-group summary {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  padding: 0.55rem 0;
+  cursor: pointer;
+  list-style-position: outside;
+}
+details.year-group summary:hover { color: var(--accent-ink); }
+details.year-group[open] summary { border-bottom: 1px dotted var(--rule); }
+
 /* Meeting list */
-.meeting-list { list-style: none; padding: 0; margin: 0; }
+.meeting-list { list-style: none; padding: 0; margin: 0 0 0.75rem; }
 .meeting-list li {
   display: flex;
   align-items: baseline;

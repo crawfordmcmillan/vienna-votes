@@ -32,14 +32,6 @@ def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.strip().lower()).strip("-")
 
 
-def matter_url(item) -> str | None:
-    # LegislationDetail.aspx rejects the API's MatterId/MatterGuid pair
-    # ("invalid parameters"); the gateway redirect by file number works.
-    if item.get("EventItemMatterFile"):
-        return f"{LEGISTAR}/gateway.aspx?M=L&ID={item['EventItemMatterFile']}"
-    return None
-
-
 def pdf_url(url: str | None) -> str | None:
     # Older cached records carry http:// Granicus links; the host serves https.
     return url.replace("http://", "https://", 1) if url else None
@@ -94,7 +86,11 @@ def main():
                     f"{n} {value if value is not None else '(no value recorded)'}"
                     for value, n in tally.items()
                 ),
-                "source_url": matter_url(item) or event["EventInSiteURL"],
+                # Vienna's InSite site keys legislation pages by internal web IDs
+                # the public API doesn't expose, so per-matter deep links can't be
+                # built; the meeting record page (from the API verbatim) shows the
+                # item with its roll call and always resolves.
+                "source_url": event["EventInSiteURL"],
                 "meeting": meeting,
                 "category": category_of.get(item["EventItemId"]),
             }

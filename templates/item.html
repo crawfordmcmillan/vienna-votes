@@ -3,7 +3,8 @@
 {% block content %}
 <p class="eyebrow">Agenda item &middot; <a href="../meeting/{{ entry.meeting.slug }}.html">meeting of {{ entry.meeting.date }}</a></p>
 <h1>{{ entry.item.EventItemTitle or "(untitled item)" }}</h1>
-<p class="dek"><a href="{{ entry.source_url }}">View this record on Legistar</a>{% if entry.meeting.minutes_pdf %} &middot; <a href="{{ entry.meeting.minutes_pdf }}">Meeting minutes (PDF)</a>{% endif %}</p>
+<p class="dek"><a href="{{ entry.source_url }}">View in the Legistar meeting record</a>{% if entry.meeting.minutes_pdf %} &middot; <a href="{{ entry.meeting.minutes_pdf }}">Meeting minutes (PDF)</a>{% endif %}
+{% if entry.item.EventItemMatterFile %} &middot; <span class="muted">file {{ entry.item.EventItemMatterFile }} in Legistar&rsquo;s <a href="{{ legistar }}/Legislation.aspx">legislation search</a></span>{% endif %}</p>
 
 <dl class="meta">
   {% if entry.item.EventItemMatterFile %}<dt>File</dt><dd>{{ entry.item.EventItemMatterFile }}</dd>{% endif %}

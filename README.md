@@ -1,8 +1,21 @@
 # Vienna Votes
 
+**Live site: https://crawfordmcmillan.github.io/vienna-votes/**
+
 A static site showing how every Town of Vienna (VA) Council member voted on every
 recorded item in the last 12 months. Data comes from the Town of Vienna's public
 Legistar records via the Granicus Legistar Web API.
+
+## Publishing
+
+The committed `site/` folder is deployed to GitHub Pages by
+`.github/workflows/pages.yml` on every push to `main`. To update the site:
+
+```
+python fetch.py    # delete data/events.json first to pick up new meetings
+python build.py
+git add -A && git commit && git push
+```
 
 ## Step 0 gate — findings (run 2026-07-25)
 

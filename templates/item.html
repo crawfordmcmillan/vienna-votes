@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ entry.item.EventItemTitle or "Agenda item " ~ entry.item.EventItemId }}{% endblock %}
 {% block content %}
+<p class="eyebrow">Agenda item &middot; <a href="../meeting/{{ entry.meeting.slug }}.html">meeting of {{ entry.meeting.date }}</a></p>
 <h1>{{ entry.item.EventItemTitle or "(untitled item)" }}</h1>
-<p>
-  From the <a href="../meeting/{{ entry.meeting.slug }}.html">meeting of {{ entry.meeting.date }}</a>
-  &middot; <a href="{{ entry.source_url }}">View on Legistar</a>
-</p>
+<p class="dek"><a href="{{ entry.source_url }}">View this record on Legistar</a></p>
 
-<dl>
+<dl class="meta">
   {% if entry.item.EventItemMatterFile %}<dt>File</dt><dd>{{ entry.item.EventItemMatterFile }}</dd>{% endif %}
   {% if entry.item.EventItemMatterType %}<dt>Type</dt><dd>{{ entry.item.EventItemMatterType }}</dd>{% endif %}
   {% if entry.item.EventItemActionName %}<dt>Action</dt><dd>{{ entry.item.EventItemActionName }}</dd>{% endif %}
@@ -24,10 +22,10 @@
 
 <h2>Votes</h2>
 {% if entry.votes %}
-<p><strong>{{ entry.tally }}</strong></p>
-<ul class="plain votes">
+<p class="tally">{{ entry.tally }}</p>
+<ul class="vote-list">
 {% for vote in entry.votes %}
-  <li>{{ vote.VotePersonName }} &mdash; <span class="vote">{{ vote.VoteValueName or "(no value recorded)" }}</span></li>
+  <li>{{ vote.VotePersonName }} <span class="vote {{ (vote.VoteValueName or 'none') | lower | replace(' ', '-') }}">{{ vote.VoteValueName or "(no value recorded)" }}</span></li>
 {% endfor %}
 </ul>
 {% else %}

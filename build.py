@@ -114,8 +114,10 @@ def main():
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    n_votes = sum(len(e["votes"]) for m in meetings for e in m["items"])
     common = {
         "legistar": LEGISTAR,
+        "repo": "https://github.com/crawfordmcmillan/vienna-votes",
         "fetched_at": meta["fetched_at_utc"][:10],
         "date_range": date_range,
     }
@@ -130,7 +132,8 @@ def main():
     SITE.mkdir()
     shutil.copy(TEMPLATES / "style.css", SITE / "style.css")
 
-    render("index.html", SITE / "index.html", root="", members=members, meetings=meetings)
+    stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
+    render("index.html", SITE / "index.html", root="", members=members, meetings=meetings, stats=stats)
     for member in members:
         render(
             "member.html",
@@ -153,7 +156,6 @@ def main():
             entry=entry,
         )
 
-    n_votes = sum(len(e["votes"]) for m in meetings for e in m["items"])
     print(
         f"built site/: {len(members)} members, {len(meetings)} meetings "
         f"({len(voted_meetings)} with recorded votes), {len(items_by_id)} items, "

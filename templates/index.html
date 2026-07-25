@@ -1,26 +1,34 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Every recorded vote{% endblock %}
 {% block content %}
-<h1>Vienna Votes</h1>
-<p>How every Town of Vienna, VA Council member voted on every recorded item
-between {{ date_range[0] }} and {{ date_range[1] }}.</p>
+<h1 class="hero">Every recorded vote of the Vienna Town Council.</h1>
+<p class="dek">A faithful mirror of the public record, {{ date_range[0] }} to {{ date_range[1] }}.
+Every roll call, every member, exactly as recorded &mdash; with a link back to the source on every page.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">{{ stats.votes }}</span><span class="stat-label">vote records</span></div>
+  <div class="stat"><span class="stat-n">{{ stats.meetings }}</span><span class="stat-label">meetings</span></div>
+  <div class="stat"><span class="stat-n">{{ stats.members }}</span><span class="stat-label">council members</span></div>
+</div>
 
 <h2>Council members</h2>
-<ul class="plain">
+<ul class="member-grid">
 {% for member in members %}
-  <li><a href="member/{{ member.slug }}.html">{{ member.name }}</a>
-      <span class="muted">{{ member.votes | length }} recorded votes</span></li>
+  <li><a class="member-card" href="member/{{ member.slug }}.html">
+    <span class="member-name">{{ member.name }}</span>
+    <span class="member-count">{{ member.votes | length }} recorded votes</span>
+  </a></li>
 {% endfor %}
 </ul>
 
 <h2>Meetings</h2>
-<ul class="plain">
+<ul class="meeting-list">
 {% for meeting in meetings %}
-  <li><a href="meeting/{{ meeting.slug }}.html">{{ meeting.date }}</a>
+  <li><a href="meeting/{{ meeting.slug }}.html"><time>{{ meeting.date }}</time></a>
       <span class="muted">{{ meeting.event.EventBodyName }}</span></li>
 {% endfor %}
 </ul>
 
-<p class="muted">Data fetched from the Granicus Legistar Web API
+<p class="muted provenance">Fetched from the Granicus Legistar Web API
 (<code>webapi.legistar.com/v1/vienna-va</code>) on {{ fetched_at }}.</p>
 {% endblock %}

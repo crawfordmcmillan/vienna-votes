@@ -3,92 +3,124 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home · Vienna Votes</title>
+<meta name="description" content="How every Town of Vienna, VA Council member voted, from the town's public Legistar records. No scores, no interpretation.">
+<title>Every recorded vote · Vienna Votes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23d1461f'/%3E%3Ctext x='50' y='76' font-size='72' font-family='Arial,sans-serif' font-weight='900' text-anchor='middle' fill='%23f7f3ec'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
+<header class="masthead">
   <a class="wordmark" href="index.html">Vienna Votes</a>
+  <span class="masthead-note">Town of Vienna, Virginia</span>
 </header>
 <main>
-<h1>Vienna Votes</h1>
-<p>How every Town of Vienna, VA Council member voted on every recorded item
-between 2025-08-25 and 2026-07-06.</p>
+<h1 class="hero">Every recorded vote of the Vienna Town Council.</h1>
+<p class="dek">A faithful mirror of the public record, 2025-08-25 to 2026-07-06.
+Every roll call, every member, exactly as recorded &mdash; with a link back to the source on every page.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">581</span><span class="stat-label">vote records</span></div>
+  <div class="stat"><span class="stat-n">21</span><span class="stat-label">meetings</span></div>
+  <div class="stat"><span class="stat-n">9</span><span class="stat-label">council members</span></div>
+</div>
 
 <h2>Council members</h2>
-<ul class="plain">
-  <li><a href="member/sandra-allen.html">Sandra Allen</a>
-      <span class="muted">46 recorded votes</span></li>
-  <li><a href="member/chuck-anderson.html">Chuck Anderson</a>
-      <span class="muted">83 recorded votes</span></li>
-  <li><a href="member/roy-baldwin.html">Roy Baldwin</a>
-      <span class="muted">83 recorded votes</span></li>
-  <li><a href="member/ray-brill-jr.html">Ray Brill Jr.</a>
-      <span class="muted">46 recorded votes</span></li>
-  <li><a href="member/linda-colbert.html">Linda Colbert</a>
-      <span class="muted">83 recorded votes</span></li>
-  <li><a href="member/doug-francis.html">Doug Francis</a>
-      <span class="muted">37 recorded votes</span></li>
-  <li><a href="member/dann-nash.html">Dann Nash</a>
-      <span class="muted">37 recorded votes</span></li>
-  <li><a href="member/jessica-ramakis.html">Jessica Ramakis</a>
-      <span class="muted">83 recorded votes</span></li>
-  <li><a href="member/howard-j-springsteen.html">Howard J. Springsteen</a>
-      <span class="muted">83 recorded votes</span></li>
+<ul class="member-grid">
+  <li><a class="member-card" href="member/sandra-allen.html">
+    <span class="member-name">Sandra Allen</span>
+    <span class="member-count">46 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/chuck-anderson.html">
+    <span class="member-name">Chuck Anderson</span>
+    <span class="member-count">83 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/roy-baldwin.html">
+    <span class="member-name">Roy Baldwin</span>
+    <span class="member-count">83 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/ray-brill-jr.html">
+    <span class="member-name">Ray Brill Jr.</span>
+    <span class="member-count">46 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/linda-colbert.html">
+    <span class="member-name">Linda Colbert</span>
+    <span class="member-count">83 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/doug-francis.html">
+    <span class="member-name">Doug Francis</span>
+    <span class="member-count">37 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/dann-nash.html">
+    <span class="member-name">Dann Nash</span>
+    <span class="member-count">37 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/jessica-ramakis.html">
+    <span class="member-name">Jessica Ramakis</span>
+    <span class="member-count">83 recorded votes</span>
+  </a></li>
+  <li><a class="member-card" href="member/howard-j-springsteen.html">
+    <span class="member-name">Howard J. Springsteen</span>
+    <span class="member-count">83 recorded votes</span>
+  </a></li>
 </ul>
 
 <h2>Meetings</h2>
-<ul class="plain">
-  <li><a href="meeting/2026-07-06.html">2026-07-06</a>
+<ul class="meeting-list">
+  <li><a href="meeting/2026-07-06.html"><time>2026-07-06</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-06-01.html">2026-06-01</a>
+  <li><a href="meeting/2026-06-01.html"><time>2026-06-01</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-05-18.html">2026-05-18</a>
+  <li><a href="meeting/2026-05-18.html"><time>2026-05-18</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-05-04.html">2026-05-04</a>
+  <li><a href="meeting/2026-05-04.html"><time>2026-05-04</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-04-27.html">2026-04-27</a>
+  <li><a href="meeting/2026-04-27.html"><time>2026-04-27</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-04-06.html">2026-04-06</a>
+  <li><a href="meeting/2026-04-06.html"><time>2026-04-06</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-03-23.html">2026-03-23</a>
+  <li><a href="meeting/2026-03-23.html"><time>2026-03-23</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-03-02.html">2026-03-02</a>
+  <li><a href="meeting/2026-03-02.html"><time>2026-03-02</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-02-23.html">2026-02-23</a>
+  <li><a href="meeting/2026-02-23.html"><time>2026-02-23</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-02-02.html">2026-02-02</a>
+  <li><a href="meeting/2026-02-02.html"><time>2026-02-02</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-01-26.html">2026-01-26</a>
+  <li><a href="meeting/2026-01-26.html"><time>2026-01-26</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-01-05.html">2026-01-05</a>
+  <li><a href="meeting/2026-01-05.html"><time>2026-01-05</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2026-01-02.html">2026-01-02</a>
+  <li><a href="meeting/2026-01-02.html"><time>2026-01-02</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-12-08.html">2025-12-08</a>
+  <li><a href="meeting/2025-12-08.html"><time>2025-12-08</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-12-02.html">2025-12-02</a>
+  <li><a href="meeting/2025-12-02.html"><time>2025-12-02</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-11-10.html">2025-11-10</a>
+  <li><a href="meeting/2025-11-10.html"><time>2025-11-10</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-10-27.html">2025-10-27</a>
+  <li><a href="meeting/2025-10-27.html"><time>2025-10-27</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-10-06.html">2025-10-06</a>
+  <li><a href="meeting/2025-10-06.html"><time>2025-10-06</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-09-29.html">2025-09-29</a>
+  <li><a href="meeting/2025-09-29.html"><time>2025-09-29</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-09-08.html">2025-09-08</a>
+  <li><a href="meeting/2025-09-08.html"><time>2025-09-08</time></a>
       <span class="muted">Town Council Meeting</span></li>
-  <li><a href="meeting/2025-08-25.html">2025-08-25</a>
+  <li><a href="meeting/2025-08-25.html"><time>2025-08-25</time></a>
       <span class="muted">Town Council Meeting</span></li>
 </ul>
 
-<p class="muted">Data fetched from the Granicus Legistar Web API
+<p class="muted provenance">Fetched from the Granicus Legistar Web API
 (<code>webapi.legistar.com/v1/vienna-va</code>) on 2026-07-25.</p>
 </main>
 <footer>
-  <p>Data from the Town of Vienna&rsquo;s public <a href="https://vienna-va.legistar.com">Legistar records</a>.
-  Last updated 2026-07-25. Votes are shown exactly as recorded, with no scoring or interpretation.</p>
+  <p>Data from the Town of Vienna&rsquo;s public <a href="https://vienna-va.legistar.com">Legistar records</a>,
+  shown exactly as recorded &mdash; no scores, no rankings, no interpretation.
+  Last updated 2026-07-25.</p>
+  <p><a href="https://github.com/crawfordmcmillan/vienna-votes">Source code &amp; raw data</a></p>
 </footer>
 </body>
 </html>

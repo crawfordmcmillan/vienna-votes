@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Meeting of {{ meeting.date }}{% endblock %}
 {% block content %}
-<h1>{{ meeting.event.EventBodyName }} &mdash; {{ meeting.date }}</h1>
-<p>
+<p class="eyebrow">{{ meeting.event.EventBodyName }}</p>
+<h1 class="hero"><time>{{ meeting.date }}</time></h1>
+<p class="dek">
   {% if meeting.event.EventTime %}{{ meeting.event.EventTime }}{% endif %}
-  {% if meeting.event.EventLocation %}&middot; {{ meeting.event.EventLocation }}{% endif %}
+  {% if meeting.event.EventLocation %} &middot; {{ meeting.event.EventLocation }}{% endif %}
   &middot; <a href="{{ meeting.event.EventInSiteURL }}">Meeting record on Legistar</a>
 </p>
 
@@ -13,11 +14,11 @@
   <h2><a href="../item/{{ entry.item.EventItemId }}.html">{{ entry.item.EventItemTitle or "(untitled item)" }}</a></h2>
   {% if entry.item.EventItemConsent %}<p class="muted">Part of a consent motion.</p>{% endif %}
   {% if entry.votes %}
-    <p><strong>{{ entry.tally }}</strong>
-      {% if entry.item.EventItemPassedFlagName %} &middot; {{ entry.item.EventItemPassedFlagName }}{% endif %}</p>
-    <ul class="plain votes">
+    <p class="tally">{{ entry.tally }}
+      {% if entry.item.EventItemPassedFlagName %}<span class="result">{{ entry.item.EventItemPassedFlagName }}</span>{% endif %}</p>
+    <ul class="vote-list">
     {% for vote in entry.votes %}
-      <li>{{ vote.VotePersonName }} &mdash; <span class="vote">{{ vote.VoteValueName or "(no value recorded)" }}</span></li>
+      <li>{{ vote.VotePersonName }} <span class="vote {{ (vote.VoteValueName or 'none') | lower | replace(' ', '-') }}">{{ vote.VoteValueName or "(no value recorded)" }}</span></li>
     {% endfor %}
     </ul>
   {% else %}

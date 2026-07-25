@@ -215,6 +215,8 @@ def main():
         shutil.rmtree(SITE)
     SITE.mkdir()
     shutil.copy(TEMPLATES / "style.css", SITE / "style.css")
+    # Custom-domain marker for GitHub Pages; must survive the site/ wipe.
+    (SITE / "CNAME").write_text("viennavotes.org\n", encoding="utf-8")
 
     stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
     render(

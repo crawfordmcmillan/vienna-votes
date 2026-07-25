@@ -7,6 +7,8 @@
   {% if meeting.event.EventTime %}{{ meeting.event.EventTime }}{% endif %}
   {% if meeting.event.EventLocation %} &middot; {{ meeting.event.EventLocation }}{% endif %}
   &middot; <a href="{{ meeting.event.EventInSiteURL }}">Meeting record on Legistar</a>
+  {% if meeting.minutes_pdf %} &middot; <a href="{{ meeting.minutes_pdf }}">Minutes (PDF)</a>{% endif %}
+  {% if meeting.agenda_pdf %} &middot; <a href="{{ meeting.agenda_pdf }}">Agenda (PDF)</a>{% endif %}
 </p>
 
 {% for entry in meeting["items"] %}

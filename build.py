@@ -33,12 +33,16 @@ def slugify(name: str) -> str:
 
 
 def matter_url(item) -> str | None:
-    if item.get("EventItemMatterId") and item.get("EventItemMatterGuid"):
-        return (
-            f"{LEGISTAR}/LegislationDetail.aspx"
-            f"?ID={item['EventItemMatterId']}&GUID={item['EventItemMatterGuid']}"
-        )
+    # LegislationDetail.aspx rejects the API's MatterId/MatterGuid pair
+    # ("invalid parameters"); the gateway redirect by file number works.
+    if item.get("EventItemMatterFile"):
+        return f"{LEGISTAR}/gateway.aspx?M=L&ID={item['EventItemMatterFile']}"
     return None
+
+
+def pdf_url(url: str | None) -> str | None:
+    # Older cached records carry http:// Granicus links; the host serves https.
+    return url.replace("http://", "https://", 1) if url else None
 
 
 def last_name(name: str) -> str:
@@ -72,7 +76,14 @@ def main():
             key=lambda i: (i.get("EventItemMinutesSequence") or i.get("EventItemAgendaSequence") or 0),
         )
         date = event["EventDate"][:10]
-        meeting = {"event": event, "date": date, "slug": date, "items": []}
+        meeting = {
+            "event": event,
+            "date": date,
+            "slug": date,
+            "items": [],
+            "minutes_pdf": pdf_url(event.get("EventMinutesFile")),
+            "agenda_pdf": pdf_url(event.get("EventAgendaFile")),
+        }
         for item in items:
             votes = load(f"votes_{item['EventItemId']}.json")
             tally = Counter(v["VoteValueName"] for v in votes)

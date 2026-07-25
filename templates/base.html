@@ -14,7 +14,10 @@
 <body>
 <header class="masthead">
   <a class="wordmark" href="{{ root }}index.html">Vienna Votes</a>
-  <span class="masthead-note">Town of Vienna, Virginia</span>
+  <nav class="masthead-right">
+    <a class="masthead-link" href="{{ root }}about.html">About</a>
+    <span class="masthead-note">Town of Vienna, Virginia</span>
+  </nav>
 </header>
 <main>
 {% block content %}{% endblock %}
@@ -23,7 +26,7 @@
   <p>Data from the Town of Vienna&rsquo;s public <a href="{{ legistar }}">Legistar records</a>,
   shown exactly as recorded &mdash; no scores, no rankings, no interpretation.
   Last updated {{ fetched_at }}.</p>
-  <p><a href="{{ repo }}">Source code &amp; raw data</a></p>
+  <p><a href="{{ root }}about.html">About this site</a> &middot; <a href="{{ repo }}">Source code &amp; raw data</a></p>
 </footer>
 </body>
 </html>

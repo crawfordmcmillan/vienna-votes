@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<p class="eyebrow">About this site</p>
+<h1 class="hero">A faithful mirror of the public record.</h1>
+
+<h2>What this is</h2>
+<p>Vienna Votes shows every recorded vote of the Town of Vienna, Virginia Town
+Council since the town&rsquo;s electronic records begin in October 2013 &mdash;
+every roll call, every member, every agenda item, exactly as recorded. The point
+is simple: the public record exists, but it is scattered across hundreds of
+meeting pages and PDFs. This site makes it legible in one place.</p>
+
+<h2>Where the data comes from</h2>
+<p>Everything here is drawn from the Town of Vienna&rsquo;s own public records
+system (<a href="{{ legistar }}">Legistar</a>), retrieved through its public
+API. The raw, unmodified responses are archived in the site&rsquo;s
+<a href="{{ repo }}">public repository</a>, so anyone can verify that what is
+displayed matches what the town published. Every meeting page links to the
+town&rsquo;s official meeting record and, where published, the official minutes
+PDF &mdash; the strongest way to check any vote is to follow those links and
+compare.</p>
+
+<h2>What this site deliberately does not do</h2>
+<p>No scores. No rankings. No &ldquo;voted with the majority X% of the
+time.&rdquo; Vote values are never simplified: <em>Aye</em>, <em>Nay</em>,
+<em>Absent</em>, and <em>Abstain</em> are different things and are always shown
+exactly as recorded, including the rare record where the town entered no value
+at all. Interpretation is left to the reader, with the sources one click away.</p>
+
+<h2>Topic categories are unofficial</h2>
+<p>The one editorial layer on this site is the topic categories (Budget,
+Land&nbsp;Use, Parks, and so on). The Town of Vienna does not tag its records by
+topic, so this site assigns them to make browsing easier. They are labeled
+&ldquo;unofficial&rdquo; wherever they appear, they never alter the underlying
+records, and the complete mapping is
+<a href="{{ repo }}/blob/main/categories.csv">public and correctable</a>.</p>
+
+<h2>Corrections</h2>
+<p>If anything here does not match the town&rsquo;s official record, that is a
+bug and it will be fixed. Please
+<a href="{{ repo }}/issues">open an issue on GitHub</a> with a link to the page
+and the official source.</p>
+
+<h2>Who runs this</h2>
+<p>Vienna Votes is independently maintained. It is not affiliated with,
+endorsed by, or produced by the Town of Vienna. The data is refreshed
+periodically from the town&rsquo;s records; the date of the last refresh appears
+at the bottom of every page.</p>
+{% endblock %}

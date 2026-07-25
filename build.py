@@ -214,6 +214,7 @@ def main():
     # Custom-domain marker for GitHub Pages; must survive the site/ wipe.
     (SITE / "CNAME").write_text("viennavotes.org\n", encoding="utf-8")
 
+    render("about.html", SITE / "about.html", root="")
     stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
     render(
         "index.html",

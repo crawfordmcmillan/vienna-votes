@@ -43,6 +43,16 @@ a:hover { color: var(--accent-ink); }
   color: var(--ink);
 }
 .wordmark:hover { color: var(--accent-ink); }
+.masthead-right { display: flex; align-items: baseline; gap: 1.25rem; }
+.masthead-link {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+.masthead-link:hover { color: var(--accent-ink); }
 .masthead-note {
   font-family: var(--display);
   font-weight: 600;

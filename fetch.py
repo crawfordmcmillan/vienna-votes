@@ -1,0 +1,88 @@
+"""fetch.py — pull Town of Vienna, VA council data from the Legistar Web API.
+
+Writes raw, unmodified JSON responses to data/, one file per call.
+Skips any call whose cache file already exists. Never renders anything.
+"""
+import json
+import sys
+import time
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+
+import requests
+
+CLIENT = "vienna-va"
+BASE = f"https://webapi.legistar.com/v1/{CLIENT}"
+COUNCIL_BODY_NAME = "Town Council Meeting"
+DATA = Path(__file__).parent / "data"
+SLEEP_SECONDS = 0.1
+MONTHS_BACK_DATE = (date.today() - timedelta(days=365)).isoformat()
+
+session = requests.Session()
+session.headers["Accept"] = "application/json"
+
+
+def get_cached(cache_name: str, path: str, params: dict | None = None):
+    """GET BASE+path unless data/{cache_name} already exists. Store the raw body verbatim."""
+    cache_file = DATA / cache_name
+    if cache_file.exists():
+        print(f"cached  {cache_name}")
+        return json.loads(cache_file.read_text(encoding="utf-8"))
+    url = f"{BASE}{path}"
+    print(f"GET     {url}" + (f"  {params}" if params else ""))
+    resp = session.get(url, params=params, timeout=30)
+    resp.raise_for_status()
+    cache_file.write_text(resp.text, encoding="utf-8")
+    time.sleep(SLEEP_SECONDS)
+    return resp.json()
+
+
+def main():
+    DATA.mkdir(exist_ok=True)
+
+    bodies = get_cached("bodies.json", "/bodies")
+    council = next(b for b in bodies if b["BodyName"] == COUNCIL_BODY_NAME)
+    body_id = council["BodyId"]
+    print(f"        {COUNCIL_BODY_NAME} -> BodyId {body_id}")
+
+    get_cached("persons.json", "/persons")
+
+    events = get_cached(
+        "events.json",
+        "/events",
+        {"$filter": f"EventBodyId eq {body_id} and EventDate ge datetime'{MONTHS_BACK_DATE}'"},
+    )
+    print(f"        {len(events)} events since {MONTHS_BACK_DATE}")
+
+    n_items = 0
+    n_votes = 0
+    for event in events:
+        event_id = event["EventId"]
+        items = get_cached(f"eventitems_{event_id}.json", f"/events/{event_id}/eventitems")
+        n_items += len(items)
+        for item in items:
+            item_id = item["EventItemId"]
+            votes = get_cached(f"votes_{item_id}.json", f"/eventitems/{item_id}/votes")
+            n_votes += len(votes)
+
+    (DATA / "fetch_meta.json").write_text(
+        json.dumps(
+            {
+                "client": CLIENT,
+                "body_id": body_id,
+                "events_since": MONTHS_BACK_DATE,
+                "fetched_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    print(f"done    {len(events)} events, {n_items} agenda items, {n_votes} vote records")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except requests.RequestException as e:
+        print(f"error   {e}", file=sys.stderr)
+        sys.exit(1)

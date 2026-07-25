@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ entry.item.EventItemTitle or "Agenda item " ~ entry.item.EventItemId }}{% endblock %}
+{% block content %}
+<h1>{{ entry.item.EventItemTitle or "(untitled item)" }}</h1>
+<p>
+  From the <a href="../meeting/{{ entry.meeting.slug }}.html">meeting of {{ entry.meeting.date }}</a>
+  &middot; <a href="{{ entry.source_url }}">View on Legistar</a>
+</p>
+
+<dl>
+  {% if entry.item.EventItemMatterFile %}<dt>File</dt><dd>{{ entry.item.EventItemMatterFile }}</dd>{% endif %}
+  {% if entry.item.EventItemMatterType %}<dt>Type</dt><dd>{{ entry.item.EventItemMatterType }}</dd>{% endif %}
+  {% if entry.item.EventItemActionName %}<dt>Action</dt><dd>{{ entry.item.EventItemActionName }}</dd>{% endif %}
+  {% if entry.item.EventItemPassedFlagName %}<dt>Result</dt><dd>{{ entry.item.EventItemPassedFlagName }}</dd>{% endif %}
+  {% if entry.item.EventItemConsent %}<dt>Consent</dt><dd>Part of a consent motion</dd>{% endif %}
+  {% if entry.item.EventItemMover %}<dt>Moved by</dt><dd>{{ entry.item.EventItemMover }}</dd>{% endif %}
+  {% if entry.item.EventItemSeconder %}<dt>Seconded by</dt><dd>{{ entry.item.EventItemSeconder }}</dd>{% endif %}
+</dl>
+
+{% if entry.item.EventItemActionText %}
+<h2>Action text</h2>
+<pre class="actiontext">{{ entry.item.EventItemActionText }}</pre>
+{% endif %}
+
+<h2>Votes</h2>
+{% if entry.votes %}
+<p><strong>{{ entry.tally }}</strong></p>
+<ul class="plain votes">
+{% for vote in entry.votes %}
+  <li>{{ vote.VotePersonName }} &mdash; <span class="vote">{{ vote.VoteValueName or "(no value recorded)" }}</span></li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="muted">No recorded roll call for this item.</p>
+{% endif %}
+{% endblock %}

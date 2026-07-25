@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ member.name }}{% endblock %}
+{% block content %}
+<h1>{{ member.name }}</h1>
+<p>{{ member.votes | length }} recorded votes between {{ date_range[0] }} and {{ date_range[1] }}.</p>
+
+<table>
+  <thead>
+    <tr><th>Date</th><th>Item</th><th>Vote</th><th>Tally</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for v in member.votes %}
+    <tr>
+      <td class="nowrap"><a href="../meeting/{{ v.entry.meeting.slug }}.html">{{ v.entry.meeting.date }}</a></td>
+      <td><a href="../item/{{ v.entry.item.EventItemId }}.html">{{ v.entry.item.EventItemTitle or "(untitled item)" }}</a>
+        {% if v.entry.item.EventItemConsent %}<span class="muted">(consent)</span>{% endif %}</td>
+      <td><span class="vote">{{ v.vote.VoteValueName or "(no value recorded)" }}</span></td>
+      <td class="nowrap">{{ v.entry.tally }}</td>
+      <td><a class="muted" href="{{ v.entry.source_url }}">source</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

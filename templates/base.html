@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %} · Vienna Votes</title>
+<link rel="stylesheet" href="{{ root }}style.css">
+</head>
+<body>
+<header>
+  <a class="wordmark" href="{{ root }}index.html">Vienna Votes</a>
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer>
+  <p>Data from the Town of Vienna&rsquo;s public <a href="{{ legistar }}">Legistar records</a>.
+  Last updated {{ fetched_at }}. Votes are shown exactly as recorded, with no scoring or interpretation.</p>
+</footer>
+</body>
+</html>

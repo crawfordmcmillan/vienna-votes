@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Vienna Votes</h1>
+<p>How every Town of Vienna, VA Council member voted on every recorded item
+between {{ date_range[0] }} and {{ date_range[1] }}.</p>
+
+<h2>Council members</h2>
+<ul class="plain">
+{% for member in members %}
+  <li><a href="member/{{ member.slug }}.html">{{ member.name }}</a>
+      <span class="muted">{{ member.votes | length }} recorded votes</span></li>
+{% endfor %}
+</ul>
+
+<h2>Meetings</h2>
+<ul class="plain">
+{% for meeting in meetings %}
+  <li><a href="meeting/{{ meeting.slug }}.html">{{ meeting.date }}</a>
+      <span class="muted">{{ meeting.event.EventBodyName }}</span></li>
+{% endfor %}
+</ul>
+
+<p class="muted">Data fetched from the Granicus Legistar Web API
+(<code>webapi.legistar.com/v1/vienna-va</code>) on {{ fetched_at }}.</p>
+{% endblock %}

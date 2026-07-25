@@ -1,0 +1,77 @@
+:root {
+  --ink: #1a1a1a;
+  --muted: #666;
+  --rule: #ddd;
+  --accent: #1a4a7a;
+  --bg: #fdfdfb;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  max-width: 46rem;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg);
+}
+header {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+.wordmark {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+h1 { font-size: 1.5rem; line-height: 1.25; }
+h2 { font-size: 1.15rem; margin-top: 2rem; }
+a { color: var(--accent); }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.nowrap { white-space: nowrap; }
+ul.plain { list-style: none; padding-left: 0; }
+ul.plain li { padding: 0.15rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.4rem 0.6rem 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.vote {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85em;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.05em 0.35em;
+  white-space: nowrap;
+}
+section.item { border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
+section.item h2 { margin-bottom: 0.25rem; }
+ul.votes li { padding: 0.05rem 0; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.2rem 1rem; }
+dt { color: var(--muted); font-size: 0.9rem; }
+dd { margin: 0; }
+pre.actiontext {
+  white-space: pre-wrap;
+  font-family: inherit;
+  background: #f4f3ef;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--rule);
+  overflow-x: auto;
+}
+footer {
+  margin-top: 3rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+@media (max-width: 40rem) {
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr { border-bottom: 1px solid var(--rule); padding: 0.4rem 0; }
+  td { border: none; padding: 0.1rem 0; }
+}

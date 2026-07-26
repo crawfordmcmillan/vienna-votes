@@ -46,6 +46,18 @@ Open `site/index.html` in a browser.
 
 Dependencies: `pip install requests jinja2`
 
+## Elections section
+
+`fetch_elections.py` pulls precinct-level results for federal, statewide, and
+Town of Vienna contests (2013–2025 November generals) from the Virginia
+Department of Elections historical database, one raw CSV per contest in
+`data/elections/`. The town is served by four Fairfax County precincts
+(Vienna #1, #2, #4, #6 — confirmed as the complete set by the town's own 2023
+council contest). Two caveats are stated on the page: precinct lines
+approximate the town boundary for non-town races, and before ~2023 most
+absentee ballots were counted in countywide central precincts that cannot be
+attributed to precincts.
+
 ## Topic categories (unofficial)
 
 Vienna applies no topic tags in Legistar (38 index labels are defined in the

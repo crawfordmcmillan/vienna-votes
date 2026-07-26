@@ -323,6 +323,26 @@ pre.actiontext {
 
 .provenance { margin-top: 3rem; }
 
+/* Elections */
+.method-note {
+  background: #fffdf8;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  padding: 0.25rem 1.25rem 0.75rem;
+  margin: 1.5rem 0 2rem;
+}
+.method-note h2 { border-top: none; padding-top: 0.5rem; margin-top: 0.5rem; font-size: 1.05rem; }
+section.contest { border-bottom: 1px solid var(--rule); padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+section.contest h3 {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.25rem;
+}
+section.contest details { margin: 0.75rem 0; }
+section.contest summary { cursor: pointer; }
+section.contest details .votes-table { font-size: 0.85rem; }
+
 /* Footer */
 footer {
   margin-top: 4rem;

@@ -47,6 +47,81 @@ def fmt_date(iso: str | None) -> str:
     return iso[:10] if iso else ""
 
 
+ELECTIONS = ROOT / "data" / "elections"
+OFFICE_ORDER = ["President", "U.S. Senate", "U.S. House", "Governor",
+                "Lieutenant Governor", "Attorney General",
+                "Mayor, Town of Vienna", "Town Council, Town of Vienna"]
+
+
+def parse_contest(contest):
+    """Parse one raw contest CSV into Vienna-precinct rows, verbatim values."""
+    rows = list(csv.reader((ELECTIONS / f"contest_{contest['id']}.csv").open(encoding="utf-8-sig")))
+    header, parties = rows[0], rows[1]
+    cols, candidates = [], []
+    for i in range(2, len(header)):
+        name = header[i].strip()
+        if not name or name.startswith("Total") or name in ("Undervotes", "Overvotes"):
+            continue
+        cols.append(i)
+        party = parties[i].strip() if i < len(parties) else ""
+        candidates.append({"name": name, "party": party})
+    stripped = [h.strip() for h in header]
+    total_idx = (stripped.index("Total Ballots Cast")
+                 if "Total Ballots Cast" in stripped
+                 else stripped.index("Total Votes Cast"))
+
+    def num(r, i):
+        s = (r[i] if i < len(r) else "").replace(",", "").strip()
+        return int(s) if s else 0
+
+    is_town = contest.get("town", False)
+    in_scope = False
+    precincts = []
+    central_absentee = 0
+    for r in rows[2:]:
+        if len(r) < 2:
+            continue
+        kind, name = r[0], r[1]
+        if kind in ("Locality", "Town", "Congressional District"):
+            in_scope = ("Fairfax County" in name) or (kind == "Town" and name == "Vienna")
+        elif kind == "Precinct" and in_scope:
+            if "Vienna #" in name or (is_town and name == "Provisional"):
+                precincts.append({
+                    "name": name,
+                    "votes": [num(r, i) for i in cols],
+                    "total": num(r, total_idx),
+                })
+            elif "Absentee" in name:
+                central_absentee += num(r, total_idx)
+    totals = [sum(p["votes"][j] for p in precincts) for j in range(len(cols))]
+    return {
+        **contest,
+        "candidates": candidates,
+        "precincts": precincts,
+        "totals": totals,
+        "ballots": sum(p["total"] for p in precincts),
+        "total_label": "ballots" if "Total Ballots Cast" in stripped else "total votes",
+        "central_absentee": central_absentee,
+        "source_url": f"https://historical.elections.virginia.gov/contest/{contest['id']}",
+    }
+
+
+def load_elections():
+    meta_file = ELECTIONS / "elections_meta.json"
+    if not meta_file.exists():
+        return None, []
+    meta = json.loads(meta_file.read_text(encoding="utf-8"))
+    contests = [parse_contest(c) for c in meta["contests"]]
+    by_date = defaultdict(list)
+    for c in contests:
+        by_date[c["date"]].append(c)
+    elections = []
+    for date in sorted(by_date, reverse=True):
+        group = sorted(by_date[date], key=lambda c: OFFICE_ORDER.index(c["office"]))
+        elections.append({"date": date, "contests": group})
+    return meta, elections
+
+
 def main():
     meta = load("fetch_meta.json")
     today = meta["fetched_at_utc"][:10]
@@ -215,6 +290,10 @@ def main():
     (SITE / "CNAME").write_text("viennavotes.org\n", encoding="utf-8")
 
     render("about.html", SITE / "about.html", root="")
+    elections_meta, elections = load_elections()
+    if elections:
+        render("elections.html", SITE / "elections.html", root="",
+               elections=elections, elections_meta=elections_meta)
     stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
     render(
         "index.html",

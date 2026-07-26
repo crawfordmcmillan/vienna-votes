@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}How Vienna votes in elections{% endblock %}
+{% block content %}
+<p class="eyebrow">Elections</p>
+<h1 class="hero">How Vienna votes.</h1>
+<p class="dek">Results from the Town of Vienna&rsquo;s four precincts in federal, statewide,
+and town elections since 2013, from the Virginia Department of Elections&rsquo; official records.</p>
+
+<section class="method-note">
+  <h2>How to read these numbers</h2>
+  <p>The Town of Vienna is served by four Fairfax County precincts &mdash; Vienna #1, #2, #4,
+  and #6. These are the same four precincts that carry the town&rsquo;s own mayoral and
+  council elections, but precinct lines are drawn by Fairfax County and may not match the
+  town boundary exactly, so federal and state totals here are a close approximation of the
+  town&rsquo;s vote, not an official town tally.</p>
+  <p>Before roughly 2023, Virginia counted most absentee and early ballots in a countywide
+  &ldquo;central absentee precinct&rdquo; that cannot be attributed to individual precincts.
+  Where that applies, it is noted on the contest, with the countywide number &mdash; the
+  precinct figures for those years reflect only ballots reported at the precinct level.
+  Town contests (2023 onward) count town voters only.</p>
+</section>
+
+{% for election in elections %}
+<h2><time>{{ election.date }}</time> <span class="muted">&middot; General Election</span></h2>
+{% for contest in election.contests %}
+<section class="contest">
+  <h3>{{ contest.office }}{% if contest.district %} &mdash; District {{ contest.district }}{% endif %}</h3>
+  <table class="votes-table">
+    <thead>
+      <tr><th>Candidate</th><th>Party</th><th>Vienna precincts</th></tr>
+    </thead>
+    <tbody>
+    {% for cand in contest.candidates %}
+      <tr>
+        <td data-label="Candidate">{{ cand.name }}</td>
+        <td data-label="Party" class="muted">{{ cand.party }}</td>
+        <td data-label="Vienna precincts" class="nowrap">{{ "{:,}".format(contest.totals[loop.index0]) }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <details>
+    <summary class="muted">By precinct ({{ "{:,}".format(contest.ballots) }} {{ contest.total_label }})</summary>
+    <table class="votes-table">
+      <thead>
+        <tr><th>Precinct</th>{% for cand in contest.candidates %}<th>{{ cand.name }}</th>{% endfor %}<th>Total</th></tr>
+      </thead>
+      <tbody>
+      {% for p in contest.precincts %}
+        <tr>
+          <td data-label="Precinct">{{ p.name }}</td>
+          {% for v in p.votes %}<td data-label="{{ contest.candidates[loop.index0].name }}">{{ "{:,}".format(v) }}</td>{% endfor %}
+          <td data-label="Total">{{ "{:,}".format(p.total) }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </details>
+  {% if contest.central_absentee %}
+  <p class="muted">Note: in this election, {{ "{:,}".format(contest.central_absentee) }} absentee ballots
+  in Fairfax County{% if contest.district %} (District {{ contest.district }}){% endif %} were counted in a
+  countywide central absentee precinct and cannot be attributed to individual precincts.</p>
+  {% endif %}
+  <p class="muted"><a href="{{ contest.source_url }}">Official record at the Virginia Department of Elections</a></p>
+</section>
+{% endfor %}
+{% endfor %}
+
+<p class="muted provenance">Results from the Virginia Department of Elections historical
+elections database, retrieved {{ elections_meta.fetched_at_utc[:10] }}. Raw source files are in the
+<a href="{{ repo }}">site repository</a>. 2015, 2019, and 2023 are shown without federal or
+statewide contests because none were on the ballot in those years.</p>
+{% endblock %}

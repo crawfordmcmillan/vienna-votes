@@ -1,0 +1,7 @@
+{
+  "sources": {
+    "fairfax_precincts.geojson": "https://data-fairfaxcountygis.opendata.arcgis.com/api/download/v1/items/7727de78b3984f4daa1ff0960d0da8cb/geojson?layers=1",
+    "vienna_boundary.geojson": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=GEOID%3D%275181072%27&outFields=GEOID,NAME&outSR=4326&f=geojson"
+  },
+  "fetched_at_utc": "2026-07-26T02:24:12+00:00"
+}

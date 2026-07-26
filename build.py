@@ -8,6 +8,7 @@ kept in categories.csv and labeled as such.
 """
 import csv
 import json
+import math
 import re
 import shutil
 from collections import Counter, defaultdict
@@ -107,6 +108,86 @@ def parse_contest(contest):
         "central_absentee": central_absentee,
         "source_url": f"https://historical.elections.virginia.gov/contest/{contest['id']}",
     }
+
+
+GIS = ROOT / "data" / "gis"
+MAP_PRECINCTS = {213: "Vienna #1", 214: "Vienna #2", 216: "Vienna #4", 218: "Vienna #6"}
+MAP_FILLS = {213: "#ead9b7", 214: "#cfd8c2", 216: "#e5c6b2", 218: "#c9d3da"}
+
+
+def build_precinct_map():
+    """Render the four Vienna precincts + town boundary as a static inline SVG."""
+    precincts_file = GIS / "fairfax_precincts.geojson"
+    boundary_file = GIS / "vienna_boundary.geojson"
+    if not (precincts_file.exists() and boundary_file.exists()):
+        return None
+
+    precincts = {}
+    polling = []
+    for f in json.loads(precincts_file.read_text(encoding="utf-8"))["features"]:
+        ident = f["properties"].get("PREC_IDENT")
+        if ident in MAP_PRECINCTS:
+            geom = f["geometry"]
+            rings = geom["coordinates"] if geom["type"] == "Polygon" else \
+                [r for poly in geom["coordinates"] for r in poly]
+            precincts[ident] = rings
+            p = f["properties"]
+            polling.append({
+                "name": MAP_PRECINCTS[ident],
+                "place": p.get("POLLING_PLACE"),
+                "address": f"{p.get('ADDRESS')}, {p.get('CITY')}, VA {p.get('ZIP')}",
+            })
+    polling.sort(key=lambda p: p["name"])
+    boundary = json.loads(boundary_file.read_text(encoding="utf-8"))["features"][0]["geometry"]["coordinates"]
+
+    all_pts = [pt for rings in list(precincts.values()) + [boundary] for ring in rings for pt in ring]
+    lons = [p[0] for p in all_pts]
+    lats = [p[1] for p in all_pts]
+    mid_lat = (min(lats) + max(lats)) / 2
+    kx = math.cos(math.radians(mid_lat))
+    span_x = (max(lons) - min(lons)) * kx
+    span_y = max(lats) - min(lats)
+    width, pad = 760.0, 16.0
+    scale = (width - 2 * pad) / span_x
+    height = span_y * scale + 2 * pad
+
+    def xy(pt):
+        x = (pt[0] - min(lons)) * kx * scale + pad
+        y = (max(lats) - pt[1]) * scale + pad
+        return x, y
+
+    def path(rings):
+        parts = []
+        for ring in rings:
+            parts.append("M" + "L".join(f"{x:.1f} {y:.1f}" for x, y in (xy(p) for p in ring)) + "Z")
+        return "".join(parts)
+
+    def centroid(ring):
+        a = cx = cy = 0.0
+        pts = [xy(p) for p in ring]
+        for (x1, y1), (x2, y2) in zip(pts, pts[1:] + pts[:1]):
+            cross = x1 * y2 - x2 * y1
+            a += cross
+            cx += (x1 + x2) * cross
+            cy += (y1 + y2) * cross
+        a *= 3
+        return (cx / a, cy / a) if a else pts[0]
+
+    svg = [f'<svg viewBox="0 0 {width:.0f} {height:.0f}" role="img" '
+           f'aria-label="Map of the four Vienna voting precincts and the town boundary" '
+           f'xmlns="http://www.w3.org/2000/svg">']
+    for ident, rings in sorted(precincts.items()):
+        svg.append(f'<path d="{path(rings)}" fill="{MAP_FILLS[ident]}" '
+                   f'stroke="#16150f" stroke-width="1.2" stroke-linejoin="round"/>')
+    svg.append(f'<path d="{path(boundary)}" fill="none" stroke="#d1461f" '
+               f'stroke-width="3" stroke-linejoin="round"/>')
+    for ident, rings in sorted(precincts.items()):
+        cx, cy = centroid(max(rings, key=len))
+        svg.append(f'<text x="{cx:.0f}" y="{cy:.0f}" text-anchor="middle" '
+                   f'font-family="Archivo, Arial, sans-serif" font-weight="900" '
+                   f'font-size="26" fill="#16150f">#{MAP_PRECINCTS[ident][-1]}</text>')
+    svg.append("</svg>")
+    return {"svg": "".join(svg), "polling": polling}
 
 
 def load_elections():
@@ -320,7 +401,8 @@ def main():
     elections_meta, elections = load_elections()
     if elections:
         render("elections.html", SITE / "elections.html", root="",
-               elections=elections, elections_meta=elections_meta)
+               elections=elections, elections_meta=elections_meta,
+               precinct_map=build_precinct_map())
     stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
     render(
         "index.html",

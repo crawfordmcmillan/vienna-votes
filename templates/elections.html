@@ -20,6 +20,26 @@ and town elections since 2013, from the Virginia Department of Elections&rsquo; 
   Town contests (2023 onward) count town voters only.</p>
 </section>
 
+{% if precinct_map %}
+<section class="precinct-map">
+  <h2>The four precincts</h2>
+  <figure>
+    {{ precinct_map.svg | safe }}
+    <figcaption class="muted">
+      The <span class="map-key-town">red line</span> is the Town of Vienna&rsquo;s corporate
+      boundary (U.S. Census TIGER); shaded areas are Fairfax County&rsquo;s four Vienna voting
+      precincts (Fairfax County GIS), as currently published. The mismatch between the shaded
+      precincts and the red town line is the boundary approximation described above, made visible.
+    </figcaption>
+  </figure>
+  <ul class="polling-list">
+  {% for p in precinct_map.polling %}
+    <li><strong>{{ p.name }}</strong> <span class="muted">&middot; {{ p.place }}, {{ p.address }}</span></li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 {% for election in elections %}
 <h2><time>{{ election.date }}</time> <span class="muted">&middot; General Election</span></h2>
 {% for contest in election.contests %}

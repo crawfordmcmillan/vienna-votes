@@ -323,6 +323,15 @@ pre.actiontext {
 
 .provenance { margin-top: 3rem; }
 
+/* Precinct map */
+.precinct-map figure { margin: 1rem 0; }
+.precinct-map svg { width: 100%; height: auto; display: block; }
+.precinct-map figcaption { margin-top: 0.6rem; }
+.map-key-town { color: var(--accent); font-weight: bold; }
+.polling-list { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+.polling-list li { padding: 0.25rem 0; border-bottom: 1px dotted var(--rule); }
+.polling-list strong { font-family: var(--display); font-weight: 700; }
+
 /* Elections */
 .method-note {
   background: #fffdf8;

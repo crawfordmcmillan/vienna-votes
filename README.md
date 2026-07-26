@@ -58,6 +58,15 @@ approximate the town boundary for non-town races, and before ~2023 most
 absentee ballots were counted in countywide central precincts that cannot be
 attributed to precincts.
 
+## Precinct map
+
+`fetch_gis.py` caches two raw GeoJSON sources in `data/gis/`: Fairfax County's
+voting precinct boundaries (county open data portal) and the Town of Vienna
+corporate boundary (Census TIGERweb, place GEOID 5181072). `build.py` renders
+them as a static inline SVG on the elections page — no JavaScript, no map
+tiles, no external requests. The visible mismatch between the shaded precincts
+and the red town line is the boundary approximation, shown rather than told.
+
 ## Topic categories (unofficial)
 
 Vienna applies no topic tags in Legistar (38 index labels are defined in the

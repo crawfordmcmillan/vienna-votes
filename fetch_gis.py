@@ -1,10 +1,13 @@
 """fetch_gis.py — pull boundary geometry for the precinct map.
 
-Two raw GeoJSON sources, cached verbatim in data/gis/:
+Raw GeoJSON sources, cached verbatim in data/gis/:
 - Fairfax County voting precincts (county open data portal, all ~266
   precincts; the build filters to the four Vienna precincts by PREC_IDENT)
+- Fairfax County polling places (points; filtered the same way at build)
 - Town of Vienna corporate boundary (Census TIGERweb, incorporated place
   GEOID 5181072)
+- Roads around the town (Census TIGERweb secondary + local road layers,
+  clipped server-side to the map's bounding box)
 """
 import json
 import sys
@@ -15,15 +18,35 @@ import requests
 
 DATA = Path(__file__).parent / "data" / "gis"
 
+# Bounding box: Vienna town boundary plus a small margin.
+BBOX = "-77.28876%2C38.87549%2C-77.23699%2C38.92483"
+ROADS_QUERY = (
+    f"query?geometry={BBOX}&geometryType=esriGeometryEnvelope&inSR=4326"
+    "&spatialRel=esriSpatialRelIntersects&outFields=NAME%2CBASENAME%2CMTFCC"
+    "&outSR=4326&f=geojson&where=1%3D1"
+)
+
 SOURCES = {
     "fairfax_precincts.geojson": (
         "https://data-fairfaxcountygis.opendata.arcgis.com/api/download/v1/"
         "items/7727de78b3984f4daa1ff0960d0da8cb/geojson?layers=1"
     ),
+    "fairfax_polling_places.geojson": (
+        "https://data-fairfaxcountygis.opendata.arcgis.com/api/download/v1/"
+        "items/9c08b886c6fa44a0922ea1e1f89ad907/geojson?layers=0"
+    ),
     "vienna_boundary.geojson": (
         "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
         "Places_CouSub_ConCity_SubMCD/MapServer/4/query"
         "?where=GEOID%3D%275181072%27&outFields=GEOID,NAME&outSR=4326&f=geojson"
+    ),
+    "roads_secondary.geojson": (
+        "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+        f"Transportation/MapServer/6/{ROADS_QUERY}"
+    ),
+    "roads_local.geojson": (
+        "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+        f"Transportation/MapServer/8/{ROADS_QUERY}"
     ),
 }
 

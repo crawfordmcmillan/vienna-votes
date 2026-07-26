@@ -113,6 +113,12 @@ def parse_contest(contest):
 GIS = ROOT / "data" / "gis"
 MAP_PRECINCTS = {213: "Vienna #1", 214: "Vienna #2", 216: "Vienna #4", 218: "Vienna #6"}
 MAP_FILLS = {213: "#ead9b7", 214: "#cfd8c2", 216: "#e5c6b2", 218: "#c9d3da"}
+# Local roads worth drawing for orientation (TIGER BASENAME values); secondary
+# roads (Rt 123/Maple, Nutley, Chain Bridge, Leesburg Pike) are all drawn.
+MAP_LOCAL_ROADS = {"Church", "Beulah", "Park", "Courthouse", "Lawyers",
+                   "Cedar", "Old Courthouse", "Follin", "Glyndon"}
+MAP_ROAD_LABELS = ["Maple Ave", "Nutley St", "Church St", "Beulah Rd",
+                   "Lawyers Rd", "Courthouse Rd", "Chain Bridge Rd"]
 
 
 def build_precinct_map():
@@ -173,12 +179,34 @@ def build_precinct_map():
         a *= 3
         return (cx / a, cy / a) if a else pts[0]
 
+    def road_lines(feature):
+        geom = feature["geometry"]
+        return geom["coordinates"] if geom["type"] == "MultiLineString" else [geom["coordinates"]]
+
+    def line_path(lines):
+        return "".join(
+            "M" + "L".join(f"{x:.1f} {y:.1f}" for x, y in (xy(p) for p in line))
+            for line in lines
+        )
+
+    secondary = json.loads((GIS / "roads_secondary.geojson").read_text(encoding="utf-8"))["features"]
+    local = [
+        f for f in json.loads((GIS / "roads_local.geojson").read_text(encoding="utf-8"))["features"]
+        if f["properties"].get("BASENAME") in MAP_LOCAL_ROADS
+    ]
+
     svg = [f'<svg viewBox="0 0 {width:.0f} {height:.0f}" role="img" '
-           f'aria-label="Map of the four Vienna voting precincts and the town boundary" '
-           f'xmlns="http://www.w3.org/2000/svg">']
+           f'aria-label="Map of the four Vienna voting precincts, the town boundary, '
+           f'major roads, and polling places" xmlns="http://www.w3.org/2000/svg">']
     for ident, rings in sorted(precincts.items()):
         svg.append(f'<path d="{path(rings)}" fill="{MAP_FILLS[ident]}" '
                    f'stroke="#16150f" stroke-width="1.2" stroke-linejoin="round"/>')
+    for f in local:
+        svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#aca38f" '
+                   f'stroke-width="1.4" stroke-linecap="round"/>')
+    for f in secondary:
+        svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#9b917c" '
+                   f'stroke-width="2.4" stroke-linecap="round"/>')
     svg.append(f'<path d="{path(boundary)}" fill="none" stroke="#d1461f" '
                f'stroke-width="3" stroke-linejoin="round"/>')
     for ident, rings in sorted(precincts.items()):
@@ -186,6 +214,46 @@ def build_precinct_map():
         svg.append(f'<text x="{cx:.0f}" y="{cy:.0f}" text-anchor="middle" '
                    f'font-family="Archivo, Arial, sans-serif" font-weight="900" '
                    f'font-size="26" fill="#16150f">#{MAP_PRECINCTS[ident][-1]}</text>')
+
+    # Road labels: midpoint of the longest drawn segment for each labeled name.
+    all_roads = secondary + local
+    for label in MAP_ROAD_LABELS:
+        candidates = [f for f in all_roads if (f["properties"].get("NAME") or "").startswith(label)]
+        if not candidates:
+            continue
+        lines = road_lines(max(candidates, key=lambda f: sum(len(l) for l in road_lines(f))))
+        line = max(lines, key=len)
+        mx, my = xy(line[len(line) // 2])
+        mx = min(max(mx, 60), width - 60)
+        my = min(max(my, 20), height - 10)
+        svg.append(f'<text x="{mx:.0f}" y="{my - 4:.0f}" text-anchor="middle" '
+                   f'font-family="Archivo, Arial, sans-serif" font-weight="600" font-size="12" '
+                   f'fill="#6d675c" stroke="#f7f3ec" stroke-width="3" '
+                   f'paint-order="stroke" letter-spacing="0.04em">{label}</text>')
+
+    # Polling place markers.
+    pp_file = GIS / "fairfax_polling_places.geojson"
+    if pp_file.exists():
+        for f in json.loads(pp_file.read_text(encoding="utf-8"))["features"]:
+            p = f["properties"]
+            idents = {p.get("PREC_IDENT"), p.get("PREC_IDENT2")}
+            if idents & set(MAP_PRECINCTS):
+                x, y = xy(f["geometry"]["coordinates"])
+                name = (p.get("DESCRIPTION") or "").title() \
+                    .replace("Elementary School", "ES").replace("High School", "HS")
+                # End-anchored labels drop below the dot so they don't collide
+                # with the big precinct number sitting to their left.
+                if x > width * 0.7:
+                    anchor, tx, ty = "end", x - 2, y + 20
+                else:
+                    anchor, tx, ty = "start", x + 9, y + 4
+                svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5.5" fill="#16150f" '
+                           f'stroke="#f7f3ec" stroke-width="2"/>')
+                svg.append(f'<text x="{tx:.0f}" y="{ty:.0f}" text-anchor="{anchor}" '
+                           f'font-family="Archivo, Arial, sans-serif" font-weight="700" '
+                           f'font-size="12" fill="#16150f" stroke="#f7f3ec" stroke-width="3" '
+                           f'paint-order="stroke">{name}</text>')
+
     svg.append("</svg>")
     return {"svg": "".join(svg), "polling": polling}
 

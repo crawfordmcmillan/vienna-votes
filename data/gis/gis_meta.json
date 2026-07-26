@@ -1,7 +1,10 @@
 {
   "sources": {
     "fairfax_precincts.geojson": "https://data-fairfaxcountygis.opendata.arcgis.com/api/download/v1/items/7727de78b3984f4daa1ff0960d0da8cb/geojson?layers=1",
-    "vienna_boundary.geojson": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=GEOID%3D%275181072%27&outFields=GEOID,NAME&outSR=4326&f=geojson"
+    "fairfax_polling_places.geojson": "https://data-fairfaxcountygis.opendata.arcgis.com/api/download/v1/items/9c08b886c6fa44a0922ea1e1f89ad907/geojson?layers=0",
+    "vienna_boundary.geojson": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=GEOID%3D%275181072%27&outFields=GEOID,NAME&outSR=4326&f=geojson",
+    "roads_secondary.geojson": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Transportation/MapServer/6/query?geometry=-77.28876%2C38.87549%2C-77.23699%2C38.92483&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=NAME%2CBASENAME%2CMTFCC&outSR=4326&f=geojson&where=1%3D1",
+    "roads_local.geojson": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Transportation/MapServer/8/query?geometry=-77.28876%2C38.87549%2C-77.23699%2C38.92483&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=NAME%2CBASENAME%2CMTFCC&outSR=4326&f=geojson&where=1%3D1"
   },
-  "fetched_at_utc": "2026-07-26T02:24:12+00:00"
+  "fetched_at_utc": "2026-07-26T02:37:04+00:00"
 }

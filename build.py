@@ -465,16 +465,22 @@ def main():
         encoding="utf-8",
     )
 
-    render("about.html", SITE / "about.html", root="")
     elections_meta, elections = load_elections()
+    render("about.html", SITE / "about.html", root="")
     if elections:
         render("elections.html", SITE / "elections.html", root="",
                elections=elections, elections_meta=elections_meta,
                precinct_map=build_precinct_map())
     stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
+    election_stats = {
+        "contests": sum(len(e["contests"]) for e in elections),
+        "elections": len(elections),
+    }
+    render("index.html", SITE / "index.html", root="",
+           stats=stats, election_stats=election_stats)
     render(
-        "index.html",
-        SITE / "index.html",
+        "council.html",
+        SITE / "council.html",
         root="",
         current_members=current_members,
         former_members=former_members,
@@ -482,6 +488,21 @@ def main():
         stats=stats,
         topics=topic_pages,
     )
+    for page in [
+        {"slug": "house-prices", "name": "House prices",
+         "pitch": "What homes in Vienna have sold and been valued at over the years.",
+         "source": "Fairfax County assessment and sales records, or a published "
+                   "town-level price index (Zillow ZHVI / Redfin)"},
+        {"slug": "weather", "name": "Weather",
+         "pitch": "High and low temperatures in and around Vienna across the years.",
+         "source": "NOAA National Centers for Environmental Information (GHCN "
+                   "station records, nearest long-running station)"},
+        {"slug": "population", "name": "Population",
+         "pitch": "How many people call Vienna home, decade by decade.",
+         "source": "U.S. Census Bureau — decennial census and American Community "
+                   "Survey for the Town of Vienna (place 51-81072)"},
+    ]:
+        render("planned.html", SITE / f"{page['slug']}.html", root="", page=page)
     for member in members:
         render("member.html", SITE / "member" / f"{member['slug']}.html", root="../", member=member)
     for meeting in meetings:

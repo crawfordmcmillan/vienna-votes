@@ -1,60 +1,46 @@
 {% extends "base.html" %}
-{% block title %}Every recorded vote{% endblock %}
+{% block title %}Vienna, Virginia, in data{% endblock %}
 {% block content %}
-<h1 class="hero">Every recorded vote of the Vienna Town Council.</h1>
-<p class="dek">A faithful mirror of the public record, {{ date_range[0] }} to {{ date_range[1] }}.
-Every roll call, every member, exactly as recorded &mdash; with a link back to the source on every page.</p>
+<h1 class="hero">A home for data about the Town of Vienna.</h1>
+<p class="dek">Official public records about Vienna, Virginia, made legible in one place &mdash;
+how the council votes, how the town votes in elections, and more as it grows.
+Everything is drawn from official sources, linked back to the record, and shown
+without scores or spin.</p>
 
-<div class="stats">
-  <div class="stat"><span class="stat-n">{{ stats.votes }}</span><span class="stat-label">vote records</span></div>
-  <div class="stat"><span class="stat-n">{{ stats.meetings }}</span><span class="stat-label">meetings</span></div>
-  <div class="stat"><span class="stat-n">{{ stats.members }}</span><span class="stat-label">members since 2013</span></div>
-</div>
-
-<h2>Current council</h2>
-<ul class="member-grid">
-{% for member in current_members %}
-  <li><a class="member-card" href="member/{{ member.slug }}.html">
-    <span class="member-name">{{ member.name }}</span>
-    <span class="member-role">{{ member.current_title }}</span>
-    <span class="member-count">{{ member.votes | length }} recorded votes</span>
+<h2>The data</h2>
+<ul class="dataset-grid">
+  <li><a class="dataset-card" href="council.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Town Council votes</span>
+    <span class="dataset-desc">Every recorded vote of the Vienna Town Council,
+    exactly as recorded &mdash; every member, every roll call, linked to the official minutes.</span>
+    <span class="dataset-stat">{{ "{:,}".format(stats.votes) }} vote records &middot; {{ stats.meetings }} meetings &middot; since 2013</span>
   </a></li>
-{% endfor %}
+  <li><a class="dataset-card" href="elections.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Elections</span>
+    <span class="dataset-desc">How Vienna&rsquo;s four precincts vote in federal, statewide,
+    and town elections, with a map of the precincts and their polling places.</span>
+    <span class="dataset-stat">{{ election_stats.contests }} contests &middot; {{ election_stats.elections }} elections &middot; 2013&ndash;2025</span>
+  </a></li>
+  <li><a class="dataset-card planned" href="house-prices.html">
+    <span class="dataset-status">In the works</span>
+    <span class="dataset-name">House prices</span>
+    <span class="dataset-desc">What homes in Vienna have sold and been valued at over the years.</span>
+  </a></li>
+  <li><a class="dataset-card planned" href="weather.html">
+    <span class="dataset-status">In the works</span>
+    <span class="dataset-name">Weather</span>
+    <span class="dataset-desc">High and low temperatures across the years, from the nearest
+    long-running weather station.</span>
+  </a></li>
+  <li><a class="dataset-card planned" href="population.html">
+    <span class="dataset-status">In the works</span>
+    <span class="dataset-name">Population</span>
+    <span class="dataset-desc">How many people call Vienna home, decade by decade.</span>
+  </a></li>
 </ul>
 
-{% if topics %}
-<h2>Topics <span class="muted">&middot; unofficial</span></h2>
-<p class="muted">Categories assigned by this site to make browsing easier &mdash; they are not part of the Town&rsquo;s records.
-The full mapping is <a href="{{ repo }}/blob/main/categories.csv">public and correctable</a>.</p>
-<ul class="topic-list">
-{% for topic in topics %}
-  <li><a href="topic/{{ topic.slug }}.html">{{ topic.name }}</a>
-      <span class="muted">{{ topic.entries | length }} items</span></li>
-{% endfor %}
-</ul>
-{% endif %}
-
-<h2>Meetings</h2>
-{% for year, group in meetings_by_year %}
-<details class="year-group" {% if loop.first %}open{% endif %}>
-  <summary>{{ year }} <span class="muted">&middot; {{ group | length }} meetings</span></summary>
-  <ul class="meeting-list">
-  {% for meeting in group %}
-    <li><a href="meeting/{{ meeting.slug }}.html"><time>{{ meeting.date }}</time></a>
-        <span class="muted">{{ meeting.event.EventBodyName }}</span></li>
-  {% endfor %}
-  </ul>
-</details>
-{% endfor %}
-
-<h2>Former members <span class="muted">&middot; since 2013</span></h2>
-<ul class="former-list">
-{% for member in former_members %}
-  <li><a href="member/{{ member.slug }}.html">{{ member.name }}</a>
-      <span class="muted">{{ member.first_vote[:4] }}&ndash;{{ member.last_vote[:4] }} &middot; {{ member.votes | length }} recorded votes</span></li>
-{% endfor %}
-</ul>
-
-<p class="muted provenance">Fetched from the Granicus Legistar Web API
-(<code>webapi.legistar.com/v1/vienna-va</code>) on {{ fetched_at }}.</p>
+<p class="muted provenance">Independently maintained; not affiliated with the Town of Vienna.
+<a href="about.html">About this site</a> &middot; data last refreshed {{ fetched_at }}.</p>
 {% endblock %}

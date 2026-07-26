@@ -1,0 +1,55 @@
+name: Weekly data refresh
+
+on:
+  schedule:
+    - cron: "0 11 * * 2"   # Tuesdays 11:00 UTC (morning US Eastern)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests jinja2
+      - name: Refetch meeting list and any new records
+        run: |
+          rm -f data/events.json
+          python fetch.py
+          python fetch_elections.py
+      - name: Regenerate categories and site
+        run: |
+          python categorize.py
+          python build.py
+      - name: Commit any data changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Weekly data refresh"
+          git push
+      - name: Warn if new items are uncategorized
+        run: |
+          if [ -f uncategorized_titles.txt ]; then
+            echo "::warning::New agenda item titles need categorization — see uncategorized_titles.txt"
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,5 @@
+{
+  "_comment": "Legistar contains duplicate person records for the same human. Votes recorded under the alias PersonId are merged into the canonical PersonId's page, and the merge is noted on that page. Corrections welcome via GitHub issues.",
+  "257": {"canonical": 192, "recorded_as": "Mayor DiRocco", "canonical_name": "Laurie DiRocco"},
+  "211": {"canonical": 269, "recorded_as": "Charles Anderson", "canonical_name": "Chuck Anderson"}
+}

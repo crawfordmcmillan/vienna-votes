@@ -21,6 +21,12 @@
 </dl>
 <p class="muted">Service record and contact from the Town of Vienna&rsquo;s Legistar system.</p>
 {% endif %}
+{% if member.merged_from %}
+<p class="muted">Includes votes the town recorded under
+{% for n in member.merged_from %}&ldquo;{{ n }}&rdquo;{% if not loop.last %}, {% endif %}{% endfor %}
+&mdash; a duplicate Legistar person record for the same member. The merge is documented in
+<a href="{{ repo }}/blob/main/person_aliases.json">person_aliases.json</a>.</p>
+{% endif %}
 
 {% for year, votes in member.votes_by_year %}
 <h2>{{ year }} <span class="muted">&middot; {{ votes | length }} recorded votes</span></h2>

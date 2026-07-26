@@ -20,8 +20,13 @@ DATA = ROOT / "data"
 SITE = ROOT / "site"
 TEMPLATES = ROOT / "templates"
 CATEGORIES = ROOT / "categories.csv"
+ALIASES = ROOT / "person_aliases.json"
 LEGISTAR = "https://vienna-va.legistar.com"
-REPO = "https://github.com/crawfordmcmillan/vienna-votes"
+REPO = "https://github.com/crawfordmcmillan/viennavadata"
+BASE_URL = "https://viennavadata.org"
+# Pages custom domain currently bound to the site; flip to viennavadata.org
+# once that domain's DNS points at GitHub Pages.
+CNAME_DOMAIN = "viennavotes.org"
 
 
 def load(name):
@@ -188,20 +193,34 @@ def main():
         terms.sort(key=lambda t: t["OfficeRecordStartDate"] or "")
 
     # Members: everyone who actually appears in a vote record, keyed by PersonId.
+    # person_aliases.json merges Legistar's duplicate person records for the
+    # same human into one page, transparently.
+    aliases = {}
+    if ALIASES.exists():
+        raw_aliases = json.loads(ALIASES.read_text(encoding="utf-8"))
+        aliases = {int(k): v for k, v in raw_aliases.items() if not k.startswith("_")}
+
     members = {}
     for meeting in meetings:
         for entry in meeting["items"]:
             for vote in entry["votes"]:
                 pid = vote["VotePersonId"]
+                alias = aliases.get(pid)
+                canonical_pid = alias["canonical"] if alias else pid
                 member = members.setdefault(
-                    pid,
+                    canonical_pid,
                     {
-                        "person_id": pid,
-                        "name": vote["VotePersonName"].strip(),
+                        "person_id": canonical_pid,
+                        "name": (alias["canonical_name"] if alias else vote["VotePersonName"].strip()),
                         "slug": None,
                         "votes": [],
+                        "merged_from": set(),
                     },
                 )
+                if alias:
+                    member["merged_from"].add(alias["recorded_as"])
+                else:
+                    member["name"] = member["name"] or vote["VotePersonName"].strip()
                 member["votes"].append({"vote": vote, "entry": entry})
 
     for member in members.values():
@@ -277,9 +296,15 @@ def main():
         "date_range": date_range,
     }
 
+    sitemap_paths = []
+
     def render(template, out_path: Path, **ctx):
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        html = env.get_template(template).render(**common, **ctx)
+        rel = out_path.relative_to(SITE).as_posix()
+        sitemap_paths.append(rel)
+        html = env.get_template(template).render(
+            **common, canonical=f"{BASE_URL}/{rel}", **ctx
+        )
         out_path.write_text(html, encoding="utf-8")
 
     if SITE.exists():
@@ -287,7 +312,11 @@ def main():
     SITE.mkdir()
     shutil.copy(TEMPLATES / "style.css", SITE / "style.css")
     # Custom-domain marker for GitHub Pages; must survive the site/ wipe.
-    (SITE / "CNAME").write_text("viennavotes.org\n", encoding="utf-8")
+    (SITE / "CNAME").write_text(f"{CNAME_DOMAIN}\n", encoding="utf-8")
+    (SITE / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\n\nSitemap: {BASE_URL}/sitemap.xml\n",
+        encoding="utf-8",
+    )
 
     render("about.html", SITE / "about.html", root="")
     elections_meta, elections = load_elections()
@@ -313,6 +342,15 @@ def main():
         render("item.html", SITE / "item" / f"{entry['item']['EventItemId']}.html", root="../", entry=entry)
     for tp in topic_pages:
         render("topic.html", SITE / "topic" / f"{tp['slug']}.html", root="../", topic=tp)
+
+    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for rel in sitemap_paths:
+        sitemap.append(
+            f"  <url><loc>{BASE_URL}/{rel}</loc><lastmod>{today}</lastmod></url>"
+        )
+    sitemap.append("</urlset>")
+    (SITE / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
 
     print(
         f"built site/: {len(members)} members ({len(current_members)} current), "

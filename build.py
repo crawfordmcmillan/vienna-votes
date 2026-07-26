@@ -24,9 +24,7 @@ ALIASES = ROOT / "person_aliases.json"
 LEGISTAR = "https://vienna-va.legistar.com"
 REPO = "https://github.com/crawfordmcmillan/viennavadata"
 BASE_URL = "https://viennavadata.org"
-# Pages custom domain currently bound to the site; flip to viennavadata.org
-# once that domain's DNS points at GitHub Pages.
-CNAME_DOMAIN = "viennavotes.org"
+CNAME_DOMAIN = "viennavadata.org"
 
 
 def load(name):

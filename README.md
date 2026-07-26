@@ -1,7 +1,6 @@
 # Vienna VA Data
 
-**Live site: https://viennavadata.org** (temporarily serving at
-https://viennavotes.org until the domain cutover completes)
+**Live site: https://viennavadata.org**
 
 A static site showing how every Town of Vienna (VA) Council member voted on every
 recorded item since the town's Legistar records begin in October 2013. Data comes

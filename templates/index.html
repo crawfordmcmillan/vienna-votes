@@ -34,14 +34,6 @@ The full mapping is <a href="{{ repo }}/blob/main/categories.csv">public and cor
 </ul>
 {% endif %}
 
-<h2>Former members <span class="muted">&middot; since 2013</span></h2>
-<ul class="former-list">
-{% for member in former_members %}
-  <li><a href="member/{{ member.slug }}.html">{{ member.name }}</a>
-      <span class="muted">{{ member.first_vote[:4] }}&ndash;{{ member.last_vote[:4] }} &middot; {{ member.votes | length }} recorded votes</span></li>
-{% endfor %}
-</ul>
-
 <h2>Meetings</h2>
 {% for year, group in meetings_by_year %}
 <details class="year-group" {% if loop.first %}open{% endif %}>
@@ -54,6 +46,14 @@ The full mapping is <a href="{{ repo }}/blob/main/categories.csv">public and cor
   </ul>
 </details>
 {% endfor %}
+
+<h2>Former members <span class="muted">&middot; since 2013</span></h2>
+<ul class="former-list">
+{% for member in former_members %}
+  <li><a href="member/{{ member.slug }}.html">{{ member.name }}</a>
+      <span class="muted">{{ member.first_vote[:4] }}&ndash;{{ member.last_vote[:4] }} &middot; {{ member.votes | length }} recorded votes</span></li>
+{% endfor %}
+</ul>
 
 <p class="muted provenance">Fetched from the Granicus Legistar Web API
 (<code>webapi.legistar.com/v1/vienna-va</code>) on {{ fetched_at }}.</p>

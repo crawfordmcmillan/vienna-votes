@@ -12,6 +12,7 @@ import math
 import re
 import shutil
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -258,6 +259,80 @@ def build_precinct_map():
     return {"svg": "".join(svg), "polling": polling}
 
 
+HOUSES = ROOT / "data" / "houses"
+
+
+def load_houses():
+    """Join county sales rows to Vienna addresses on parcel ID."""
+    meta_file = HOUSES / "houses_meta.json"
+    if not meta_file.exists():
+        return None
+    meta = json.loads(meta_file.read_text(encoding="utf-8"))
+    addresses = {}
+    for f in sorted(HOUSES.glob("addresses_*.json")):
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            a = feat["attributes"]
+            pin = (a.get("PARCEL_PIN") or "").strip()
+            if pin and pin not in addresses:
+                unit = (a.get("UNIT_NUMBER") or "").strip()
+                address = (a.get("ADDRESS_1") or "").strip()
+                if unit and unit not in address:
+                    address = f"{address} #{unit}"
+                addresses[pin] = {"address": address, "zip": a.get("ZIP")}
+
+    land_use = {}
+    for f in sorted(HOUSES.glob("parcels_*.json")):
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            a = feat["attributes"]
+            pin = (a.get("PARID") or "").strip()
+            year = a.get("TAXYR") or 0
+            if pin not in land_use or year > land_use[pin][1]:
+                land_use[pin] = ((a.get("LUC_DESC") or "").strip(), year)
+
+    sales = []
+    seen = set()
+    no_consideration = 0
+    for f in sorted(HOUSES.glob("sales_*.json")):
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            s = feat["attributes"]
+            pin = (s.get("PARID") or "").strip()
+            if pin not in addresses:
+                continue
+            price = s.get("PRICE") or 0
+            desc = (s.get("SALEVAL_DESC") or "").strip()
+            if price <= 0:
+                no_consideration += 1
+                continue
+            # The county lists a sale once per tax year; keep one row.
+            key = (pin, s.get("SALEDT"), price)
+            if key in seen:
+                continue
+            seen.add(key)
+            sales.append({
+                "date": datetime.fromtimestamp(s["SALEDT"] / 1000, tz=timezone.utc).date().isoformat(),
+                "address": addresses[pin]["address"],
+                "zip": addresses[pin]["zip"],
+                "price": price,
+                "classification": desc,
+                "type": land_use.get(pin, ("", 0))[0],
+            })
+    sales.sort(key=lambda s: (s["date"], s["address"]), reverse=True)
+    valid_prices = sorted(s["price"] for s in sales
+                          if s["classification"] == "Valid and verified sale")
+    median_valid = None
+    if valid_prices:
+        mid = len(valid_prices) // 2
+        median_valid = (valid_prices[mid] if len(valid_prices) % 2
+                        else (valid_prices[mid - 1] + valid_prices[mid]) // 2)
+    return {
+        "meta": meta,
+        "sales": sales,
+        "n_valid": len(valid_prices),
+        "median_valid": median_valid,
+        "no_consideration": no_consideration,
+    }
+
+
 def load_elections():
     meta_file = ELECTIONS / "elections_meta.json"
     if not meta_file.exists():
@@ -476,8 +551,11 @@ def main():
         "contests": sum(len(e["contests"]) for e in elections),
         "elections": len(elections),
     }
+    houses = load_houses()
     render("index.html", SITE / "index.html", root="",
-           stats=stats, election_stats=election_stats)
+           stats=stats, election_stats=election_stats, houses=houses)
+    if houses:
+        render("houses.html", SITE / "house-prices.html", root="", houses=houses)
     render(
         "council.html",
         SITE / "council.html",
@@ -488,11 +566,7 @@ def main():
         stats=stats,
         topics=topic_pages,
     )
-    for page in [
-        {"slug": "house-prices", "name": "House prices",
-         "pitch": "What homes in Vienna have sold and been valued at over the years.",
-         "source": "Fairfax County assessment and sales records, or a published "
-                   "town-level price index (Zillow ZHVI / Redfin)"},
+    planned_pages = [
         {"slug": "weather", "name": "Weather",
          "pitch": "High and low temperatures in and around Vienna across the years.",
          "source": "NOAA National Centers for Environmental Information (GHCN "
@@ -501,7 +575,13 @@ def main():
          "pitch": "How many people call Vienna home, decade by decade.",
          "source": "U.S. Census Bureau — decennial census and American Community "
                    "Survey for the Town of Vienna (place 51-81072)"},
-    ]:
+    ]
+    if not houses:
+        planned_pages.insert(0, {
+            "slug": "house-prices", "name": "House prices",
+            "pitch": "What homes in Vienna have sold for over the years.",
+            "source": "Fairfax County Department of Tax Administration sales records"})
+    for page in planned_pages:
         render("planned.html", SITE / f"{page['slug']}.html", root="", page=page)
     for member in members:
         render("member.html", SITE / "member" / f"{member['slug']}.html", root="../", member=member)

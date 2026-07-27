@@ -23,11 +23,21 @@ records. Nothing is scored or ranked.</p>
     and town elections, with a map of the precincts and polling places.</span>
     <span class="dataset-stat">{{ election_stats.contests }} contests &middot; {{ election_stats.elections }} elections &middot; 2013&ndash;2025</span>
   </a></li>
+  {% if houses %}
+  <li><a class="dataset-card" href="house-prices.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">House prices</span>
+    <span class="dataset-desc">What homes in Vienna sold for in the last 12 months,
+    from county tax records.</span>
+    <span class="dataset-stat">{{ houses.sales | length }} recorded sales{% if houses.median_valid %} &middot; ${{ "{:,}".format(houses.median_valid) }} median{% endif %}</span>
+  </a></li>
+  {% else %}
   <li><a class="dataset-card planned" href="house-prices.html">
     <span class="dataset-status">In the works</span>
     <span class="dataset-name">House prices</span>
-    <span class="dataset-desc">What homes in Vienna have sold and been valued at over the years.</span>
+    <span class="dataset-desc">What homes in Vienna have sold for over the years.</span>
   </a></li>
+  {% endif %}
   <li><a class="dataset-card planned" href="weather.html">
     <span class="dataset-status">In the works</span>
     <span class="dataset-name">Weather</span>

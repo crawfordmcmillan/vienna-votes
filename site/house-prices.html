@@ -24,18 +24,2067 @@
   </nav>
 </header>
 <main>
-<p class="eyebrow">In the works</p>
-<h1 class="hero">House prices</h1>
-<p class="dek">What homes in Vienna have sold and been valued at over the years.</p>
-<p>This dataset is not built yet. When it is, it will work the same way as the
-rest of the site. The data will come from an official source, the raw files
-will be archived in the <a href="https://github.com/crawfordmcmillan/viennavadata">public repository</a>, and the
-numbers will be shown without scores or interpretation.</p>
-<dl class="meta">
-  <dt>Planned source</dt><dd>Fairfax County assessment and sales records, or a published town-level price index (Zillow ZHVI / Redfin)</dd>
-  <dt>Status</dt><dd>Not yet started</dd>
-</dl>
-<p><a href="index.html">&larr; Back to all data</a></p>
+<p class="eyebrow">House prices</p>
+<h1 class="hero">What homes in Vienna sold for.</h1>
+<p class="dek">Property sales recorded in the Town of Vienna over the last 12 months,
+from Fairfax County tax records. The county classifies each sale, and that
+classification is shown with every row.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">289</span><span class="stat-label">recorded sales</span></div>
+  <div class="stat"><span class="stat-n">$1,754,500</span><span class="stat-label">median, county-verified sales</span></div>
+  <div class="stat"><span class="stat-n">208</span><span class="stat-label">verified as market sales</span></div>
+</div>
+
+<section class="method-note">
+  <h2>How to read these numbers</h2>
+  <p>This table lists every transaction with a sale price that the county recorded
+  against an address inside the town in the last 12 months. It covers all property
+  types, not just houses; the type column shows the county&rsquo;s land-use label for
+  each parcel. The county also marks which sales it verified as normal market sales.
+  Other rows include sales tied to rezoning, sales between related parties, and
+  prices the county could not verify. The median above uses only the county-verified
+  single sales. The county lists some sales under more than one tax year; exact
+  duplicates are removed here. Another 235 transfers were
+  recorded with no sale price (deeds and similar paperwork) and are not listed.</p>
+</section>
+
+<table class="votes-table">
+  <thead>
+    <tr><th>Date</th><th>Address</th><th>Price</th><th>Type</th><th>County classification</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-07-15</time></td>
+      <td data-label="Address">605 ORRIN ST SE</td>
+      <td class="nowrap" data-label="Price">$1,060,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-07-14</time></td>
+      <td data-label="Address">113 JAMES DR SW</td>
+      <td class="nowrap" data-label="Price">$2,495,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-07-13</time></td>
+      <td data-label="Address">313 LOCUST ST SE</td>
+      <td class="nowrap" data-label="Price">$975,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-07-10</time></td>
+      <td data-label="Address">721 UPHAM PL NW</td>
+      <td class="nowrap" data-label="Price">$805,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-07-09</time></td>
+      <td data-label="Address">611 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-30</time></td>
+      <td data-label="Address">608 ROBERTS DR NW</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-30</time></td>
+      <td data-label="Address">1118 WESTBRIAR CT NE</td>
+      <td class="nowrap" data-label="Price">$2,650,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-30</time></td>
+      <td data-label="Address">100 CHURCH ST NW STE A203</td>
+      <td class="nowrap" data-label="Price">$350,000</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-29</time></td>
+      <td data-label="Address">505 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$2,526,520</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-29</time></td>
+      <td data-label="Address">415 BLAIR RD NW</td>
+      <td class="nowrap" data-label="Price">$925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-29</time></td>
+      <td data-label="Address">311 MAPLE AVE W STE K</td>
+      <td class="nowrap" data-label="Price">$450,000</td>
+      <td data-label="Type" class="muted">Condominium Office (&lt; = 4 stories)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-26</time></td>
+      <td data-label="Address">352 AYR HILL AVE NE</td>
+      <td class="nowrap" data-label="Price">$3,250,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-26</time></td>
+      <td data-label="Address">200 LOCUST ST SE CND 405</td>
+      <td class="nowrap" data-label="Price">$410,000</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-25</time></td>
+      <td data-label="Address">926 MOOREFIELD CREEK RD SW</td>
+      <td class="nowrap" data-label="Price">$865,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-25</time></td>
+      <td data-label="Address">700 PARK ST SE</td>
+      <td class="nowrap" data-label="Price">$1,800,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-25</time></td>
+      <td data-label="Address">100 JAMES DR SW</td>
+      <td class="nowrap" data-label="Price">$1,066,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-24</time></td>
+      <td data-label="Address">506 KINGSLEY RD SW</td>
+      <td class="nowrap" data-label="Price">$2,499,888</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-24</time></td>
+      <td data-label="Address">206 OAK ST SW</td>
+      <td class="nowrap" data-label="Price">$1,607,210</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-24</time></td>
+      <td data-label="Address">125 CARTER CT SW</td>
+      <td class="nowrap" data-label="Price">$1,010,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-23</time></td>
+      <td data-label="Address">611 GIBSON DR SW</td>
+      <td class="nowrap" data-label="Price">$2,379,750</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-23</time></td>
+      <td data-label="Address">439 LEWIS ST NW</td>
+      <td class="nowrap" data-label="Price">$3,191,400</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-23</time></td>
+      <td data-label="Address">1111 DESALE ST SW</td>
+      <td class="nowrap" data-label="Price">$940,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-22</time></td>
+      <td data-label="Address">701 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$2,433,625</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-22</time></td>
+      <td data-label="Address">427 ORCHARD ST NW</td>
+      <td class="nowrap" data-label="Price">$2,780,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-18</time></td>
+      <td data-label="Address">930 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$2,925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-18</time></td>
+      <td data-label="Address">309 CENTER ST N</td>
+      <td class="nowrap" data-label="Price">$720,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-18</time></td>
+      <td data-label="Address">117 KINGSLEY RD SW</td>
+      <td class="nowrap" data-label="Price">$1,200,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-18</time></td>
+      <td data-label="Address">104 DOGWOOD ST SW</td>
+      <td class="nowrap" data-label="Price">$2,672,219</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-17</time></td>
+      <td data-label="Address">350 AYR HILL AVE NE</td>
+      <td class="nowrap" data-label="Price">$3,548,388</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-16</time></td>
+      <td data-label="Address">129 WOODVIEW CIR SW</td>
+      <td class="nowrap" data-label="Price">$951,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-15</time></td>
+      <td data-label="Address">503 GIBSON DR SW</td>
+      <td class="nowrap" data-label="Price">$900,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-15</time></td>
+      <td data-label="Address">410 VICTORIA CT NW</td>
+      <td class="nowrap" data-label="Price">$922,500</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-15</time></td>
+      <td data-label="Address">121 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$2,275,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-12</time></td>
+      <td data-label="Address">919 OLYMPIAN CIR SW</td>
+      <td class="nowrap" data-label="Price">$850,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-12</time></td>
+      <td data-label="Address">913 SYMPHONY CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,450,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-12</time></td>
+      <td data-label="Address">613 UPHAM PL NW</td>
+      <td class="nowrap" data-label="Price">$2,079,900</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-12</time></td>
+      <td data-label="Address">500 NUTLEY ST SW</td>
+      <td class="nowrap" data-label="Price">$1,525,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-12</time></td>
+      <td data-label="Address">311 MILL ST NE</td>
+      <td class="nowrap" data-label="Price">$7,950,000</td>
+      <td data-label="Type" class="muted">Wholesale,warehousing &amp; stg (not in IP)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-12</time></td>
+      <td data-label="Address">1112 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$770,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Transfer between related parties</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-11</time></td>
+      <td data-label="Address">125 ROLAND CT SW</td>
+      <td class="nowrap" data-label="Price">$1,040,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-09</time></td>
+      <td data-label="Address">908 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$3,102,800</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-09</time></td>
+      <td data-label="Address">312 BROADLEAF DR NE</td>
+      <td class="nowrap" data-label="Price">$1,115,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-09</time></td>
+      <td data-label="Address">115 SAINT ANDREWS DR NE</td>
+      <td class="nowrap" data-label="Price">$1,055,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-08</time></td>
+      <td data-label="Address">907 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$2,108,083</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-08</time></td>
+      <td data-label="Address">151 CENTER ST S STE 1</td>
+      <td class="nowrap" data-label="Price">$1,500,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-08</time></td>
+      <td data-label="Address">1109 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$1,010,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-05</time></td>
+      <td data-label="Address">348 WINDOVER AVE NW</td>
+      <td class="nowrap" data-label="Price">$3,475,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-04</time></td>
+      <td data-label="Address">616 GIBSON CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,505,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-04</time></td>
+      <td data-label="Address">301 NUTLEY ST SW</td>
+      <td class="nowrap" data-label="Price">$1,999,999</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-03</time></td>
+      <td data-label="Address">324 TAPAWINGO RD SE</td>
+      <td class="nowrap" data-label="Price">$2,950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-02</time></td>
+      <td data-label="Address">511 COUNCIL CT NE</td>
+      <td class="nowrap" data-label="Price">$995,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-02</time></td>
+      <td data-label="Address">309 PARK ST NE</td>
+      <td class="nowrap" data-label="Price">$2,834,010</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-06-01</time></td>
+      <td data-label="Address">123 WILMAR PL NW</td>
+      <td class="nowrap" data-label="Price">$952,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-29</time></td>
+      <td data-label="Address">217 PLEASANT ST SW</td>
+      <td class="nowrap" data-label="Price">$1,915,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-28</time></td>
+      <td data-label="Address">204 BATTLE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,349,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-28</time></td>
+      <td data-label="Address">1402 DESALE ST SW</td>
+      <td class="nowrap" data-label="Price">$990,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-28</time></td>
+      <td data-label="Address">105 COURTHOUSE RD SW CND 3</td>
+      <td class="nowrap" data-label="Price">$1,575,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-27</time></td>
+      <td data-label="Address">502 WOODLAND CT NW</td>
+      <td class="nowrap" data-label="Price">$1,360,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-27</time></td>
+      <td data-label="Address">1103 DESALE ST SW</td>
+      <td class="nowrap" data-label="Price">$950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-22</time></td>
+      <td data-label="Address">909 PLUM ST SW</td>
+      <td class="nowrap" data-label="Price">$1,090,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-20</time></td>
+      <td data-label="Address">802 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,300,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-20</time></td>
+      <td data-label="Address">105 YEONAS DR SW</td>
+      <td class="nowrap" data-label="Price">$2,100,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-19</time></td>
+      <td data-label="Address">208 GLEN AVE SW</td>
+      <td class="nowrap" data-label="Price">$1,400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-18</time></td>
+      <td data-label="Address">1203 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,108,888</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-14</time></td>
+      <td data-label="Address">504 VALLEY DR SE</td>
+      <td class="nowrap" data-label="Price">$2,270,504</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-13</time></td>
+      <td data-label="Address">320 AYITO RD SE</td>
+      <td class="nowrap" data-label="Price">$975,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-12</time></td>
+      <td data-label="Address">715 PARK ST SE</td>
+      <td class="nowrap" data-label="Price">$1,030,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-12</time></td>
+      <td data-label="Address">229 COMMONS DR NW</td>
+      <td class="nowrap" data-label="Price">$755,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-11</time></td>
+      <td data-label="Address">900 DALE CT SE</td>
+      <td class="nowrap" data-label="Price">$2,200,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-11</time></td>
+      <td data-label="Address">218 LOCUST ST SE CND 142</td>
+      <td class="nowrap" data-label="Price">$335,000</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-08</time></td>
+      <td data-label="Address">705 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$2,375,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-06</time></td>
+      <td data-label="Address">129B PARK ST NE</td>
+      <td class="nowrap" data-label="Price">$1,687,000</td>
+      <td data-label="Type" class="muted">Multiplex in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-05</time></td>
+      <td data-label="Address">500 KRAMER DR SE</td>
+      <td class="nowrap" data-label="Price">$1,250,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-04</time></td>
+      <td data-label="Address">505 GLYNDON ST NE</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-04</time></td>
+      <td data-label="Address">316 OWAISSA RD SE</td>
+      <td class="nowrap" data-label="Price">$2,010,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-04</time></td>
+      <td data-label="Address">203 YEONAS DR SW</td>
+      <td class="nowrap" data-label="Price">$925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-01</time></td>
+      <td data-label="Address">424 CREEK CROSSING RD NE</td>
+      <td class="nowrap" data-label="Price">$1,500,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-01</time></td>
+      <td data-label="Address">210 COURTHOUSE CIR SW</td>
+      <td class="nowrap" data-label="Price">$950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-01</time></td>
+      <td data-label="Address">118 OAK ST SW</td>
+      <td class="nowrap" data-label="Price">$2,399,999</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-05-01</time></td>
+      <td data-label="Address">103 BATTLE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,700,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-30</time></td>
+      <td data-label="Address">930 PARK ST SE</td>
+      <td class="nowrap" data-label="Price">$1,505,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-30</time></td>
+      <td data-label="Address">112 ELM ST SW</td>
+      <td class="nowrap" data-label="Price">$2,597,500</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-30</time></td>
+      <td data-label="Address">1105 LAKEWOOD DR SW</td>
+      <td class="nowrap" data-label="Price">$1,950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-29</time></td>
+      <td data-label="Address">506 STEPHEN CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,817,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-28</time></td>
+      <td data-label="Address">903 LAUREN LN SE</td>
+      <td class="nowrap" data-label="Price">$980,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-27</time></td>
+      <td data-label="Address">602 KINGSLEY RD SW</td>
+      <td class="nowrap" data-label="Price">$920,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-27</time></td>
+      <td data-label="Address">314 ORCHARD CT NW</td>
+      <td class="nowrap" data-label="Price">$1,720,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-24</time></td>
+      <td data-label="Address">214 PARK TERRACE CT SE CND 88</td>
+      <td class="nowrap" data-label="Price">$412,500</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-22</time></td>
+      <td data-label="Address">501 DELANO DR SE</td>
+      <td class="nowrap" data-label="Price">$950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-22</time></td>
+      <td data-label="Address">401 OLD COURT HOUSE RD NE</td>
+      <td class="nowrap" data-label="Price">$2,500,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-21</time></td>
+      <td data-label="Address">370 HOLMES DR NW</td>
+      <td class="nowrap" data-label="Price">$1,950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-21</time></td>
+      <td data-label="Address">202 GLEN AVE SW</td>
+      <td class="nowrap" data-label="Price">$1,180,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-20</time></td>
+      <td data-label="Address">1312 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-17</time></td>
+      <td data-label="Address">1002 KERGE CT SE</td>
+      <td class="nowrap" data-label="Price">$1,439,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-16</time></td>
+      <td data-label="Address">603 VALLEY DR SE</td>
+      <td class="nowrap" data-label="Price">$1,017,500</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-15</time></td>
+      <td data-label="Address">961 NICHOLAS CIR SE</td>
+      <td class="nowrap" data-label="Price">$1,925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-15</time></td>
+      <td data-label="Address">906 FREDERICK ST SW</td>
+      <td class="nowrap" data-label="Price">$2,365,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-15</time></td>
+      <td data-label="Address">437 GLYNDON ST NE</td>
+      <td class="nowrap" data-label="Price">$1,626,024</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-15</time></td>
+      <td data-label="Address">314 AYITO RD SE</td>
+      <td class="nowrap" data-label="Price">$1,165,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-14</time></td>
+      <td data-label="Address">305 GLYNDON ST SE</td>
+      <td class="nowrap" data-label="Price">$3,365,598</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-14</time></td>
+      <td data-label="Address">123 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$2,700,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-13</time></td>
+      <td data-label="Address">109 JAMES DR SE</td>
+      <td class="nowrap" data-label="Price">$2,600,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-10</time></td>
+      <td data-label="Address">518 BRENTWOOD CT NW</td>
+      <td class="nowrap" data-label="Price">$1,649,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-09</time></td>
+      <td data-label="Address">902 ECHOLS ST SE</td>
+      <td class="nowrap" data-label="Price">$1,125,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-09</time></td>
+      <td data-label="Address">300 LEWIS ST NW</td>
+      <td class="nowrap" data-label="Price">$1,816,410</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-06</time></td>
+      <td data-label="Address">208 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$840,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-06</time></td>
+      <td data-label="Address">131 CASMAR ST SE</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-03</time></td>
+      <td data-label="Address">401 MOOREFIELD RD SW</td>
+      <td class="nowrap" data-label="Price">$870,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-01</time></td>
+      <td data-label="Address">600 NIBLICK DR SE</td>
+      <td class="nowrap" data-label="Price">$1,476,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-01</time></td>
+      <td data-label="Address">554 ORCHARD ST NW</td>
+      <td class="nowrap" data-label="Price">$775,021</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-01</time></td>
+      <td data-label="Address">300 VALEVIEW CT NW</td>
+      <td class="nowrap" data-label="Price">$700,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-01</time></td>
+      <td data-label="Address">300 VALEVIEW CT NW</td>
+      <td class="nowrap" data-label="Price">$743,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-01</time></td>
+      <td data-label="Address">207A LOCUST ST SE</td>
+      <td class="nowrap" data-label="Price">$753,750</td>
+      <td data-label="Type" class="muted">Multiplex in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-04-01</time></td>
+      <td data-label="Address">201 PRESCOTT CIR SE</td>
+      <td class="nowrap" data-label="Price">$1,950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-31</time></td>
+      <td data-label="Address">607 TRUMAN CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,137,867</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-30</time></td>
+      <td data-label="Address">448 NELSON DR NE</td>
+      <td class="nowrap" data-label="Price">$2,850,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-30</time></td>
+      <td data-label="Address">1008 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$1,050,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-26</time></td>
+      <td data-label="Address">606 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$959,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-26</time></td>
+      <td data-label="Address">501 YEONAS DR SW</td>
+      <td class="nowrap" data-label="Price">$2,557,500</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-25</time></td>
+      <td data-label="Address">307 JADE CT NW</td>
+      <td class="nowrap" data-label="Price">$1,120,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-24</time></td>
+      <td data-label="Address">1207 DRAKE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,200,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-23</time></td>
+      <td data-label="Address">406 DOVE CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,325,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-19</time></td>
+      <td data-label="Address">244 OLD COURT HOUSE RD NE</td>
+      <td class="nowrap" data-label="Price">$1,172,300</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-18</time></td>
+      <td data-label="Address">105 SHEPHERDSON LN NE</td>
+      <td class="nowrap" data-label="Price">$1,020,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-17</time></td>
+      <td data-label="Address">315 CHARLES ST SE</td>
+      <td class="nowrap" data-label="Price">$2,320,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-13</time></td>
+      <td data-label="Address">1412 PATRICK CIR SW</td>
+      <td class="nowrap" data-label="Price">$900,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-13</time></td>
+      <td data-label="Address">1216 KELLEY ST SW</td>
+      <td class="nowrap" data-label="Price">$925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-12</time></td>
+      <td data-label="Address">604 BLACKSTONE TER NW</td>
+      <td class="nowrap" data-label="Price">$2,279,945</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-12</time></td>
+      <td data-label="Address">516 VALLEY DR SE</td>
+      <td class="nowrap" data-label="Price">$2,599,900</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-11</time></td>
+      <td data-label="Address">515 WOODLAND CT NW</td>
+      <td class="nowrap" data-label="Price">$1,400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-03</time></td>
+      <td data-label="Address">404 WINDOVER CT NW</td>
+      <td class="nowrap" data-label="Price">$1,105,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-03</time></td>
+      <td data-label="Address">1212 DRAKE ST SW</td>
+      <td class="nowrap" data-label="Price">$910,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-02</time></td>
+      <td data-label="Address">917 WARE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,946,901</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Non-representative sale date</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-03-02</time></td>
+      <td data-label="Address">324 DOMINION RD NE</td>
+      <td class="nowrap" data-label="Price">$3,500,000</td>
+      <td data-label="Type" class="muted">Motor vehicle repair separately</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-25</time></td>
+      <td data-label="Address">305 OLD COURT HOUSE RD NE</td>
+      <td class="nowrap" data-label="Price">$2,800,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-25</time></td>
+      <td data-label="Address">207 PARK ST SE CND A</td>
+      <td class="nowrap" data-label="Price">$516,000</td>
+      <td data-label="Type" class="muted">Multiplex in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-24</time></td>
+      <td data-label="Address">521 CREEK CROSSING RD NE</td>
+      <td class="nowrap" data-label="Price">$1,335,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-20</time></td>
+      <td data-label="Address">602 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$1,907,875</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-20</time></td>
+      <td data-label="Address">307 VALEVIEW CT NW</td>
+      <td class="nowrap" data-label="Price">$1,125,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-19</time></td>
+      <td data-label="Address">915 WESTWOOD DR NE</td>
+      <td class="nowrap" data-label="Price">$1,140,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-19</time></td>
+      <td data-label="Address">118 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$2,350,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-18</time></td>
+      <td data-label="Address">1022 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$945,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-17</time></td>
+      <td data-label="Address">203 LOCUST ST SW</td>
+      <td class="nowrap" data-label="Price">$980,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-13</time></td>
+      <td data-label="Address">1104 WESTBRIAR CT NE</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-13</time></td>
+      <td data-label="Address">108 CHURCH ST NE</td>
+      <td class="nowrap" data-label="Price">$1,680,000</td>
+      <td data-label="Type" class="muted">Personal services (laundry,photo,beauty)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-12</time></td>
+      <td data-label="Address">508 NELSON DR NE</td>
+      <td class="nowrap" data-label="Price">$3,130,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-11</time></td>
+      <td data-label="Address">612 GIBSON CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,240,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-09</time></td>
+      <td data-label="Address">212 PARK TERRACE CT SE CND 72</td>
+      <td class="nowrap" data-label="Price">$319,500</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-05</time></td>
+      <td data-label="Address">103 CHURCH ST NE</td>
+      <td class="nowrap" data-label="Price">$1,500,000</td>
+      <td data-label="Type" class="muted">Personal services (laundry,photo,beauty)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-04</time></td>
+      <td data-label="Address">1008 MOORE PL SW</td>
+      <td class="nowrap" data-label="Price">$870,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-03</time></td>
+      <td data-label="Address">713 HUNTER CT SW</td>
+      <td class="nowrap" data-label="Price">$800,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-03</time></td>
+      <td data-label="Address">301 MAPLE AVE W STE 520</td>
+      <td class="nowrap" data-label="Price">$3,387,878</td>
+      <td data-label="Type" class="muted">Condo office (= &gt; 5 stories)</td>
+      <td data-label="Classification" class="muted">Purchased by tenant</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-03</time></td>
+      <td data-label="Address">301 MAPLE AVE W STE 510</td>
+      <td class="nowrap" data-label="Price">$3,387,878</td>
+      <td data-label="Type" class="muted">Condo office (= &gt; 5 stories)</td>
+      <td data-label="Classification" class="muted">Purchased by tenant</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-03</time></td>
+      <td data-label="Address">301 MAPLE AVE W STE 500</td>
+      <td class="nowrap" data-label="Price">$3,387,878</td>
+      <td data-label="Type" class="muted">Condo office (= &gt; 5 stories)</td>
+      <td data-label="Classification" class="muted">Purchased by tenant</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-02-02</time></td>
+      <td data-label="Address">609 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$2,670,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-30</time></td>
+      <td data-label="Address">711 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$980,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-30</time></td>
+      <td data-label="Address">1203 WARE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-29</time></td>
+      <td data-label="Address">440 MILL ST NE</td>
+      <td class="nowrap" data-label="Price">$2,690,000</td>
+      <td data-label="Type" class="muted">Wholesale,warehousing &amp; stg (not in IP)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-29</time></td>
+      <td data-label="Address">311 ALBRECHT CIR SW</td>
+      <td class="nowrap" data-label="Price">$2,313,215</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-29</time></td>
+      <td data-label="Address">208 ELM ST SW</td>
+      <td class="nowrap" data-label="Price">$850,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-23</time></td>
+      <td data-label="Address">1105 WESTBRIAR CT NE</td>
+      <td class="nowrap" data-label="Price">$1,180,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-20</time></td>
+      <td data-label="Address">226 TALAHI RD SE</td>
+      <td class="nowrap" data-label="Price">$1,380,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-16</time></td>
+      <td data-label="Address">239 OLD COURT HOUSE RD NE</td>
+      <td class="nowrap" data-label="Price">$850,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-15</time></td>
+      <td data-label="Address">410 DOVE CIR SW</td>
+      <td class="nowrap" data-label="Price">$945,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-15</time></td>
+      <td data-label="Address">1012 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$1,029,833</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-07</time></td>
+      <td data-label="Address">613 BLACKSTONE TER NW</td>
+      <td class="nowrap" data-label="Price">$900,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-05</time></td>
+      <td data-label="Address">218 LOCUST ST SE CND 143</td>
+      <td class="nowrap" data-label="Price">$380,000</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-05</time></td>
+      <td data-label="Address">105 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$2,050,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2026-01-02</time></td>
+      <td data-label="Address">205 MARKET SQ NW CND 15</td>
+      <td class="nowrap" data-label="Price">$1,180,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-29</time></td>
+      <td data-label="Address">900 PARK ST SE</td>
+      <td class="nowrap" data-label="Price">$3,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-23</time></td>
+      <td data-label="Address">707 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$1,400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-23</time></td>
+      <td data-label="Address">412 ROLAND ST SW</td>
+      <td class="nowrap" data-label="Price">$840,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Non-representative price based on comps</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-19</time></td>
+      <td data-label="Address">1416 DESALE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,925,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-16</time></td>
+      <td data-label="Address">408 BRANCH RD SE</td>
+      <td class="nowrap" data-label="Price">$1,100,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-16</time></td>
+      <td data-label="Address">323 OWAISSA RD SE</td>
+      <td class="nowrap" data-label="Price">$1,100,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-16</time></td>
+      <td data-label="Address">111 AYR HILL AVE NW</td>
+      <td class="nowrap" data-label="Price">$1,575,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-12</time></td>
+      <td data-label="Address">153 EAST ST NE</td>
+      <td class="nowrap" data-label="Price">$890,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-10</time></td>
+      <td data-label="Address">407 MILL ST SE</td>
+      <td class="nowrap" data-label="Price">$650,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-09</time></td>
+      <td data-label="Address">541 MARSHALL RD SW</td>
+      <td class="nowrap" data-label="Price">$7,300,000</td>
+      <td data-label="Type" class="muted">Churches, Synagogues</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-08</time></td>
+      <td data-label="Address">509 KRAMER DR SE</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-05</time></td>
+      <td data-label="Address">116 FARDALE ST SE</td>
+      <td class="nowrap" data-label="Price">$2,400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-05</time></td>
+      <td data-label="Address">103 MOORE AVE SE</td>
+      <td class="nowrap" data-label="Price">$2,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-03</time></td>
+      <td data-label="Address">801 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$1,895,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-03</time></td>
+      <td data-label="Address">1405 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$800,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-03</time></td>
+      <td data-label="Address">129 MARKET SQ NW CND 2</td>
+      <td class="nowrap" data-label="Price">$1,450,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-02</time></td>
+      <td data-label="Address">206 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$850,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-02</time></td>
+      <td data-label="Address">113 PLEASANT ST NW CND 6</td>
+      <td class="nowrap" data-label="Price">$1,175,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-12-01</time></td>
+      <td data-label="Address">217 MOORE AVE SE</td>
+      <td class="nowrap" data-label="Price">$1,315,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-26</time></td>
+      <td data-label="Address">1419 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,890,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-24</time></td>
+      <td data-label="Address">1107 DESALE ST SW</td>
+      <td class="nowrap" data-label="Price">$980,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-21</time></td>
+      <td data-label="Address">903 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$1,100,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-21</time></td>
+      <td data-label="Address">517 WALKER ST SW</td>
+      <td class="nowrap" data-label="Price">$1,999,999</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-18</time></td>
+      <td data-label="Address">911 FOLLIN LN SE</td>
+      <td class="nowrap" data-label="Price">$12,000,000</td>
+      <td data-label="Type" class="muted">Low Rise Office(&lt; = 4 stories)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-18</time></td>
+      <td data-label="Address">1003 WARE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,789,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-17</time></td>
+      <td data-label="Address">128 WILMAR PL NW</td>
+      <td class="nowrap" data-label="Price">$2,365,782</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-14</time></td>
+      <td data-label="Address">616 KINGSLEY RD SW</td>
+      <td class="nowrap" data-label="Price">$780,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-14</time></td>
+      <td data-label="Address">130 WILMAR PL NW</td>
+      <td class="nowrap" data-label="Price">$2,232,665</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-12</time></td>
+      <td data-label="Address">506 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,026,167</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-10</time></td>
+      <td data-label="Address">420 HOLMES DR NW</td>
+      <td class="nowrap" data-label="Price">$950,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-05</time></td>
+      <td data-label="Address">507 KRAMER DR SE</td>
+      <td class="nowrap" data-label="Price">$2,600,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-03</time></td>
+      <td data-label="Address">709 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$2,163,525</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-11-03</time></td>
+      <td data-label="Address">510 VALLEY DR SE</td>
+      <td class="nowrap" data-label="Price">$1,150,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-31</time></td>
+      <td data-label="Address">1005 KERGE CT SE</td>
+      <td class="nowrap" data-label="Price">$1,165,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-30</time></td>
+      <td data-label="Address">1412 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$755,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-30</time></td>
+      <td data-label="Address">1002 COUNTRY CLUB DR NE</td>
+      <td class="nowrap" data-label="Price">$2,750,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-29</time></td>
+      <td data-label="Address">908 GLYNDON ST SE</td>
+      <td class="nowrap" data-label="Price">$975,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-29</time></td>
+      <td data-label="Address">806 DESALE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,160,785</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-24</time></td>
+      <td data-label="Address">515 MAPLE AVE E</td>
+      <td class="nowrap" data-label="Price">$12,500,000</td>
+      <td data-label="Type" class="muted">Low Rise Office(&lt; = 4 stories)</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-24</time></td>
+      <td data-label="Address">126 MAPLE AVE E</td>
+      <td class="nowrap" data-label="Price">$2,700,000</td>
+      <td data-label="Type" class="muted">Other Retail NEC(not in shopping center)</td>
+      <td data-label="Classification" class="muted">Valid and verified multi-parcel sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-24</time></td>
+      <td data-label="Address">120 MAPLE AVE E</td>
+      <td class="nowrap" data-label="Price">$2,700,000</td>
+      <td data-label="Type" class="muted">Restaurant with alcohol</td>
+      <td data-label="Classification" class="muted">Valid and verified multi-parcel sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-24</time></td>
+      <td data-label="Address">102 MOORE AVE SW</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-23</time></td>
+      <td data-label="Address">411 CENTER ST N</td>
+      <td class="nowrap" data-label="Price">$1,130,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-23</time></td>
+      <td data-label="Address">310 JOHNSON ST SW</td>
+      <td class="nowrap" data-label="Price">$2,540,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-22</time></td>
+      <td data-label="Address">202 NIBLICK DR SE</td>
+      <td class="nowrap" data-label="Price">$1,450,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-22</time></td>
+      <td data-label="Address">141 CENTER ST S STE 6</td>
+      <td class="nowrap" data-label="Price">$1,165,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-17</time></td>
+      <td data-label="Address">408 COUNCIL DR NE</td>
+      <td class="nowrap" data-label="Price">$970,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-16</time></td>
+      <td data-label="Address">910 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$2,445,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-15</time></td>
+      <td data-label="Address">920 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$915,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-10</time></td>
+      <td data-label="Address">212 PARK TERRACE CT SE CND 72</td>
+      <td class="nowrap" data-label="Price">$233,650</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Non-representative price based on comps</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-10</time></td>
+      <td data-label="Address">210 PARK TERRACE CT SE CND 62</td>
+      <td class="nowrap" data-label="Price">$318,000</td>
+      <td data-label="Type" class="muted">Garden Style condominium (=&lt;4story)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-10</time></td>
+      <td data-label="Address">105 MELODY LN SW</td>
+      <td class="nowrap" data-label="Price">$880,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-09</time></td>
+      <td data-label="Address">106 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$1,950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-06</time></td>
+      <td data-label="Address">510 MILL ST NE</td>
+      <td class="nowrap" data-label="Price">$6,625,000</td>
+      <td data-label="Type" class="muted">Wholesale,warehousing &amp; stg (not in IP)</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-06</time></td>
+      <td data-label="Address">219 CERET CT SW</td>
+      <td class="nowrap" data-label="Price">$500,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Transfer between related parties</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-06</time></td>
+      <td data-label="Address">1208 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$2,260,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-10-01</time></td>
+      <td data-label="Address">101 OAKMONT CT NE</td>
+      <td class="nowrap" data-label="Price">$1,175,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-30</time></td>
+      <td data-label="Address">516 CENTER ST S</td>
+      <td class="nowrap" data-label="Price">$1,900,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-30</time></td>
+      <td data-label="Address">305 SPRINGWOOD CT NE</td>
+      <td class="nowrap" data-label="Price">$1,535,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-30</time></td>
+      <td data-label="Address">217 TALAHI RD SE</td>
+      <td class="nowrap" data-label="Price">$1,916,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-26</time></td>
+      <td data-label="Address">431 CREEK CROSSING RD NE</td>
+      <td class="nowrap" data-label="Price">$1,400,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-26</time></td>
+      <td data-label="Address">1123 MOOREFIELD HILL CT SW</td>
+      <td class="nowrap" data-label="Price">$765,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-25</time></td>
+      <td data-label="Address">113A PARK ST NE</td>
+      <td class="nowrap" data-label="Price">$1,688,242</td>
+      <td data-label="Type" class="muted">Multiplex in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-24</time></td>
+      <td data-label="Address">506 BIRCH ST SW</td>
+      <td class="nowrap" data-label="Price">$2,400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-23</time></td>
+      <td data-label="Address">123 DOGWOOD ST SW</td>
+      <td class="nowrap" data-label="Price">$2,500,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-23</time></td>
+      <td data-label="Address">109 PATRICK ST SE</td>
+      <td class="nowrap" data-label="Price">$965,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-19</time></td>
+      <td data-label="Address">447 COURTHOUSE RD SW</td>
+      <td class="nowrap" data-label="Price">$2,250,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Atypical price, cant verify-multi-parce</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-19</time></td>
+      <td data-label="Address">445 COURTHOUSE RD SW</td>
+      <td class="nowrap" data-label="Price">$2,250,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Atypical price, cant verify-multi-parce</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-19</time></td>
+      <td data-label="Address">1111 LAKEWOOD DR SW</td>
+      <td class="nowrap" data-label="Price">$860,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-18</time></td>
+      <td data-label="Address">910 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-17</time></td>
+      <td data-label="Address">1014 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$2,041,078</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-16</time></td>
+      <td data-label="Address">511 ORRIN ST SE</td>
+      <td class="nowrap" data-label="Price">$1,005,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-16</time></td>
+      <td data-label="Address">389 HOLMES DR NW</td>
+      <td class="nowrap" data-label="Price">$2,249,900</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-16</time></td>
+      <td data-label="Address">107 MOORE AVE SE</td>
+      <td class="nowrap" data-label="Price">$1,053,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-15</time></td>
+      <td data-label="Address">623 ECHOLS ST SE</td>
+      <td class="nowrap" data-label="Price">$930,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-12</time></td>
+      <td data-label="Address">904 CAROLE CT SE</td>
+      <td class="nowrap" data-label="Price">$1,100,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-12</time></td>
+      <td data-label="Address">525 MAPLE AVE W</td>
+      <td class="nowrap" data-label="Price">$680,000</td>
+      <td data-label="Type" class="muted">Condo Center</td>
+      <td data-label="Classification" class="muted">Price reflects leased fee value</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-11</time></td>
+      <td data-label="Address">242 HILLSIDE CIR SW</td>
+      <td class="nowrap" data-label="Price">$1,065,242</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-10</time></td>
+      <td data-label="Address">903 SHADY DR SE</td>
+      <td class="nowrap" data-label="Price">$1,000,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-08</time></td>
+      <td data-label="Address">703 MEADOW LN SW</td>
+      <td class="nowrap" data-label="Price">$2,105,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-05</time></td>
+      <td data-label="Address">715 CENTER ST S</td>
+      <td class="nowrap" data-label="Price">$1,365,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-05</time></td>
+      <td data-label="Address">610 DELANO DR SE</td>
+      <td class="nowrap" data-label="Price">$2,722,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-03</time></td>
+      <td data-label="Address">119B PARK ST NE</td>
+      <td class="nowrap" data-label="Price">$1,679,900</td>
+      <td data-label="Type" class="muted">Multiplex in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-03</time></td>
+      <td data-label="Address">106 YEONAS DR SE</td>
+      <td class="nowrap" data-label="Price">$1,075,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-09-02</time></td>
+      <td data-label="Address">500 ROLAND ST SW</td>
+      <td class="nowrap" data-label="Price">$1,275,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Non-representative price based on comps</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-29</time></td>
+      <td data-label="Address">513 TAPAWINGO RD SW</td>
+      <td class="nowrap" data-label="Price">$795,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-29</time></td>
+      <td data-label="Address">107 YEONAS DR SE</td>
+      <td class="nowrap" data-label="Price">$925,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-28</time></td>
+      <td data-label="Address">502 KIBLER CIR SW</td>
+      <td class="nowrap" data-label="Price">$950,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-28</time></td>
+      <td data-label="Address">1013 MOOREFIELD HILL GRV SW</td>
+      <td class="nowrap" data-label="Price">$725,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-27</time></td>
+      <td data-label="Address">1135 MOOREFIELD HILL CT SW</td>
+      <td class="nowrap" data-label="Price">$785,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-21</time></td>
+      <td data-label="Address">923 WARE ST SW</td>
+      <td class="nowrap" data-label="Price">$2,371,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-21</time></td>
+      <td data-label="Address">323 CENTER ST N</td>
+      <td class="nowrap" data-label="Price">$799,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-21</time></td>
+      <td data-label="Address">126 MENDON LN SW</td>
+      <td class="nowrap" data-label="Price">$990,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-21</time></td>
+      <td data-label="Address">119A PARK ST NE</td>
+      <td class="nowrap" data-label="Price">$1,826,380</td>
+      <td data-label="Type" class="muted">Multiplex in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-20</time></td>
+      <td data-label="Address">303 ROOSEVELT CT NE</td>
+      <td class="nowrap" data-label="Price">$1,060,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-20</time></td>
+      <td data-label="Address">1212 ROSS DR SW</td>
+      <td class="nowrap" data-label="Price">$400,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Transfer between related parties</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-19</time></td>
+      <td data-label="Address">809 PLUM ST SW</td>
+      <td class="nowrap" data-label="Price">$1,450,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-18</time></td>
+      <td data-label="Address">403 COLIN LN NW</td>
+      <td class="nowrap" data-label="Price">$2,050,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-18</time></td>
+      <td data-label="Address">109 MARKET SQ NW CND 33</td>
+      <td class="nowrap" data-label="Price">$1,335,000</td>
+      <td data-label="Type" class="muted">Townhouse in condominium development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-18</time></td>
+      <td data-label="Address">1010 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$2,332,743</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-18</time></td>
+      <td data-label="Address">1001 PICKETT PL SW</td>
+      <td class="nowrap" data-label="Price">$1,200,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-14</time></td>
+      <td data-label="Address">912 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$1,306,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-12</time></td>
+      <td data-label="Address">904 SHADY DR SE</td>
+      <td class="nowrap" data-label="Price">$2,275,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-12</time></td>
+      <td data-label="Address">713 KINGSLEY RD SW</td>
+      <td class="nowrap" data-label="Price">$2,200,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-12</time></td>
+      <td data-label="Address">1016 COTTAGE ST SW</td>
+      <td class="nowrap" data-label="Price">$1,090,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-11</time></td>
+      <td data-label="Address">611 GIBSON DR SW</td>
+      <td class="nowrap" data-label="Price">$915,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-08</time></td>
+      <td data-label="Address">9745 VALE RD NW</td>
+      <td class="nowrap" data-label="Price">$1,657,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-08</time></td>
+      <td data-label="Address">440 LEWIS ST NW</td>
+      <td class="nowrap" data-label="Price">$1,010,000</td>
+      <td data-label="Type" class="muted">Vacant Land</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-08</time></td>
+      <td data-label="Address">302 JADE CT NW</td>
+      <td class="nowrap" data-label="Price">$2,267,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-07</time></td>
+      <td data-label="Address">437 GLYNDON ST NE</td>
+      <td class="nowrap" data-label="Price">$1,001,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-04</time></td>
+      <td data-label="Address">927 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$1,325,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-04</time></td>
+      <td data-label="Address">805 GLYNDON ST SE</td>
+      <td class="nowrap" data-label="Price">$2,600,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-08-04</time></td>
+      <td data-label="Address">732 HUNTER CT SW</td>
+      <td class="nowrap" data-label="Price">$680,000</td>
+      <td data-label="Type" class="muted">Townhouse in ownership development</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-31</time></td>
+      <td data-label="Address">504 KINGSLEY RD SW</td>
+      <td class="nowrap" data-label="Price">$2,100,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Non-representative price based on comps</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-31</time></td>
+      <td data-label="Address">1012 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$935,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Price reflects anticipated rezoning</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-31</time></td>
+      <td data-label="Address">1005 FAIRWAY DR NE</td>
+      <td class="nowrap" data-label="Price">$1,180,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Atypical price - could not be verified</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-30</time></td>
+      <td data-label="Address">300 JADE CT NW</td>
+      <td class="nowrap" data-label="Price">$1,800,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-30</time></td>
+      <td data-label="Address">200 PARIS CT SW</td>
+      <td class="nowrap" data-label="Price">$1,357,500</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-28</time></td>
+      <td data-label="Address">609 KEARNEY CT SW</td>
+      <td class="nowrap" data-label="Price">$1,175,000</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Valid and verified sale</td>
+    </tr>
+    <tr>
+      <td class="nowrap" data-label="Date"><time>2025-07-28</time></td>
+      <td data-label="Address">505 HILLCREST DR SW</td>
+      <td class="nowrap" data-label="Price">$1,007,500</td>
+      <td data-label="Type" class="muted">Single-family, Detached</td>
+      <td data-label="Classification" class="muted">Land sale but land improved after sale</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="muted provenance">Sales from the Fairfax County Department of Tax Administration&rsquo;s
+<a href="https://data-fairfaxcountygis.opendata.arcgis.com/datasets/Fairfaxcountygis::tax-administrations-real-estate-sales-data">public sales table</a>,
+matched to addresses the county flags as inside the Town of Vienna. Sales recorded since
+2025-07-26, retrieved 2026-07-27. Raw files are in the
+<a href="https://github.com/crawfordmcmillan/viennavadata">site repository</a>.</p>
 </main>
 <footer>
   <p>Data from the Town of Vienna&rsquo;s public <a href="https://vienna-va.legistar.com">records</a> and the

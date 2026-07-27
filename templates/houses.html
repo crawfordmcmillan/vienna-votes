@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}House prices{% endblock %}
+{% block content %}
+<p class="eyebrow">House prices</p>
+<h1 class="hero">What homes in Vienna sold for.</h1>
+<p class="dek">Property sales recorded in the Town of Vienna over the last 12 months,
+from Fairfax County tax records. The county classifies each sale, and that
+classification is shown with every row.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">{{ houses.sales | length }}</span><span class="stat-label">recorded sales</span></div>
+  {% if houses.median_valid %}
+  <div class="stat"><span class="stat-n">${{ "{:,}".format(houses.median_valid) }}</span><span class="stat-label">median, county-verified sales</span></div>
+  {% endif %}
+  <div class="stat"><span class="stat-n">{{ houses.n_valid }}</span><span class="stat-label">verified as market sales</span></div>
+</div>
+
+<section class="method-note">
+  <h2>How to read these numbers</h2>
+  <p>This table lists every transaction with a sale price that the county recorded
+  against an address inside the town in the last 12 months. It covers all property
+  types, not just houses; the type column shows the county&rsquo;s land-use label for
+  each parcel. The county also marks which sales it verified as normal market sales.
+  Other rows include sales tied to rezoning, sales between related parties, and
+  prices the county could not verify. The median above uses only the county-verified
+  single sales. The county lists some sales under more than one tax year; exact
+  duplicates are removed here. Another {{ houses.no_consideration }} transfers were
+  recorded with no sale price (deeds and similar paperwork) and are not listed.</p>
+</section>
+
+<table class="votes-table">
+  <thead>
+    <tr><th>Date</th><th>Address</th><th>Price</th><th>Type</th><th>County classification</th></tr>
+  </thead>
+  <tbody>
+  {% for s in houses.sales %}
+    <tr>
+      <td class="nowrap" data-label="Date"><time>{{ s.date }}</time></td>
+      <td data-label="Address">{{ s.address }}</td>
+      <td class="nowrap" data-label="Price">${{ "{:,}".format(s.price) }}</td>
+      <td data-label="Type" class="muted">{{ s.type }}</td>
+      <td data-label="Classification" class="muted">{{ s.classification }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<p class="muted provenance">Sales from the Fairfax County Department of Tax Administration&rsquo;s
+<a href="https://data-fairfaxcountygis.opendata.arcgis.com/datasets/Fairfaxcountygis::tax-administrations-real-estate-sales-data">public sales table</a>,
+matched to addresses the county flags as inside the Town of Vienna. Sales recorded since
+{{ houses.meta.sales_since }}, retrieved {{ houses.meta.fetched_at_utc[:10] }}. Raw files are in the
+<a href="{{ repo }}">site repository</a>.</p>
+{% endblock %}

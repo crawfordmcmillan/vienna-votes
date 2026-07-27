@@ -28,13 +28,30 @@ classification is shown with every row.</p>
   recorded with no sale price (deeds and similar paperwork) and are not listed.</p>
 </section>
 
-<table class="votes-table">
+<div class="table-controls" id="sale-controls" hidden>
+  <input type="search" id="sale-search" placeholder="Search by street or address" aria-label="Search by street or address">
+  <select id="sale-type" aria-label="Filter by property type">
+    <option value="">All types</option>
+    {% for t in houses.types %}
+    <option value="{{ t }}">{{ t }}</option>
+    {% endfor %}
+  </select>
+  <span class="muted" id="sale-count"></span>
+</div>
+
+<table class="votes-table" id="sales-table">
   <thead>
-    <tr><th>Date</th><th>Address</th><th>Price</th><th>Type</th><th>County classification</th></tr>
+    <tr>
+      <th data-sort="date" data-num="1">Date</th>
+      <th data-sort="address">Address</th>
+      <th data-sort="price" data-num="1">Price</th>
+      <th data-sort="type">Type</th>
+      <th data-sort="class">County classification</th>
+    </tr>
   </thead>
   <tbody>
   {% for s in houses.sales %}
-    <tr>
+    <tr data-address="{{ s.address | lower }}" data-type="{{ s.type }}" data-price="{{ s.price }}" data-date="{{ s.date }}" data-class="{{ s.classification | lower }}">
       <td class="nowrap" data-label="Date"><time>{{ s.date }}</time></td>
       <td data-label="Address">{{ s.address }}</td>
       <td class="nowrap" data-label="Price">${{ "{:,}".format(s.price) }}</td>
@@ -44,6 +61,56 @@ classification is shown with every row.</p>
   {% endfor %}
   </tbody>
 </table>
+
+<script>
+(function () {
+  var controls = document.getElementById("sale-controls");
+  var search = document.getElementById("sale-search");
+  var typeSel = document.getElementById("sale-type");
+  var count = document.getElementById("sale-count");
+  var table = document.getElementById("sales-table");
+  var tbody = table.tBodies[0];
+  var rows = Array.prototype.slice.call(tbody.rows);
+  var sortKey = "date", sortDir = -1;
+  controls.hidden = false;
+
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var t = typeSel.value;
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = (!q || r.dataset.address.indexOf(q) !== -1) &&
+               (!t || r.dataset.type === t);
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = shown + " of " + rows.length + " sales shown";
+  }
+
+  function sortBy(key, numeric) {
+    sortDir = (key === sortKey) ? -sortDir : (key === "price" ? -1 : (key === "date" ? -1 : 1));
+    sortKey = key;
+    rows.sort(function (a, b) {
+      var av = a.dataset[key], bv = b.dataset[key];
+      if (numeric) { av = +av; bv = +bv; }
+      return (av < bv ? -1 : av > bv ? 1 : 0) * sortDir;
+    });
+    rows.forEach(function (r) { tbody.appendChild(r); });
+    Array.prototype.forEach.call(table.tHead.rows[0].cells, function (th) {
+      th.classList.remove("sorted-asc", "sorted-desc");
+      if (th.dataset.sort === key) th.classList.add(sortDir === 1 ? "sorted-asc" : "sorted-desc");
+    });
+  }
+
+  Array.prototype.forEach.call(table.tHead.rows[0].cells, function (th) {
+    th.addEventListener("click", function () { sortBy(th.dataset.sort, !!th.dataset.num); });
+  });
+  search.addEventListener("input", apply);
+  typeSel.addEventListener("change", apply);
+  table.tHead.rows[0].cells[0].classList.add("sorted-desc");
+  apply();
+})();
+</script>
 
 <p class="muted provenance">Sales from the Fairfax County Department of Tax Administration&rsquo;s
 <a href="https://data-fairfaxcountygis.opendata.arcgis.com/datasets/Fairfaxcountygis::tax-administrations-real-estate-sales-data">public sales table</a>,

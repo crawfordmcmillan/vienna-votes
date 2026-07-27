@@ -379,6 +379,33 @@ pre.actiontext {
 
 .provenance { margin-top: 3rem; }
 
+/* Sortable, filterable sales table */
+.table-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.table-controls input[type="search"], .table-controls select {
+  font-family: var(--display);
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: #fffdf8;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  padding: 0.4rem 0.6rem;
+}
+.table-controls input[type="search"] { flex: 1 1 14rem; }
+.table-controls input[type="search"]:focus, .table-controls select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+#sales-table th { cursor: pointer; user-select: none; white-space: nowrap; }
+#sales-table th:hover { color: var(--accent-ink); }
+#sales-table th.sorted-asc::after { content: " \2191"; color: var(--accent); }
+#sales-table th.sorted-desc::after { content: " \2193"; color: var(--accent); }
+
 /* Precinct map */
 .precinct-map figure { margin: 1rem 0; }
 .precinct-map svg { width: 100%; height: auto; display: block; }

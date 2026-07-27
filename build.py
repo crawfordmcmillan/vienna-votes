@@ -300,14 +300,14 @@ def load_houses():
                 continue
             price = s.get("PRICE") or 0
             desc = (s.get("SALEVAL_DESC") or "").strip()
-            if price <= 0:
-                no_consideration += 1
-                continue
             # The county lists a sale once per tax year; keep one row.
             key = (pin, s.get("SALEDT"), price)
             if key in seen:
                 continue
             seen.add(key)
+            if price <= 0:
+                no_consideration += 1
+                continue
             sales.append({
                 "date": datetime.fromtimestamp(s["SALEDT"] / 1000, tz=timezone.utc).date().isoformat(),
                 "address": addresses[pin]["address"],
@@ -327,6 +327,7 @@ def load_houses():
     return {
         "meta": meta,
         "sales": sales,
+        "types": sorted({s["type"] for s in sales if s["type"]}),
         "n_valid": len(valid_prices),
         "median_valid": median_valid,
         "no_consideration": no_consideration,

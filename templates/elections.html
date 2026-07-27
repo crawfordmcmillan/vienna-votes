@@ -3,23 +3,23 @@
 {% block content %}
 <p class="eyebrow">Elections</p>
 <h1 class="hero">How Vienna votes.</h1>
-<p class="dek">Results from the Town of Vienna&rsquo;s four precincts in federal, statewide,
-and town elections since 2013, from the Virginia Department of Elections&rsquo; official records.</p>
+<p class="dek">Results from the Town of Vienna&rsquo;s four precincts in federal, state,
+and town elections since 2013. The data comes from the Virginia Department of
+Elections&rsquo; official records.</p>
 
 <section class="method-note">
   <h2>How to read these numbers</h2>
-  <p>The Town of Vienna is served by four Fairfax County precincts &mdash; Vienna #1, #2, #4,
-  and #6. These are the same four precincts that carry the town&rsquo;s own mayoral and
-  council elections. Precinct lines are drawn by Fairfax County rather than the town, so
-  federal and state totals here are an approximation of the town&rsquo;s vote rather than an
-  official town tally &mdash; but a very close one: comparing the county&rsquo;s current
-  precinct boundaries with the Census town boundary, about 0.1% of the precincts&rsquo; land
-  area lies outside the town, and about 0.3% of the town lies outside the four precincts.</p>
-  <p>Before roughly 2023, Virginia counted most absentee and early ballots in a countywide
-  &ldquo;central absentee precinct&rdquo; that cannot be attributed to individual precincts.
-  Where that applies, it is noted on the contest, with the countywide number &mdash; the
-  precinct figures for those years reflect only ballots reported at the precinct level.
-  Town contests (2023 onward) count town voters only.</p>
+  <p>The Town of Vienna is served by four Fairfax County precincts: Vienna #1, #2, #4,
+  and #6. The same four precincts carry the town&rsquo;s own mayoral and council elections.
+  Precinct lines are drawn by Fairfax County rather than the town, so federal and state
+  totals here are an approximation of the town&rsquo;s vote. It is a close one. About 0.1%
+  of the precincts&rsquo; land area is outside the town, and about 0.3% of the town is
+  outside the four precincts.</p>
+  <p>Until about 2023, Virginia counted most absentee and early ballots in a countywide
+  central precinct. Those ballots cannot be tied to individual precincts, so for those
+  years the precinct figures only cover ballots reported at the precinct level. Contests
+  where this applies carry a note with the countywide number. Town contests, which begin
+  in 2023, count town voters only.</p>
 </section>
 
 {% if precinct_map %}
@@ -28,11 +28,10 @@ and town elections since 2013, from the Virginia Department of Elections&rsquo; 
   <figure>
     {{ precinct_map.svg | safe }}
     <figcaption class="muted">
-      The <span class="map-key-town">red line</span> is the Town of Vienna&rsquo;s corporate
-      boundary (U.S. Census TIGER); shaded areas are Fairfax County&rsquo;s four Vienna voting
-      precincts (Fairfax County GIS), as currently published &mdash; the two coincide to within
-      less than half a percent of land area. Dots mark each precinct&rsquo;s polling place;
-      major roads (Census TIGER) are drawn for orientation.
+      The <span class="map-key-town">red line</span> is the town boundary, from the U.S.
+      Census. The shaded areas are Fairfax County&rsquo;s four Vienna voting precincts, from
+      county GIS data. The two match to within half a percent of land area. Dots mark each
+      precinct&rsquo;s polling place, and major roads are drawn for orientation.
     </figcaption>
   </figure>
   <ul class="polling-list">

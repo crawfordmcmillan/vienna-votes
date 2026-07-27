@@ -1,64 +1,54 @@
 {% extends "base.html" %}
 {% block title %}About{% endblock %}
 {% block content %}
-<p class="eyebrow">About this site</p>
-<h1 class="hero">A faithful mirror of the public record.</h1>
+<p class="eyebrow">About</p>
+<h1 class="hero">About this site</h1>
 
 <h2>What this is</h2>
-<p>Vienna VA Data is a home for data about the Town of Vienna, Virginia, drawn
-from official public records. Its first datasets: every recorded vote of the
-Town Council since the town&rsquo;s electronic records begin in October 2013
-&mdash; every roll call, every member, every agenda item, exactly as recorded
-&mdash; and precinct-level election results for the town. The point is simple:
-the public record exists, but it is scattered across hundreds of meeting pages,
-PDFs, and databases. This site makes it legible in one place.</p>
+<p>Vienna VA Data collects public records about the Town of Vienna, Virginia in
+one place. Right now it has two datasets: recorded votes of the Town Council
+going back to October 2013, and precinct-level election results. These records
+already exist on town and state websites, but they are spread across hundreds
+of meeting pages, PDFs, and databases. This site puts them in one place and
+links back to the originals.</p>
 
 <h2>Where the data comes from</h2>
-<p>Everything here is drawn from the Town of Vienna&rsquo;s own public records
-system (<a href="{{ legistar }}">Legistar</a>), retrieved through its public
-API. The raw, unmodified responses are archived in the site&rsquo;s
-<a href="{{ repo }}">public repository</a>, so anyone can verify that what is
-displayed matches what the town published. Every meeting page links to the
-town&rsquo;s official meeting record and, where published, the official minutes
-PDF &mdash; the strongest way to check any vote is to follow those links and
-compare.</p>
-<p>The <a href="{{ root }}elections.html">Elections</a> section draws on a second
-official source: precinct-level results from the Virginia Department of
-Elections&rsquo; historical elections database. Its numbers, the precinct
-approximation involved, and its limits are explained on that page.</p>
+<p>Council data comes from the town&rsquo;s public records system
+(<a href="{{ legistar }}">Legistar</a>) through its public API. Election
+results come from the Virginia Department of Elections. The raw files are
+archived in the site&rsquo;s <a href="{{ repo }}">public repository</a>, so
+anyone can check that what is shown here matches what was published. Meeting
+pages link to the town&rsquo;s official meeting record and, where published,
+the official minutes PDF.</p>
 
-<h2>What this site deliberately does not do</h2>
-<p>No scores. No rankings. No &ldquo;voted with the majority X% of the
-time.&rdquo; Vote values are never simplified: <em>Aye</em>, <em>Nay</em>,
-<em>Absent</em>, and <em>Abstain</em> are different things and are always shown
-exactly as recorded, including the rare record where the town entered no value
-at all. Interpretation is left to the reader, with the sources one click away.</p>
-<p>Nothing is selected or omitted: every recorded vote in the town&rsquo;s
-system appears here, not a curated subset. The one correction applied to the
-raw data is documented in the open &mdash; where Legistar holds duplicate
-person records for the same member, their votes are merged into one page and
-the merge is noted on that page and in the repository.</p>
+<h2>What this site does not do</h2>
+<p>No scores, no rankings, no percentages. Vote values are shown exactly as
+recorded: <em>Aye</em>, <em>Nay</em>, <em>Absent</em>, and <em>Abstain</em> are
+different things, and they stay different here. A few records have no vote
+value entered in the town&rsquo;s system, and those are shown that way too.</p>
+<p>Every recorded vote appears on this site, not a selection. One correction is
+applied to the raw data: Legistar holds duplicate person records for two
+members, and their votes are merged onto one page each. The merge is noted on
+those pages and documented in the repository.</p>
 
 <h2>Topic categories are unofficial</h2>
-<p>The one editorial layer on this site is the topic categories (Budget,
-Land&nbsp;Use, Parks, and so on). The Town of Vienna does not tag its records by
-topic, so this site assigns them to make browsing easier. They are labeled
-&ldquo;unofficial&rdquo; wherever they appear, they never alter the underlying
-records, and the complete mapping is
-<a href="{{ repo }}/blob/main/categories.csv">public and correctable</a>.</p>
+<p>The Town of Vienna does not tag its records by topic, so this site adds its
+own categories (Budget, Land&nbsp;Use, Parks, and so on) to make browsing
+easier. They are labeled &ldquo;unofficial&rdquo; wherever they appear, and the
+complete mapping is <a href="{{ repo }}/blob/main/categories.csv">public</a>
+and can be corrected.</p>
 
 <h2>Corrections</h2>
-<p>If anything here does not match the town&rsquo;s official record, that is a
-bug and it will be fixed. Please
+<p>If anything here does not match the official record, that is a bug. Please
 <a href="{{ repo }}/issues">open an issue on GitHub</a> with a link to the page
-and the official source.</p>
+and the official source, and it will be fixed.</p>
 
 <h2>Who runs this</h2>
 <p>Vienna VA Data is independently maintained. It is not affiliated with,
 endorsed by, or produced by the Town of Vienna. The data refreshes
-automatically from the town&rsquo;s records every Tuesday; the date of the last
-refresh appears at the bottom of every page.</p>
-<p>The site counts visits with <a href="https://www.goatcounter.com/">GoatCounter</a>,
-a privacy-friendly counter: no cookies, no cross-site tracking, no personal
-data collected or sold.</p>
+automatically every Tuesday, and the date of the last refresh appears at the
+bottom of every page.</p>
+<p>The site counts visits with
+<a href="https://www.goatcounter.com/">GoatCounter</a>, which uses no cookies
+and collects no personal data.</p>
 {% endblock %}

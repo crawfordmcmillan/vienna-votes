@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Every recorded vote{% endblock %}
 {% block content %}
-<h1 class="hero">Every recorded vote of the Vienna Town Council.</h1>
-<p class="dek">A faithful mirror of the public record, {{ date_range[0] }} to {{ date_range[1] }}.
-Every roll call, every member, exactly as recorded &mdash; with a link back to the source on every page.</p>
+<h1 class="hero">Recorded votes of the Vienna Town Council.</h1>
+<p class="dek">All of the council&rsquo;s recorded votes from {{ date_range[0] }} to {{ date_range[1] }},
+shown exactly as the town recorded them. Each page links back to the source.</p>
 
 <div class="stats">
   <div class="stat"><span class="stat-n">{{ stats.votes }}</span><span class="stat-label">vote records</span></div>
@@ -24,8 +24,9 @@ Every roll call, every member, exactly as recorded &mdash; with a link back to t
 
 {% if topics %}
 <h2>Topics <span class="muted">&middot; unofficial</span></h2>
-<p class="muted">Categories assigned by this site to make browsing easier &mdash; they are not part of the Town&rsquo;s records.
-The full mapping is <a href="{{ repo }}/blob/main/categories.csv">public and correctable</a>.</p>
+<p class="muted">Categories assigned by this site to make browsing easier. They are not part of the
+town&rsquo;s records, and the full mapping is <a href="{{ repo }}/blob/main/categories.csv">public</a>
+and can be corrected.</p>
 <ul class="topic-list">
 {% for topic in topics %}
   <li><a href="topic/{{ topic.slug }}.html">{{ topic.name }}</a>

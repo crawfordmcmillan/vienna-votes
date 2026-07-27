@@ -23,8 +23,8 @@
 {% endif %}
 {% if member.merged_from %}
 <p class="muted">Includes votes the town recorded under
-{% for n in member.merged_from %}&ldquo;{{ n }}&rdquo;{% if not loop.last %}, {% endif %}{% endfor %}
-&mdash; a duplicate Legistar person record for the same member. The merge is documented in
+{% for n in member.merged_from %}&ldquo;{{ n }}&rdquo;{% if not loop.last %}, {% endif %}{% endfor %},
+a duplicate record for the same member in Legistar. The merge is documented in
 <a href="{{ repo }}/blob/main/person_aliases.json">person_aliases.json</a>.</p>
 {% endif %}
 

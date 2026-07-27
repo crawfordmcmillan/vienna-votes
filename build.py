@@ -262,6 +262,54 @@ def build_precinct_map():
 HOUSES = ROOT / "data" / "houses"
 
 
+def point_in_ring(x, y, ring):
+    inside = False
+    j = len(ring) - 1
+    for i in range(len(ring)):
+        xi, yi = ring[i][0], ring[i][1]
+        xj, yj = ring[j][0], ring[j][1]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+UNIT_RE = re.compile(r"\s+(CND|STE|APT|UNIT|BLDG|FL|RM|#)\s*\S*$")
+
+
+def build_address_book():
+    """All town addresses with their precinct, for the in-browser checker."""
+    precincts_file = GIS / "fairfax_precincts.geojson"
+    if not precincts_file.exists():
+        return None
+    rings = {}
+    for f in json.loads(precincts_file.read_text(encoding="utf-8"))["features"]:
+        ident = f["properties"].get("PREC_IDENT")
+        if ident in MAP_PRECINCTS:
+            geom = f["geometry"]
+            rings[ident] = geom["coordinates"] if geom["type"] == "Polygon" else \
+                [r for poly in geom["coordinates"] for r in poly]
+
+    book = {}
+    for f in sorted(HOUSES.glob("addresses_*.json")):
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            address = (feat["attributes"].get("ADDRESS_1") or "").strip()
+            base = UNIT_RE.sub("", address)
+            while UNIT_RE.search(base):
+                base = UNIT_RE.sub("", base)
+            if not base or base in book:
+                continue
+            precinct = 0
+            geom = feat.get("geometry")
+            if geom:
+                for ident, rs in rings.items():
+                    if any(point_in_ring(geom["x"], geom["y"], r) for r in rs):
+                        precinct = int(MAP_PRECINCTS[ident][-1])
+                        break
+            book[base] = precinct
+    return sorted(book.items())
+
+
 def load_houses():
     """Join county sales rows to Vienna addresses on parcel ID."""
     meta_file = HOUSES / "houses_meta.json"
@@ -542,19 +590,26 @@ def main():
     )
 
     elections_meta, elections = load_elections()
+    precinct_map = build_precinct_map()
     render("about.html", SITE / "about.html", root="")
     if elections:
         render("elections.html", SITE / "elections.html", root="",
                elections=elections, elections_meta=elections_meta,
-               precinct_map=build_precinct_map())
+               precinct_map=precinct_map)
     stats = {"votes": n_votes, "meetings": len(meetings), "members": len(members)}
     election_stats = {
         "contests": sum(len(e["contests"]) for e in elections),
         "elections": len(elections),
     }
     houses = load_houses()
+    address_book = build_address_book()
+    if address_book:
+        (SITE / "addresses.json").write_text(
+            json.dumps(address_book, separators=(",", ":")), encoding="utf-8")
     render("index.html", SITE / "index.html", root="",
-           stats=stats, election_stats=election_stats, houses=houses)
+           stats=stats, election_stats=election_stats, houses=houses,
+           address_book=bool(address_book),
+           polling=(precinct_map or {}).get("polling"))
     if houses:
         render("houses.html", SITE / "house-prices.html", root="", houses=houses)
     render(

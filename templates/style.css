@@ -379,6 +379,35 @@ pre.actiontext {
 
 .provenance { margin-top: 3rem; }
 
+/* Address checker */
+.address-check { max-width: 32rem; margin: 1rem 0 0.5rem; }
+.address-check input {
+  width: 100%;
+  font-family: var(--display);
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fffdf8;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  padding: 0.6rem 0.8rem;
+}
+.address-check input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+#addr-result { margin-top: 0.75rem; font-size: 1.05rem; }
+#addr-result.addr-yes { border-left: 4px solid var(--ink); padding-left: 0.75rem; }
+#addr-result.addr-no { border-left: 4px solid var(--accent); padding-left: 0.75rem; }
+#addr-suggest { margin-top: 0.5rem; }
+#addr-suggest button {
+  font-family: var(--display);
+  font-size: 0.9rem;
+  background: none;
+  border: none;
+  color: var(--accent-ink);
+  cursor: pointer;
+  padding: 0.15rem 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+}
+
 /* Sortable, filterable sales table */
 .table-controls {
   display: flex;

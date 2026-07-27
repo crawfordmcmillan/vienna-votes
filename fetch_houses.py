@@ -61,7 +61,8 @@ def main():
     fetch_pages(session, "addresses", ADDRESS_URL, {
         "where": "JURISDICTION = 'TOWN OF VIENNA'",
         "outFields": "PARCEL_PIN,ADDRESS_1,CITY,ZIP,UNIT_TYPE,UNIT_NUMBER",
-        "returnGeometry": "false",
+        "returnGeometry": "true",
+        "outSR": 4326,
     }, 2000)
 
     fetch_pages(session, "sales", SALES_URL, {

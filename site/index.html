@@ -66,6 +66,100 @@ records. Nothing is scored or ranked.</p>
   </a></li>
 </ul>
 
+<h2>Is your address in the town?</h2>
+<p>Not every Vienna, VA address is in the Town of Vienna. The Vienna postal area
+is much larger than the town, so many homes with Vienna mailing addresses are
+actually in Fairfax County. They get county services, vote in county-only
+races, and are not covered by the council votes on this site. Type a street
+address to check.</p>
+<div class="address-check">
+  <input type="search" id="addr-input" placeholder="e.g. 120 Cherry St SE" aria-label="Street address to check">
+  <div id="addr-result" role="status"></div>
+  <ul id="addr-suggest" class="plain"></ul>
+</div>
+<p class="muted">The check uses Fairfax County&rsquo;s official address list and runs
+entirely in your browser. Addresses you type are not sent anywhere or stored.</p>
+
+<script>
+(function () {
+  var input = document.getElementById("addr-input");
+  var result = document.getElementById("addr-result");
+  var suggest = document.getElementById("addr-suggest");
+  var polling = { 1: "Cunningham Park Elementary School", 2: "Vienna Community Center", 4: "Cedar Lane School", 6: "Madison High School" };
+  var book = null, loading = false;
+
+  var WORDS = { STREET: "ST", AVENUE: "AVE", ROAD: "RD", DRIVE: "DR", LANE: "LN",
+    COURT: "CT", PLACE: "PL", CIRCLE: "CIR", TERRACE: "TER", BOULEVARD: "BLVD",
+    HIGHWAY: "HWY", NORTHEAST: "NE", NORTHWEST: "NW", SOUTHEAST: "SE",
+    SOUTHWEST: "SW" };
+
+  function norm(s) {
+    return s.toUpperCase().replace(/[.,#]/g, " ").split(/\s+/).filter(Boolean)
+      .map(function (w) { return WORDS[w] || w; }).join(" ");
+  }
+
+  function load(cb) {
+    if (book) return cb();
+    if (loading) return;
+    loading = true;
+    fetch("addresses.json").then(function (r) { return r.json(); })
+      .then(function (d) { book = d; cb(); });
+  }
+
+  function verdict(entry) {
+    var precinct = entry[1];
+    var html = "<strong>Yes.</strong> " + entry[0] + " is in the Town of Vienna.";
+    if (precinct && polling[precinct]) {
+      html += " It votes in precinct Vienna #" + precinct + ", at " + polling[precinct] + ".";
+    }
+    return html;
+  }
+
+  function check() {
+    var q = norm(input.value);
+    suggest.innerHTML = "";
+    result.className = "";
+    if (q.length < 4) { result.innerHTML = ""; return; }
+    var exact = null, partial = [];
+    for (var i = 0; i < book.length; i++) {
+      var a = book[i][0];
+      if (a === q) { exact = book[i]; break; }
+      if (a.indexOf(q) === 0 && partial.length < 8) partial.push(book[i]);
+    }
+    if (exact) {
+      result.className = "addr-yes";
+      result.innerHTML = verdict(exact);
+    } else if (partial.length) {
+      result.innerHTML = "";
+      partial.forEach(function (entry) {
+        var li = document.createElement("li");
+        var b = document.createElement("button");
+        b.type = "button";
+        b.textContent = entry[0];
+        b.addEventListener("click", function () {
+          input.value = entry[0];
+          suggest.innerHTML = "";
+          result.className = "addr-yes";
+          result.innerHTML = verdict(entry);
+        });
+        li.appendChild(b);
+        suggest.appendChild(li);
+      });
+    } else if (/\d/.test(q) && q.length >= 6) {
+      result.className = "addr-no";
+      result.innerHTML = "<strong>No match.</strong> This address is not on the county&rsquo;s " +
+        "list of Town of Vienna addresses. If your mail says Vienna, VA, your home may still be " +
+        "outside town limits, in Fairfax County.";
+    } else {
+      result.innerHTML = "";
+    }
+  }
+
+  input.addEventListener("focus", function () { load(function () {}); });
+  input.addEventListener("input", function () { load(check); if (book) check(); });
+})();
+</script>
+
 <p class="muted provenance">Independently maintained. Not affiliated with the Town of Vienna.
 <a href="about.html">About this site</a> &middot; data last refreshed 2026-07-25.</p>
 </main>

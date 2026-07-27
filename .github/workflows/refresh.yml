@@ -28,9 +28,10 @@ jobs:
       - run: pip install requests jinja2
       - name: Refetch meeting list and any new records
         run: |
-          rm -f data/events.json
+          rm -f data/events.json data/boards/events_*.json
           rm -rf data/houses
           python fetch.py
+          python fetch_boards.py
           python fetch_elections.py
           python fetch_houses.py
       - name: Regenerate categories and site

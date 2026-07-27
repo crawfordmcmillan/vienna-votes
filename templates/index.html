@@ -23,6 +23,15 @@ records. Nothing is scored or ranked.</p>
     and town elections, with a map of the precincts and polling places.</span>
     <span class="dataset-stat">{{ election_stats.contests }} contests &middot; {{ election_stats.elections }} elections &middot; 2013&ndash;2025</span>
   </a></li>
+  {% if boards %}
+  <li><a class="dataset-card" href="planning.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Planning &amp; zoning</span>
+    <span class="dataset-desc">Cases before the town&rsquo;s planning and land-use boards:
+    signs, variances, and new construction, with links to the minutes.</span>
+    <span class="dataset-stat">{{ "{:,}".format(boards.cases | length) }} cases &middot; {{ boards.bodies | length }} boards &middot; since 2013</span>
+  </a></li>
+  {% endif %}
   {% if houses %}
   <li><a class="dataset-card" href="house-prices.html">
     <span class="dataset-status live">Live</span>

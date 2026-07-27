@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Planning &amp; zoning{% endblock %}
+{% block content %}
+<p class="eyebrow">Planning &amp; zoning</p>
+<h1 class="hero">What comes before the town&rsquo;s boards.</h1>
+<p class="dek">Cases heard by the Town of Vienna&rsquo;s planning and land-use boards since 2013:
+signs, fences, new buildings, variances, and everything else that needs approval before it
+gets built. From the town&rsquo;s public records.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">{{ "{:,}".format(boards.cases | length) }}</span><span class="stat-label">cases</span></div>
+  <div class="stat"><span class="stat-n">{{ boards.n_meetings }}</span><span class="stat-label">meetings</span></div>
+  <div class="stat"><span class="stat-n">{{ boards.bodies | length }}</span><span class="stat-label">boards</span></div>
+</div>
+
+<section class="method-note">
+  <h2>How to read this list</h2>
+  <p>The Planning Commission reviews development plans and the comprehensive plan. The
+  Board of Zoning Appeals decides variances and appeals. The Board of Architectural
+  Review approves signs and building exteriors. The Windover Heights Board of Review
+  covers the town&rsquo;s historic district. The town&rsquo;s system records what was on
+  each agenda; the outcome of a case is in the meeting minutes, linked on each row
+  where published.</p>
+</section>
+
+<div class="table-controls" id="case-controls" hidden>
+  <input type="search" id="case-search" placeholder="Search by street, project, or case number" aria-label="Search cases">
+  <select id="case-body" aria-label="Filter by board">
+    <option value="">All boards</option>
+    {% for b in boards.bodies %}
+    <option value="{{ b }}">{{ b }}</option>
+    {% endfor %}
+  </select>
+  <span class="muted" id="case-count"></span>
+</div>
+
+<table class="votes-table" id="cases-table">
+  <thead>
+    <tr>
+      <th data-sort="date">Date</th>
+      <th data-sort="case">Case</th>
+      <th data-sort="title">Item</th>
+      <th data-sort="body">Board</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for c in boards.cases %}
+    <tr data-date="{{ c.date }}" data-case="{{ c.case | lower }}" data-title="{{ c.title | lower }}" data-body="{{ c.body }}">
+      <td class="nowrap" data-label="Date"><time>{{ c.date }}</time></td>
+      <td class="nowrap" data-label="Case">{{ c.case }}</td>
+      <td data-label="Item">{{ c.title }}</td>
+      <td data-label="Board" class="muted">{{ c.body }}</td>
+      <td class="nowrap"><a class="source-link" href="{{ c.source_url }}">agenda</a>{% if c.minutes_pdf %} <a class="source-link" href="{{ c.minutes_pdf }}">minutes</a>{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<p class="muted provenance">From the Town of Vienna&rsquo;s public
+<a href="{{ legistar }}">Legistar records</a>, fetched {{ boards.meta.fetched_at_utc[:10] }}.
+Raw files are in the <a href="{{ repo }}">site repository</a>.</p>
+
+<script>
+(function () {
+  var controls = document.getElementById("case-controls");
+  var search = document.getElementById("case-search");
+  var bodySel = document.getElementById("case-body");
+  var count = document.getElementById("case-count");
+  var table = document.getElementById("cases-table");
+  var tbody = table.tBodies[0];
+  var rows = Array.prototype.slice.call(tbody.rows);
+  var sortKey = "date", sortDir = -1;
+  controls.hidden = false;
+
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var b = bodySel.value;
+    var shown = 0;
+    rows.forEach(function (r) {
+      var hay = r.dataset.title + " " + r.dataset.case;
+      var ok = (!q || hay.indexOf(q) !== -1) && (!b || r.dataset.body === b);
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = shown + " of " + rows.length + " cases shown";
+  }
+
+  function sortBy(key) {
+    sortDir = (key === sortKey) ? -sortDir : (key === "date" ? -1 : 1);
+    sortKey = key;
+    rows.sort(function (a, b) {
+      var av = a.dataset[key], bv = b.dataset[key];
+      return (av < bv ? -1 : av > bv ? 1 : 0) * sortDir;
+    });
+    rows.forEach(function (r) { tbody.appendChild(r); });
+    Array.prototype.forEach.call(table.tHead.rows[0].cells, function (th) {
+      th.classList.remove("sorted-asc", "sorted-desc");
+      if (th.dataset.sort === key) th.classList.add(sortDir === 1 ? "sorted-asc" : "sorted-desc");
+    });
+  }
+
+  Array.prototype.forEach.call(table.tHead.rows[0].cells, function (th) {
+    if (th.dataset.sort) th.addEventListener("click", function () { sortBy(th.dataset.sort); });
+  });
+  search.addEventListener("input", apply);
+  bodySel.addEventListener("change", apply);
+  table.tHead.rows[0].cells[0].classList.add("sorted-desc");
+  apply();
+})();
+</script>
+{% endblock %}

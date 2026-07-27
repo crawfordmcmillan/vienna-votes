@@ -382,6 +382,44 @@ def load_houses():
     }
 
 
+BOARDS = ROOT / "data" / "boards"
+
+
+def load_boards():
+    """Cases that came before the town's planning and land-use boards."""
+    meta_file = BOARDS / "boards_meta.json"
+    if not meta_file.exists():
+        return None
+    meta = json.loads(meta_file.read_text(encoding="utf-8"))
+    events = {}
+    for f in sorted(BOARDS.glob("events_*.json")):
+        for e in json.loads(f.read_text(encoding="utf-8")):
+            events[e["EventId"]] = e
+    cases = []
+    for f in sorted(BOARDS.glob("eventitems_*.json")):
+        for it in json.loads(f.read_text(encoding="utf-8")):
+            if not it.get("EventItemMatterFile"):
+                continue
+            event = events.get(it.get("EventItemEventId"))
+            if not event:
+                continue
+            cases.append({
+                "date": event["EventDate"][:10],
+                "body": event["EventBodyName"],
+                "case": it["EventItemMatterFile"],
+                "title": (it.get("EventItemTitle") or "").strip() or "(untitled)",
+                "source_url": event["EventInSiteURL"],
+                "minutes_pdf": pdf_url(event.get("EventMinutesFile")),
+            })
+    cases.sort(key=lambda c: (c["date"], c["case"]), reverse=True)
+    return {
+        "meta": meta,
+        "cases": cases,
+        "bodies": sorted({c["body"] for c in cases}),
+        "n_meetings": len(events),
+    }
+
+
 def load_elections():
     meta_file = ELECTIONS / "elections_meta.json"
     if not meta_file.exists():
@@ -602,13 +640,16 @@ def main():
         "elections": len(elections),
     }
     houses = load_houses()
+    boards = load_boards()
+    if boards:
+        render("planning.html", SITE / "planning.html", root="", boards=boards)
     address_book = build_address_book()
     if address_book:
         (SITE / "addresses.json").write_text(
             json.dumps(address_book, separators=(",", ":")), encoding="utf-8")
     render("index.html", SITE / "index.html", root="",
            stats=stats, election_stats=election_stats, houses=houses,
-           address_book=bool(address_book),
+           boards=boards, address_book=bool(address_book),
            polling=(precinct_map or {}).get("polling"))
     if houses:
         render("houses.html", SITE / "house-prices.html", root="", houses=houses)

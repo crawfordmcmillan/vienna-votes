@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Crashes{% endblock %}
+{% block content %}
+<p class="eyebrow">Crashes</p>
+<h1 class="hero">Crashes on Vienna&rsquo;s streets.</h1>
+<p class="dek">Reportable crashes inside the Town of Vienna since 2017, from the Virginia
+Department of Transportation&rsquo;s statewide crash records.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">{{ "{:,}".format(crashes.crashes | length) }}</span><span class="stat-label">crashes since {{ crashes.years[0] }}</span></div>
+  <div class="stat"><span class="stat-n">{{ crashes.n_injury }}</span><span class="stat-label">with injuries or deaths</span></div>
+  <div class="stat"><span class="stat-n">{{ crashes.n_ped }}</span><span class="stat-label">involving pedestrians</span></div>
+</div>
+
+<section class="method-note">
+  <h2>How to read these numbers</h2>
+  <p>A crash appears in state records when it involved a death, an injury, or at least
+  $1,500 in damage. VDOT grades each crash on the state&rsquo;s severity scale: K means
+  someone died, A a severe injury, B a minor injury, C a possible injury, and O property
+  damage only. The records begin in 2017, and {{ crashes.current_year }} is a partial
+  year. Crashes here are the ones VDOT attributes to the Town of Vienna; locations are
+  as VDOT recorded them.</p>
+</section>
+
+<h2>The map</h2>
+<div class="table-controls" id="crash-controls" hidden>
+  <select id="crash-year" aria-label="Filter by year">
+    <option value="">All years</option>
+    {% for y in crashes.years %}
+    <option value="{{ y }}"{% if y == crashes.default_year %} selected{% endif %}>{{ y }}{% if y == crashes.current_year %} (partial){% endif %}</option>
+    {% endfor %}
+  </select>
+  <label class="crash-toggle"><input type="checkbox" id="crash-injury"> Injury and fatal crashes only</label>
+  <span class="muted" id="crash-count"></span>
+</div>
+<figure class="precinct-map">
+  {{ crashes.map_svg | safe }}
+  <figcaption class="muted">
+    Each dot is one crash: <span class="legend-k">large dark red</span> fatal,
+    <span class="legend-a">red</span> severe injury, <span class="legend-b">orange</span> minor
+    or possible injury, <span class="legend-o">gray</span> property damage only. Hover a dot
+    for the date and type. Precincts are shaded for orientation.
+  </figcaption>
+</figure>
+
+<h2>By year</h2>
+<table class="votes-table">
+  <thead>
+    <tr><th>Year</th><th>Fatal (K)</th><th>Severe injury (A)</th><th>Minor injury (B)</th><th>Possible injury (C)</th><th>Property only (O)</th><th>Total</th></tr>
+  </thead>
+  <tbody>
+  {% for y in crashes.years %}
+    <tr>
+      <td data-label="Year">{{ y }}{% if y == crashes.current_year %} <span class="muted">(partial)</span>{% endif %}</td>
+      <td data-label="Fatal">{{ crashes.by_year[y]["K"] }}</td>
+      <td data-label="Severe injury">{{ crashes.by_year[y]["A"] }}</td>
+      <td data-label="Minor injury">{{ crashes.by_year[y]["B"] }}</td>
+      <td data-label="Possible injury">{{ crashes.by_year[y]["C"] }}</td>
+      <td data-label="Property only">{{ crashes.by_year[y]["O"] }}</td>
+      <td data-label="Total">{{ crashes.by_year[y].values() | sum }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<p class="muted provenance">From VDOT&rsquo;s statewide crash data, published on the
+<a href="https://www.virginiaroads.org/">Virginia Roads</a> open data portal, filtered to
+crashes VDOT attributes to the Town of Vienna. Retrieved {{ crashes.meta.fetched_at_utc[:10] }}.
+Raw files are in the <a href="{{ repo }}">site repository</a>.</p>
+
+<script>
+(function () {
+  var controls = document.getElementById("crash-controls");
+  var yearSel = document.getElementById("crash-year");
+  var injuryCb = document.getElementById("crash-injury");
+  var count = document.getElementById("crash-count");
+  var dots = Array.prototype.slice.call(document.querySelectorAll(".crash-dot"));
+  controls.hidden = false;
+
+  function apply() {
+    var y = yearSel.value;
+    var injuryOnly = injuryCb.checked;
+    var shown = 0;
+    dots.forEach(function (d) {
+      var ok = (!y || d.dataset.year === y) && (!injuryOnly || d.dataset.sev !== "O");
+      d.style.display = ok ? "" : "none";
+      if (ok) shown++;
+    });
+    count.textContent = shown + " crashes on the map";
+  }
+
+  yearSel.addEventListener("change", apply);
+  injuryCb.addEventListener("change", apply);
+  apply();
+})();
+</script>
+{% endblock %}

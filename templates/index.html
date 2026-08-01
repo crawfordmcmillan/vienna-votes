@@ -32,6 +32,15 @@ records. Nothing is scored or ranked.</p>
     <span class="dataset-stat">{{ "{:,}".format(boards.cases | length) }} cases &middot; {{ boards.bodies | length }} boards &middot; since 2013</span>
   </a></li>
   {% endif %}
+  {% if crashes %}
+  <li><a class="dataset-card" href="crashes.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Crashes</span>
+    <span class="dataset-desc">Reportable crashes on Vienna&rsquo;s streets, mapped and
+    counted by year and severity, from state records.</span>
+    <span class="dataset-stat">{{ "{:,}".format(crashes.crashes | length) }} crashes &middot; since {{ crashes.years[0] }}</span>
+  </a></li>
+  {% endif %}
   {% if houses %}
   <li><a class="dataset-card" href="house-prices.html">
     <span class="dataset-status live">Live</span>

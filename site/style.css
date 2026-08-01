@@ -435,6 +435,19 @@ pre.actiontext {
 #sales-table th.sorted-asc::after { content: " \2191"; color: var(--accent); }
 #sales-table th.sorted-desc::after { content: " \2193"; color: var(--accent); }
 
+/* Crash map */
+.crash-toggle {
+  font-family: var(--display);
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend-k { color: #7a1710; font-weight: bold; }
+.legend-a { color: #d1461f; font-weight: bold; }
+.legend-b { color: #b96a3a; font-weight: bold; }
+.legend-o { color: #6d675c; font-weight: bold; }
+
 /* Precinct map */
 .precinct-map figure { margin: 1rem 0; }
 .precinct-map svg { width: 100%; height: auto; display: block; }

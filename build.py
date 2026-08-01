@@ -122,8 +122,13 @@ MAP_ROAD_LABELS = ["Maple Ave", "Nutley St", "Church St", "Beulah Rd",
                    "Lawyers Rd", "Courthouse Rd", "Chain Bridge Rd"]
 
 
-def build_precinct_map():
-    """Render the four Vienna precincts + town boundary as a static inline SVG."""
+def build_precinct_map(crashes=None, include_polling=True):
+    """Render the four Vienna precincts + town boundary as a static inline SVG.
+
+    With crashes, adds one dot per crash (sized and colored by severity, with
+    data attributes for client-side year/severity filtering) and skips the
+    polling-place markers to keep the map readable.
+    """
     precincts_file = GIS / "fairfax_precincts.geojson"
     boundary_file = GIS / "vienna_boundary.geojson"
     if not (precincts_file.exists() and boundary_file.exists()):
@@ -232,9 +237,22 @@ def build_precinct_map():
                    f'fill="#6d675c" stroke="#f7f3ec" stroke-width="3" '
                    f'paint-order="stroke" letter-spacing="0.04em">{label}</text>')
 
+    if crashes:
+        for c in crashes:
+            r, fill = SEVERITY_DOTS.get(c["sev"], SEVERITY_DOTS["O"])
+            x, y = xy((c["x"], c["y"]))
+            label = f"{c['date']} · {SEVERITY_LABELS.get(c['sev'], c['sev'])}"
+            if c["type"]:
+                label += f" · {c['type']}"
+            svg.append(
+                f'<circle class="crash-dot" data-year="{c["year"]}" '
+                f'data-sev="{c["sev"]}" cx="{x:.1f}" cy="{y:.1f}" r="{r}" '
+                f'fill="{fill}" fill-opacity="0.75" stroke="#f7f3ec" stroke-width="0.6">'
+                f'<title>{label}</title></circle>')
+
     # Polling place markers.
     pp_file = GIS / "fairfax_polling_places.geojson"
-    if pp_file.exists():
+    if include_polling and pp_file.exists():
         for f in json.loads(pp_file.read_text(encoding="utf-8"))["features"]:
             p = f["properties"]
             idents = {p.get("PREC_IDENT"), p.get("PREC_IDENT2")}
@@ -417,6 +435,59 @@ def load_boards():
         "cases": cases,
         "bodies": sorted({c["body"] for c in cases}),
         "n_meetings": len(events),
+    }
+
+
+CRASHES = ROOT / "data" / "crashes"
+SEVERITY_LABELS = {"K": "Fatal", "A": "Severe injury", "B": "Minor injury",
+                   "C": "Possible injury", "O": "Property damage only"}
+SEVERITY_DOTS = {"K": (7.0, "#7a1710"), "A": (5.5, "#d1461f"),
+                 "B": (4.0, "#e08a52"), "C": (4.0, "#e08a52"),
+                 "O": (2.6, "#9b917c")}
+
+
+def load_crashes():
+    meta_file = CRASHES / "crashes_meta.json"
+    if not meta_file.exists():
+        return None
+    meta = json.loads(meta_file.read_text(encoding="utf-8"))
+    crashes = []
+    for f in sorted(CRASHES.glob("crashes_*.json")):
+        if f.name == "crashes_meta.json":
+            continue
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            a = feat["attributes"]
+            geom = feat.get("geometry")
+            if not geom:
+                continue
+            ctype = (a.get("COLLISION_TYPE") or "").split(". ", 1)[-1]
+            crashes.append({
+                "year": int(a.get("CRASH_YEAR") or 0),
+                "date": (datetime.fromtimestamp(a["CRASH_DT"] / 1000, tz=timezone.utc)
+                         .date().isoformat() if a.get("CRASH_DT") else ""),
+                "sev": (a.get("CRASH_SEVERITY") or "O").strip() or "O",
+                "type": ctype,
+                "ped": (a.get("PED_NONPED") or "").startswith("1"),
+                "x": geom["x"], "y": geom["y"],
+            })
+    years = sorted({c["year"] for c in crashes})
+    by_year = {}
+    for y in years:
+        row = Counter(c["sev"] for c in crashes if c["year"] == y)
+        by_year[y] = {s: row.get(s, 0) for s in "KABCO"}
+    n_injury = sum(1 for c in crashes if c["sev"] in "KABC")
+    current_year = max(years)
+    default_year = current_year - 1 if len(years) > 1 else current_year
+    return {
+        "meta": meta,
+        "crashes": crashes,
+        "years": years,
+        "by_year": by_year,
+        "n_injury": n_injury,
+        "n_ped": sum(1 for c in crashes if c["ped"]),
+        "current_year": current_year,
+        "default_year": default_year,
+        "severity_labels": SEVERITY_LABELS,
     }
 
 
@@ -643,13 +714,18 @@ def main():
     boards = load_boards()
     if boards:
         render("planning.html", SITE / "planning.html", root="", boards=boards)
+    crashes = load_crashes()
+    if crashes:
+        crashes["map_svg"] = build_precinct_map(
+            crashes=crashes["crashes"], include_polling=False)["svg"]
+        render("crashes.html", SITE / "crashes.html", root="", crashes=crashes)
     address_book = build_address_book()
     if address_book:
         (SITE / "addresses.json").write_text(
             json.dumps(address_book, separators=(",", ":")), encoding="utf-8")
     render("index.html", SITE / "index.html", root="",
            stats=stats, election_stats=election_stats, houses=houses,
-           boards=boards, address_book=bool(address_book),
+           boards=boards, crashes=crashes, address_book=bool(address_book),
            polling=(precinct_map or {}).get("polling"))
     if houses:
         render("houses.html", SITE / "house-prices.html", root="", houses=houses)

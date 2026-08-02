@@ -117,9 +117,15 @@ MAP_FILLS = {213: "#ead9b7", 214: "#cfd8c2", 216: "#e5c6b2", 218: "#c9d3da"}
 # Local roads worth drawing for orientation (TIGER BASENAME values); secondary
 # roads (Rt 123/Maple, Nutley, Chain Bridge, Leesburg Pike) are all drawn.
 MAP_LOCAL_ROADS = {"Church", "Beulah", "Park", "Courthouse", "Lawyers",
-                   "Cedar", "Old Courthouse", "Follin", "Glyndon"}
-MAP_ROAD_LABELS = ["Maple Ave", "Nutley St", "Church St", "Beulah Rd",
-                   "Lawyers Rd", "Courthouse Rd", "Chain Bridge Rd"]
+                   "Cedar", "Old Courthouse", "Follin", "Glyndon", "Center",
+                   "Washington and Old Dominion"}
+# (name prefix to match in the data, label shown on the map)
+MAP_ROAD_LABELS = [("Maple Ave", "Maple Ave"), ("Nutley St", "Nutley St"),
+                   ("Church St", "Church St"), ("Beulah Rd", "Beulah Rd"),
+                   ("Lawyers Rd", "Lawyers Rd"), ("Courthouse Rd", "Courthouse Rd"),
+                   ("Chain Bridge Rd", "Chain Bridge Rd"), ("Park St", "Park St"),
+                   ("Center St", "Center St"),
+                   ("Washington and Old Dominion", "W&amp;OD Trail")]
 
 
 def build_precinct_map(crashes=None, include_polling=True):
@@ -174,16 +180,25 @@ def build_precinct_map(crashes=None, include_polling=True):
             parts.append("M" + "L".join(f"{x:.1f} {y:.1f}" for x, y in (xy(p) for p in ring)) + "Z")
         return "".join(parts)
 
-    def centroid(ring):
-        a = cx = cy = 0.0
+    def interior_point(ring):
+        """Approximate the point deepest inside the ring (grid-sampled), so
+        labels sit centrally even in concave shapes where the centroid drifts
+        to an edge."""
         pts = [xy(p) for p in ring]
-        for (x1, y1), (x2, y2) in zip(pts, pts[1:] + pts[:1]):
-            cross = x1 * y2 - x2 * y1
-            a += cross
-            cx += (x1 + x2) * cross
-            cy += (y1 + y2) * cross
-        a *= 3
-        return (cx / a, cy / a) if a else pts[0]
+        xs = [p[0] for p in pts]
+        ys = [p[1] for p in pts]
+        step = 26
+        best, best_d = pts[0], -1.0
+        for i in range(1, step):
+            for j in range(1, step):
+                px = min(xs) + (max(xs) - min(xs)) * i / step
+                py = min(ys) + (max(ys) - min(ys)) * j / step
+                if not point_in_ring(px, py, pts):
+                    continue
+                d = min((px - vx) ** 2 + (py - vy) ** 2 for vx, vy in pts)
+                if d > best_d:
+                    best, best_d = (px, py), d
+        return best
 
     def road_lines(feature):
         geom = feature["geometry"]
@@ -208,34 +223,49 @@ def build_precinct_map(crashes=None, include_polling=True):
         svg.append(f'<path d="{path(rings)}" fill="{MAP_FILLS[ident]}" '
                    f'stroke="#16150f" stroke-width="1.2" stroke-linejoin="round"/>')
     for f in local:
-        svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#aca38f" '
-                   f'stroke-width="1.4" stroke-linecap="round"/>')
+        if "Old Dominion" in (f["properties"].get("NAME") or ""):
+            svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#7d8a6a" '
+                       f'stroke-width="2.2" stroke-dasharray="7 4" stroke-linecap="round"/>')
+        else:
+            svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#aca38f" '
+                       f'stroke-width="1.4" stroke-linecap="round"/>')
     for f in secondary:
         svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#9b917c" '
                    f'stroke-width="2.4" stroke-linecap="round"/>')
     svg.append(f'<path d="{path(boundary)}" fill="none" stroke="#d1461f" '
                f'stroke-width="3" stroke-linejoin="round"/>')
     for ident, rings in sorted(precincts.items()):
-        cx, cy = centroid(max(rings, key=len))
+        cx, cy = interior_point(max(rings, key=len))
+        nx, ny = {216: (-60, -50)}.get(ident, (0, 0))
+        cx, cy = cx + nx, cy + ny
         svg.append(f'<text x="{cx:.0f}" y="{cy:.0f}" text-anchor="middle" '
                    f'font-family="Archivo, Arial, sans-serif" font-weight="900" '
                    f'font-size="26" fill="#16150f">#{MAP_PRECINCTS[ident][-1]}</text>')
 
     # Road labels: midpoint of the longest drawn segment for each labeled name.
     all_roads = secondary + local
-    for label in MAP_ROAD_LABELS:
-        candidates = [f for f in all_roads if (f["properties"].get("NAME") or "").startswith(label)]
+    for prefix, display in MAP_ROAD_LABELS:
+        candidates = [f for f in all_roads if (f["properties"].get("NAME") or "").startswith(prefix)]
         if not candidates:
             continue
-        lines = road_lines(max(candidates, key=lambda f: sum(len(l) for l in road_lines(f))))
-        line = max(lines, key=len)
-        mx, my = xy(line[len(line) // 2])
+        if "OD Trail" in display:
+            # The trail is one long feature that mostly runs outside town;
+            # label it at whichever of its points is nearest the map middle.
+            mx, my = min(
+                (xy(p) for f in candidates for line in road_lines(f) for p in line),
+                key=lambda q: (q[0] - width / 2) ** 2 + (q[1] - height / 2) ** 2)
+            my -= 8
+        else:
+            chosen = max(candidates, key=lambda f: sum(len(l) for l in road_lines(f)))
+            line = max(road_lines(chosen), key=len)
+            mx, my = xy(line[len(line) // 2])
         mx = min(max(mx, 60), width - 60)
         my = min(max(my, 20), height - 10)
+        color = "#5d6b4d" if "OD Trail" in display else "#6d675c"
         svg.append(f'<text x="{mx:.0f}" y="{my - 4:.0f}" text-anchor="middle" '
                    f'font-family="Archivo, Arial, sans-serif" font-weight="600" font-size="12" '
-                   f'fill="#6d675c" stroke="#f7f3ec" stroke-width="3" '
-                   f'paint-order="stroke" letter-spacing="0.04em">{label}</text>')
+                   f'fill="{color}" stroke="#f7f3ec" stroke-width="3" '
+                   f'paint-order="stroke" letter-spacing="0.04em">{display}</text>')
 
     if crashes:
         for c in crashes:

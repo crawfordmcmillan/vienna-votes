@@ -1,4 +1,4 @@
-"""build.py — render static HTML from data/ into site/. No network calls.
+﻿"""build.py — render static HTML from data/ into site/. No network calls.
 
 Reads the raw JSON cached by fetch.py and writes five page types:
 index, one page per council member, one per meeting, one per agenda item,
@@ -221,7 +221,7 @@ def build_precinct_map(crashes=None, include_polling=True):
            f'major roads, and polling places" xmlns="http://www.w3.org/2000/svg">']
     for ident, rings in sorted(precincts.items()):
         svg.append(f'<path d="{path(rings)}" fill="{MAP_FILLS[ident]}" '
-                   f'stroke="#16150f" stroke-width="1.2" stroke-linejoin="round"/>')
+                   f'stroke="#211d13" stroke-width="1.2" stroke-linejoin="round"/>')
     for f in local:
         if "Old Dominion" in (f["properties"].get("NAME") or ""):
             svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#7d8a6a" '
@@ -232,15 +232,15 @@ def build_precinct_map(crashes=None, include_polling=True):
     for f in secondary:
         svg.append(f'<path d="{line_path(road_lines(f))}" fill="none" stroke="#9b917c" '
                    f'stroke-width="2.4" stroke-linecap="round"/>')
-    svg.append(f'<path d="{path(boundary)}" fill="none" stroke="#d1461f" '
+    svg.append(f'<path d="{path(boundary)}" fill="none" stroke="#9c2f1d" '
                f'stroke-width="3" stroke-linejoin="round"/>')
     for ident, rings in sorted(precincts.items()):
         cx, cy = interior_point(max(rings, key=len))
         nx, ny = {216: (-60, -50)}.get(ident, (0, 0))
         cx, cy = cx + nx, cy + ny
         svg.append(f'<text x="{cx:.0f}" y="{cy:.0f}" text-anchor="middle" '
-                   f'font-family="Archivo, Arial, sans-serif" font-weight="900" '
-                   f'font-size="26" fill="#16150f">#{MAP_PRECINCTS[ident][-1]}</text>')
+                   f'font-family="Libre Franklin, Arial, sans-serif" font-weight="900" '
+                   f'font-size="26" fill="#211d13">#{MAP_PRECINCTS[ident][-1]}</text>')
 
     # Road labels: midpoint of the longest drawn segment for each labeled name.
     all_roads = secondary + local
@@ -263,8 +263,8 @@ def build_precinct_map(crashes=None, include_polling=True):
         my = min(max(my, 20), height - 10)
         color = "#5d6b4d" if "OD Trail" in display else "#6d675c"
         svg.append(f'<text x="{mx:.0f}" y="{my - 4:.0f}" text-anchor="middle" '
-                   f'font-family="Archivo, Arial, sans-serif" font-weight="600" font-size="12" '
-                   f'fill="{color}" stroke="#f7f3ec" stroke-width="3" '
+                   f'font-family="Libre Franklin, Arial, sans-serif" font-weight="600" font-size="12" '
+                   f'fill="{color}" stroke="#f5eedd" stroke-width="3" '
                    f'paint-order="stroke" letter-spacing="0.04em">{display}</text>')
 
     if crashes:
@@ -277,7 +277,7 @@ def build_precinct_map(crashes=None, include_polling=True):
             svg.append(
                 f'<circle class="crash-dot" data-year="{c["year"]}" '
                 f'data-sev="{c["sev"]}" cx="{x:.1f}" cy="{y:.1f}" r="{r}" '
-                f'fill="{fill}" fill-opacity="0.75" stroke="#f7f3ec" stroke-width="0.6">'
+                f'fill="{fill}" fill-opacity="0.75" stroke="#f5eedd" stroke-width="0.6">'
                 f'<title>{label}</title></circle>')
 
     # Polling place markers.
@@ -296,11 +296,11 @@ def build_precinct_map(crashes=None, include_polling=True):
                     anchor, tx, ty = "end", x - 2, y + 20
                 else:
                     anchor, tx, ty = "start", x + 9, y + 4
-                svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5.5" fill="#16150f" '
-                           f'stroke="#f7f3ec" stroke-width="2"/>')
+                svg.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5.5" fill="#211d13" '
+                           f'stroke="#f5eedd" stroke-width="2"/>')
                 svg.append(f'<text x="{tx:.0f}" y="{ty:.0f}" text-anchor="{anchor}" '
-                           f'font-family="Archivo, Arial, sans-serif" font-weight="700" '
-                           f'font-size="12" fill="#16150f" stroke="#f7f3ec" stroke-width="3" '
+                           f'font-family="Libre Franklin, Arial, sans-serif" font-weight="700" '
+                           f'font-size="12" fill="#211d13" stroke="#f5eedd" stroke-width="3" '
                            f'paint-order="stroke">{name}</text>')
 
     svg.append("</svg>")
@@ -471,7 +471,7 @@ def load_boards():
 CRASHES = ROOT / "data" / "crashes"
 SEVERITY_LABELS = {"K": "Fatal", "A": "Severe injury", "B": "Minor injury",
                    "C": "Possible injury", "O": "Property damage only"}
-SEVERITY_DOTS = {"K": (7.0, "#7a1710"), "A": (5.5, "#d1461f"),
+SEVERITY_DOTS = {"K": (7.0, "#6e1a0e"), "A": (5.5, "#9c2f1d"),
                  "B": (4.0, "#e08a52"), "C": (4.0, "#e08a52"),
                  "O": (2.6, "#9b917c")}
 

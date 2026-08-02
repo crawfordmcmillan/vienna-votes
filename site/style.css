@@ -61,8 +61,8 @@ th, summary, #addr-suggest button { transition: color 200ms ease; }
   .reveal.revealed { opacity: 1; transform: none; }
 }
 
-/* Masthead: dateline, centered nameplate, rule-bounded nav. */
-.masthead { margin-bottom: 2.5rem; }
+/* Masthead: dateline and centered nameplate. */
+.masthead { margin-bottom: 2.5rem; border-bottom: 5px double var(--ink); }
 .masthead-top {
   display: flex;
   flex-wrap: wrap;
@@ -90,26 +90,6 @@ th, summary, #addr-suggest button { transition: color 200ms ease; }
   color: var(--ink);
 }
 .wordmark:hover { color: var(--accent-ink); }
-.masthead-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  padding: 0.45rem 0;
-}
-.masthead-link {
-  font-family: var(--ui);
-  font-weight: 700;
-  font-size: var(--fs-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--ls-caps);
-  text-decoration: none;
-  padding: 0 1.2rem;
-}
-.masthead-link + .masthead-link { border-left: 1px solid var(--rule); }
-.masthead-link:hover { color: var(--accent-ink); }
-
 /* Type */
 h1, h2, h3 {
   font-family: var(--display);
@@ -541,7 +521,6 @@ footer {
 /* Phone */
 @media (max-width: 42rem) {
   .stats { gap: 0 1.5rem; }
-  .masthead-link { padding: 0 0.8rem; }
 
   /* Interactive tables keep their columns and scroll sideways. */
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }

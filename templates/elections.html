@@ -63,7 +63,7 @@ Elections&rsquo; official records.</p>
   </table>
   <details>
     <summary class="muted">By precinct ({{ "{:,}".format(contest.ballots) }} {{ contest.total_label }})</summary>
-    <table class="votes-table">
+    <div class="table-wrap"><table class="votes-table keep-table">
       <thead>
         <tr><th>Precinct</th>{% for cand in contest.candidates %}<th>{{ cand.name }}</th>{% endfor %}<th>Total</th></tr>
       </thead>
@@ -76,7 +76,7 @@ Elections&rsquo; official records.</p>
         </tr>
       {% endfor %}
       </tbody>
-    </table>
+    </table></div>
   </details>
   {% if contest.central_absentee %}
   <p class="muted">Note: in this election, {{ "{:,}".format(contest.central_absentee) }} absentee ballots

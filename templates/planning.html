@@ -34,7 +34,7 @@ gets built. From the town&rsquo;s public records.</p>
   <span class="muted" id="case-count"></span>
 </div>
 
-<table class="votes-table" id="cases-table">
+<div class="table-wrap"><table class="votes-table keep-table" id="cases-table">
   <thead>
     <tr>
       <th data-sort="date">Date</th>
@@ -55,7 +55,7 @@ gets built. From the town&rsquo;s public records.</p>
     </tr>
   {% endfor %}
   </tbody>
-</table>
+</table></div>
 
 <p class="muted provenance">From the Town of Vienna&rsquo;s public
 <a href="{{ legistar }}">Legistar records</a>, fetched {{ boards.meta.fetched_at_utc[:10] }}.

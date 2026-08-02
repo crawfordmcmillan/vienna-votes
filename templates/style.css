@@ -426,6 +426,7 @@ pre.actiontext {
   padding: 0.4rem 0.6rem;
 }
 .table-controls input[type="search"] { flex: 1 1 14rem; }
+.table-controls select { max-width: 100%; }
 .table-controls input[type="search"]:focus, .table-controls select:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
@@ -488,10 +489,41 @@ footer {
 
 /* Phone */
 @media (max-width: 42rem) {
-  .masthead { flex-direction: column; gap: 0.1rem; }
-  .votes-table, .votes-table thead, .votes-table tbody, .votes-table tr, .votes-table th, .votes-table td { display: block; }
-  .votes-table thead { display: none; }
-  .votes-table tr { border-bottom: 2px solid var(--rule); padding: 0.6rem 0; }
-  .votes-table td { border: none; padding: 0.12rem 0; }
-  .stats { gap: 0 1.75rem; }
+  .masthead { flex-direction: column; gap: 0.1rem; align-items: flex-start; }
+  .masthead-right { flex-wrap: wrap; }
+  .stats { gap: 0 1.5rem; }
+
+  /* Interactive tables keep their columns and scroll sideways. */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .votes-table.keep-table { font-size: 0.8rem; min-width: 34rem; }
+  .votes-table.keep-table th, .votes-table.keep-table td { padding: 0.35rem 0.5rem 0.35rem 0; }
+
+  /* Everything else becomes labeled cards: one bordered block per row,
+     each value prefixed with its column name from data-label. */
+  .votes-table:not(.keep-table), .votes-table:not(.keep-table) tbody,
+  .votes-table:not(.keep-table) tr, .votes-table:not(.keep-table) td { display: block; }
+  .votes-table:not(.keep-table) thead { display: none; }
+  .votes-table:not(.keep-table) tr { border-bottom: 2px solid var(--rule); padding: 0.55rem 0; }
+  .votes-table:not(.keep-table) td { border: none; padding: 0.15rem 0; white-space: normal; }
+  .votes-table:not(.keep-table) td[data-label] {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 0 0.9rem;
+    align-items: baseline;
+  }
+  .votes-table:not(.keep-table) td[data-label]::before {
+    content: attr(data-label);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    grid-column: 1;
+  }
+  .votes-table:not(.keep-table) td[data-label] > * {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .votes-table:not(.keep-table) td:empty { display: none; }
 }

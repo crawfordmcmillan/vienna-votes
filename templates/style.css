@@ -38,8 +38,26 @@ body {
   color: var(--ink);
   background: var(--paper);
 }
-a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 2px; }
+a { color: inherit; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 2px; transition: color 200ms ease; }
 a:hover { color: var(--accent-ink); }
+
+/* Motion: subtle, 200-300ms, plain easing throughout. */
+th, summary, #addr-suggest button { transition: color 200ms ease; }
+.dataset-card, .member-card {
+  transition: border-top-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dataset-card:hover, .member-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(22, 21, 15, 0.08);
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 280ms ease-out, transform 280ms ease-out;
+  }
+  .reveal.revealed { opacity: 1; transform: none; }
+}
 
 /* Masthead */
 .masthead {

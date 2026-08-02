@@ -171,6 +171,26 @@
     <p class="muted">No recorded roll call for this item.</p>
 </section>
 </main>
+<script>
+(function () {
+  if (!("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var els = document.querySelectorAll(
+    "h2, .dataset-card, .member-card, .stats, .method-note, .precinct-map figure");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add("revealed");
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
+  els.forEach(function (el) {
+    el.classList.add("reveal");
+    io.observe(el);
+  });
+})();
+</script>
 <footer>
   <p>Data from the Town of Vienna&rsquo;s public <a href="https://vienna-va.legistar.com">records</a> and the
   Virginia Department of Elections, shown as recorded. No scores, no rankings.

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -24,18 +24,247 @@
   </nav>
 </header>
 <main>
-<p class="eyebrow">In the works</p>
-<h1 class="hero">Population</h1>
-<p class="dek">How many people call Vienna home, decade by decade.</p>
-<p>This dataset is not built yet. When it is, it will work the same way as the
-rest of the site. The data will come from an official source, the raw files
-will be archived in the <a href="https://github.com/crawfordmcmillan/viennavadata">public repository</a>, and the
-numbers will be shown without scores or interpretation.</p>
-<dl class="meta">
-  <dt>Planned source</dt><dd>U.S. Census Bureau — decennial census and American Community Survey for the Town of Vienna (place 51-81072)</dd>
-  <dt>Status</dt><dd>Not yet started</dd>
-</dl>
-<p><a href="index.html">&larr; Back to all data</a></p>
+<p class="eyebrow">Population</p>
+<h1 class="hero">Who calls Vienna home.</h1>
+<p class="dek">The town&rsquo;s population and its shape, from the U.S. Census Bureau:
+official decade counts plus yearly survey estimates for age, households, housing,
+and how people get to work.</p>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">16,412</span><span class="stat-label">people (2024 estimate)</span></div>
+  <div class="stat"><span class="stat-n">41.7</span><span class="stat-label">median age</span></div>
+  <div class="stat"><span class="stat-n">16,473</span><span class="stat-label">2020 census count</span></div>
+</div>
+
+<section class="method-note">
+  <h2>Counts and estimates</h2>
+  <p>Two kinds of numbers appear here. Decennial census figures are actual counts,
+  taken every ten years. Everything else comes from the American Community Survey&rsquo;s
+  5-year estimates, which are based on samples and carry a margin of error that can
+  be meaningful for a town of this size. Both cover the Town of Vienna exactly
+  (Census place 51-81072, the same boundary drawn on the elections map).</p>
+</section>
+
+<h2>Census counts by decade</h2>
+<table class="votes-table">
+  <thead><tr><th>Census</th><th>Population</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Census">2000</td><td data-label="Population">14,453</td></tr>
+    <tr><td data-label="Census">2010</td><td data-label="Population">15,687</td></tr>
+    <tr><td data-label="Census">2020</td><td data-label="Population">16,473</td></tr>
+  </tbody>
+</table>
+
+<h2>Year by year <span class="muted">&middot; ACS estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Year</th><th>Population</th><th>Median age</th><th>Owner / renter households</th><th>Median home value</th><th>Median rent</th></tr></thead>
+  <tbody>
+    <tr>
+      <td data-label="Year">2010</td>
+      <td data-label="Population">15,387</td>
+      <td data-label="Median age">39.9</td>
+      <td data-label="Owner / renter" class="nowrap">4,353 / 878</td>
+      <td data-label="Median home value" class="nowrap">$600,100</td>
+      <td data-label="Median rent" class="nowrap">$1,748</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2011</td>
+      <td data-label="Population">15,564</td>
+      <td data-label="Median age">40.8</td>
+      <td data-label="Owner / renter" class="nowrap">4,465 / 1,013</td>
+      <td data-label="Median home value" class="nowrap">$588,300</td>
+      <td data-label="Median rent" class="nowrap">$1,849</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2012</td>
+      <td data-label="Population">15,748</td>
+      <td data-label="Median age">39.4</td>
+      <td data-label="Owner / renter" class="nowrap">4,131 / 1,231</td>
+      <td data-label="Median home value" class="nowrap">$594,500</td>
+      <td data-label="Median rent" class="nowrap">$1,859</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2013</td>
+      <td data-label="Population">15,958</td>
+      <td data-label="Median age">40.0</td>
+      <td data-label="Owner / renter" class="nowrap">4,122 / 1,235</td>
+      <td data-label="Median home value" class="nowrap">$602,100</td>
+      <td data-label="Median rent" class="nowrap">$1,890</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2014</td>
+      <td data-label="Population">16,173</td>
+      <td data-label="Median age">40.9</td>
+      <td data-label="Owner / renter" class="nowrap">4,428 / 1,114</td>
+      <td data-label="Median home value" class="nowrap">$614,500</td>
+      <td data-label="Median rent" class="nowrap">$1,908</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2015</td>
+      <td data-label="Population">16,341</td>
+      <td data-label="Median age">41.0</td>
+      <td data-label="Owner / renter" class="nowrap">4,308 / 1,221</td>
+      <td data-label="Median home value" class="nowrap">$639,200</td>
+      <td data-label="Median rent" class="nowrap">$1,961</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2016</td>
+      <td data-label="Population">16,378</td>
+      <td data-label="Median age">40.8</td>
+      <td data-label="Owner / renter" class="nowrap">4,377 / 1,139</td>
+      <td data-label="Median home value" class="nowrap">$662,200</td>
+      <td data-label="Median rent" class="nowrap">$1,896</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2017</td>
+      <td data-label="Population">16,474</td>
+      <td data-label="Median age">41.4</td>
+      <td data-label="Owner / renter" class="nowrap">4,543 / 1,030</td>
+      <td data-label="Median home value" class="nowrap">$687,000</td>
+      <td data-label="Median rent" class="nowrap">$1,909</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2018</td>
+      <td data-label="Population">16,488</td>
+      <td data-label="Median age">41.3</td>
+      <td data-label="Owner / renter" class="nowrap">4,602 / 868</td>
+      <td data-label="Median home value" class="nowrap">$711,100</td>
+      <td data-label="Median rent" class="nowrap">$2,045</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2019</td>
+      <td data-label="Population">16,489</td>
+      <td data-label="Median age">41.3</td>
+      <td data-label="Owner / renter" class="nowrap">4,509 / 905</td>
+      <td data-label="Median home value" class="nowrap">$743,500</td>
+      <td data-label="Median rent" class="nowrap">$2,081</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2020</td>
+      <td data-label="Population">16,532</td>
+      <td data-label="Median age">41.0</td>
+      <td data-label="Owner / renter" class="nowrap">4,784 / 688</td>
+      <td data-label="Median home value" class="nowrap">$778,200</td>
+      <td data-label="Median rent" class="nowrap">$2,235</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2021</td>
+      <td data-label="Population">16,465</td>
+      <td data-label="Median age">41.7</td>
+      <td data-label="Owner / renter" class="nowrap">4,679 / 745</td>
+      <td data-label="Median home value" class="nowrap">$827,800</td>
+      <td data-label="Median rent" class="nowrap">$2,270</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2022</td>
+      <td data-label="Population">16,401</td>
+      <td data-label="Median age">41.2</td>
+      <td data-label="Owner / renter" class="nowrap">4,604 / 814</td>
+      <td data-label="Median home value" class="nowrap">$912,500</td>
+      <td data-label="Median rent" class="nowrap">$2,410</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2023</td>
+      <td data-label="Population">16,369</td>
+      <td data-label="Median age">41.2</td>
+      <td data-label="Owner / renter" class="nowrap">4,488 / 926</td>
+      <td data-label="Median home value" class="nowrap">$961,100</td>
+      <td data-label="Median rent" class="nowrap">$2,430</td>
+    </tr>
+    <tr>
+      <td data-label="Year">2024</td>
+      <td data-label="Population">16,412</td>
+      <td data-label="Median age">41.7</td>
+      <td data-label="Owner / renter" class="nowrap">4,647 / 906</td>
+      <td data-label="Median home value" class="nowrap">$1,008,800</td>
+      <td data-label="Median rent" class="nowrap">$2,391</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Age <span class="muted">&middot; 2024 estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Age group</th><th>People</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Age group">Under 18</td><td data-label="People">4,404</td></tr>
+    <tr><td data-label="Age group">18 to 34</td><td data-label="People">2,060</td></tr>
+    <tr><td data-label="Age group">35 to 49</td><td data-label="People">3,868</td></tr>
+    <tr><td data-label="Age group">50 to 64</td><td data-label="People">3,596</td></tr>
+    <tr><td data-label="Age group">65 and over</td><td data-label="People">2,484</td></tr>
+  </tbody>
+</table>
+
+<h2>Households <span class="muted">&middot; 2024 estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Household type</th><th>Households</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Type">All households</td><td data-label="Households">5,553</td></tr>
+    <tr><td data-label="Type">Family households</td><td data-label="Households">4,399</td></tr>
+    <tr><td data-label="Type">Married-couple families</td><td data-label="Households">3,889</td></tr>
+    <tr><td data-label="Type">Nonfamily households</td><td data-label="Households">1,154</td></tr>
+    <tr><td data-label="Type">Living alone</td><td data-label="Households">940</td></tr>
+  </tbody>
+</table>
+
+<h2>When Vienna&rsquo;s homes were built <span class="muted">&middot; 2024 estimates</span></h2>
+<p>The median home in Vienna was built in 1971.</p><table class="votes-table">
+  <thead><tr><th>Decade built</th><th>Housing units</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Decade">Built 2020 or later</td><td data-label="Units">311</td></tr>
+    <tr><td data-label="Decade">2010s</td><td data-label="Units">822</td></tr>
+    <tr><td data-label="Decade">2000s</td><td data-label="Units">344</td></tr>
+    <tr><td data-label="Decade">1990s</td><td data-label="Units">303</td></tr>
+    <tr><td data-label="Decade">1980s</td><td data-label="Units">246</td></tr>
+    <tr><td data-label="Decade">1970s</td><td data-label="Units">935</td></tr>
+    <tr><td data-label="Decade">1960s</td><td data-label="Units">1,557</td></tr>
+    <tr><td data-label="Decade">1950s</td><td data-label="Units">1,063</td></tr>
+    <tr><td data-label="Decade">1940s</td><td data-label="Units">197</td></tr>
+    <tr><td data-label="Decade">1939 or earlier</td><td data-label="Units">40</td></tr>
+  </tbody>
+</table>
+
+<h2>Education <span class="muted">&middot; 2024 estimates, ages 25 and over</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Highest level completed</th><th>People</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Level">Less than high school</td><td data-label="People">425</td></tr>
+    <tr><td data-label="Level">High school graduate</td><td data-label="People">1,010</td></tr>
+    <tr><td data-label="Level">Some college or associate degree</td><td data-label="People">1,375</td></tr>
+    <tr><td data-label="Level">Bachelor&#39;s degree</td><td data-label="People">3,543</td></tr>
+    <tr><td data-label="Level">Graduate or professional degree</td><td data-label="People">4,747</td></tr>
+  </tbody>
+</table>
+
+<h2>Time to work <span class="muted">&middot; 2024 estimates, workers who commute</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Travel time</th><th>Workers</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Travel time">Under 15 minutes</td><td data-label="Workers">1,168</td></tr>
+    <tr><td data-label="Travel time">15 to 29 minutes</td><td data-label="Workers">2,194</td></tr>
+    <tr><td data-label="Travel time">30 to 44 minutes</td><td data-label="Workers">1,277</td></tr>
+    <tr><td data-label="Travel time">45 to 59 minutes</td><td data-label="Workers">264</td></tr>
+    <tr><td data-label="Travel time">An hour or more</td><td data-label="Workers">486</td></tr>
+  </tbody>
+</table>
+
+<h2>Getting to work <span class="muted">&middot; 2024 estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Means of transportation</th><th>Workers</th></tr></thead>
+  <tbody>
+    <tr><td data-label="Means">Workers 16 and over</td><td data-label="Workers">8,348</td></tr>
+    <tr><td data-label="Means">Drove alone</td><td data-label="Workers">3,865</td></tr>
+    <tr><td data-label="Means">Carpooled</td><td data-label="Workers">767</td></tr>
+    <tr><td data-label="Means">Public transportation</td><td data-label="Workers">283</td></tr>
+    <tr><td data-label="Means">Bicycle</td><td data-label="Workers">119</td></tr>
+    <tr><td data-label="Means">Walked</td><td data-label="Workers">245</td></tr>
+    <tr><td data-label="Means">Worked from home</td><td data-label="Workers">2,959</td></tr>
+    <tr><td data-label="Means">Other means</td><td data-label="Workers">110</td></tr>
+  </tbody>
+</table>
+
+<p class="muted provenance">From the U.S. Census Bureau API: decennial census and American
+Community Survey 5-year estimates for the Town of Vienna (place 51-81072). Retrieved
+2026-08-02. Raw files are in the <a href="https://github.com/crawfordmcmillan/viennavadata">site repository</a>.</p>
 </main>
 <footer>
   <p>Data from the Town of Vienna&rsquo;s public <a href="https://vienna-va.legistar.com">records</a> and the

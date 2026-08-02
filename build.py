@@ -491,6 +491,137 @@ def load_crashes():
     }
 
 
+POPULATION = ROOT / "data" / "population"
+
+
+def load_population():
+    meta_file = POPULATION / "population_meta.json"
+    if not meta_file.exists():
+        return None
+    meta = json.loads(meta_file.read_text(encoding="utf-8"))
+    latest = meta.get("latest_acs")
+    if not latest:
+        return None
+
+    def rows(name):
+        f = POPULATION / f"{name}.json"
+        if not f.exists():
+            return None
+        data = json.loads(f.read_text(encoding="utf-8"))["response"]["data"]
+        return dict(zip(data[0], data[1]))
+
+    def num(d, k):
+        v = str((d or {}).get(k) or "").replace(",", "").rstrip("+")
+        try:
+            return int(float(v))
+        except ValueError:
+            return 0
+
+    decennial = []
+    for year, name, var in [(2000, "dec_2000", "P001001"),
+                            (2010, "dec_2010", "P001001"),
+                            (2020, "dec_2020", "P1_001N")]:
+        d = rows(name)
+        if d:
+            decennial.append({"year": year, "pop": num(d, var)})
+
+    series = []
+    for year in range(2010, latest + 1):
+        merged = {}
+        for table in ["B01003", "B01002", "B25003", "B25077", "B25064"]:
+            merged.update(rows(f"acs_{table}_{year}") or {})
+        if not merged.get("B01003_001E"):
+            continue
+        series.append({
+            "year": year,
+            "pop": num(merged, "B01003_001E"),
+            "median_age": float(str(merged.get("B01002_001E") or 0).replace(",", "")),
+            "owner": num(merged, "B25003_002E"),
+            "renter": num(merged, "B25003_003E"),
+            "home_value": num(merged, "B25077_001E"),
+            "rent": num(merged, "B25064_001E"),
+        })
+
+    detail = {}
+    for table in ["B01002", "B11001", "B08301", "B25003"]:
+        detail.update(rows(f"acs_{table}_{latest}") or {})
+    age = rows(f"acs_B01001_{latest}")
+    brackets = None
+    if age:
+        def s(ids):
+            return sum(num(age, f"B01001_{i:03d}E") for i in ids)
+        brackets = [
+            ("Under 18", s(range(3, 7)) + s(range(27, 31))),
+            ("18 to 34", s(range(7, 13)) + s(range(31, 37))),
+            ("35 to 49", s(range(13, 16)) + s(range(37, 40))),
+            ("50 to 64", s(range(16, 20)) + s(range(40, 44))),
+            ("65 and over", s(range(20, 26)) + s(range(44, 50))),
+        ]
+    households = commute = None
+    if detail:
+        households = [
+            ("All households", num(detail, "B11001_001E")),
+            ("Family households", num(detail, "B11001_002E")),
+            ("Married-couple families", num(detail, "B11001_003E")),
+            ("Nonfamily households", num(detail, "B11001_007E")),
+            ("Living alone", num(detail, "B11001_008E")),
+        ]
+        main_modes = ["B08301_003E", "B08301_004E", "B08301_010E",
+                      "B08301_018E", "B08301_019E", "B08301_021E"]
+        other = num(detail, "B08301_001E") - sum(num(detail, m) for m in main_modes)
+        commute = [
+            ("Workers 16 and over", num(detail, "B08301_001E")),
+            ("Drove alone", num(detail, "B08301_003E")),
+            ("Carpooled", num(detail, "B08301_004E")),
+            ("Public transportation", num(detail, "B08301_010E")),
+            ("Bicycle", num(detail, "B08301_018E")),
+            ("Walked", num(detail, "B08301_019E")),
+            ("Worked from home", num(detail, "B08301_021E")),
+            ("Other means", other),
+        ]
+    year_built = education = travel = median_built = None
+    he = {}
+    for table in ["B25034", "B25035", "B15003", "B08303"]:
+        he.update(rows(f"acs_{table}_{latest}") or {})
+    if he:
+        def hnum(k):
+            return num(he, k)
+        median_built = num(he, "B25035_001E") or None
+        built_labels = [("Built 2020 or later", [2]), ("2010s", [3]), ("2000s", [4]),
+                        ("1990s", [5]), ("1980s", [6]), ("1970s", [7]), ("1960s", [8]),
+                        ("1950s", [9]), ("1940s", [10]), ("1939 or earlier", [11])]
+        year_built = [(label, sum(hnum(f"B25034_{i:03d}E") for i in ids))
+                      for label, ids in built_labels]
+        edu_groups = [("Less than high school", range(2, 17)),
+                      ("High school graduate", range(17, 19)),
+                      ("Some college or associate degree", range(19, 22)),
+                      ("Bachelor's degree", range(22, 23)),
+                      ("Graduate or professional degree", range(23, 26))]
+        education = [(label, sum(hnum(f"B15003_{i:03d}E") for i in ids))
+                     for label, ids in edu_groups]
+        travel_groups = [("Under 15 minutes", range(2, 5)),
+                         ("15 to 29 minutes", range(5, 8)),
+                         ("30 to 44 minutes", range(8, 11)),
+                         ("45 to 59 minutes", range(11, 12)),
+                         ("An hour or more", range(12, 14))]
+        travel = [(label, sum(hnum(f"B08303_{i:03d}E") for i in ids))
+                  for label, ids in travel_groups]
+    return {
+        "meta": meta,
+        "latest": latest,
+        "decennial": decennial,
+        "series": series,
+        "brackets": brackets,
+        "households": households,
+        "commute": commute,
+        "year_built": year_built,
+        "median_built": median_built,
+        "education": education,
+        "travel": travel,
+        "latest_row": series[-1] if series else None,
+    }
+
+
 def load_elections():
     meta_file = ELECTIONS / "elections_meta.json"
     if not meta_file.exists():
@@ -719,13 +850,17 @@ def main():
         crashes["map_svg"] = build_precinct_map(
             crashes=crashes["crashes"], include_polling=False)["svg"]
         render("crashes.html", SITE / "crashes.html", root="", crashes=crashes)
+    pop = load_population()
+    if pop:
+        render("population.html", SITE / "population.html", root="", pop=pop)
     address_book = build_address_book()
     if address_book:
         (SITE / "addresses.json").write_text(
             json.dumps(address_book, separators=(",", ":")), encoding="utf-8")
     render("index.html", SITE / "index.html", root="",
            stats=stats, election_stats=election_stats, houses=houses,
-           boards=boards, crashes=crashes, address_book=bool(address_book),
+           boards=boards, crashes=crashes, pop=pop,
+           address_book=bool(address_book),
            polling=(precinct_map or {}).get("polling"))
     if houses:
         render("houses.html", SITE / "house-prices.html", root="", houses=houses)
@@ -739,7 +874,7 @@ def main():
         stats=stats,
         topics=topic_pages,
     )
-    planned_pages = [
+    planned_pages_all = [
         {"slug": "weather", "name": "Weather",
          "pitch": "High and low temperatures in and around Vienna across the years.",
          "source": "NOAA National Centers for Environmental Information (GHCN "
@@ -749,6 +884,8 @@ def main():
          "source": "U.S. Census Bureau — decennial census and American Community "
                    "Survey for the Town of Vienna (place 51-81072)"},
     ]
+    planned_pages = [p for p in planned_pages_all
+                     if not (p["slug"] == "population" and pop)]
     if not houses:
         planned_pages.insert(0, {
             "slug": "house-prices", "name": "House prices",

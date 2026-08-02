@@ -1,0 +1,1 @@
+{"response":{"data":[["GEO_ID","P001001","NAME"],["1600000US5181072","14453","Vienna town, Virginia"]],"dataAPIURI":"https://api.census.gov/data/2000/dec/sf1?get=group(P001)&ucgid=1600000US5181072","objectId":"DECENNIALSF12000.P001","tableName":"P001","metadataAPIURI":"https://api.census.gov/data/2000/dec/sf1"}}

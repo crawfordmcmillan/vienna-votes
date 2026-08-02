@@ -62,11 +62,21 @@ records. Nothing is scored or ranked.</p>
     <span class="dataset-desc">High and low temperatures across the years, from the nearest
     long-running weather station.</span>
   </a></li>
+  {% if pop %}
+  <li><a class="dataset-card" href="population.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Population</span>
+    <span class="dataset-desc">Who calls Vienna home: census counts by decade plus
+    age, households, and commuting from yearly estimates.</span>
+    <span class="dataset-stat">{{ "{:,}".format(pop.latest_row['pop']) }} people &middot; {{ pop.latest }} estimate</span>
+  </a></li>
+  {% else %}
   <li><a class="dataset-card planned" href="population.html">
     <span class="dataset-status">In the works</span>
     <span class="dataset-name">Population</span>
     <span class="dataset-desc">How many people call Vienna home, decade by decade.</span>
   </a></li>
+  {% endif %}
 </ul>
 
 {% if address_book %}

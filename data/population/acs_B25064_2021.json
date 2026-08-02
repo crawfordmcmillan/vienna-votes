@@ -1,0 +1,1 @@
+{"response":{"data":[["GEO_ID","B25064_001MA","B25064_001E","B25064_001EA","B25064_001M","NAME"],["1600000US5181072",null,"2270",null,"433","Vienna town, Virginia"]],"dataAPIURI":"https://api.census.gov/data/2021/acs/acs5?get=group(B25064)&ucgid=1600000US5181072","objectId":"ACSDT5Y2021.B25064","tableName":"B25064","metadataAPIURI":"https://api.census.gov/data/2021/acs/acs5"}}

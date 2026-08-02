@@ -1,0 +1,132 @@
+﻿{% extends "base.html" %}
+{% block title %}Population{% endblock %}
+{% block content %}
+<p class="eyebrow">Population</p>
+<h1 class="hero">Who calls Vienna home.</h1>
+<p class="dek">The town&rsquo;s population and its shape, from the U.S. Census Bureau:
+official decade counts plus yearly survey estimates for age, households, housing,
+and how people get to work.</p>
+
+{% if pop.latest_row %}
+<div class="stats">
+  <div class="stat"><span class="stat-n">{{ "{:,}".format(pop.latest_row['pop']) }}</span><span class="stat-label">people ({{ pop.latest }} estimate)</span></div>
+  <div class="stat"><span class="stat-n">{{ pop.latest_row.median_age }}</span><span class="stat-label">median age</span></div>
+  {% if pop.decennial %}
+  <div class="stat"><span class="stat-n">{{ "{:,}".format(pop.decennial[-1]['pop']) }}</span><span class="stat-label">{{ pop.decennial[-1].year }} census count</span></div>
+  {% endif %}
+</div>
+{% endif %}
+
+<section class="method-note">
+  <h2>Counts and estimates</h2>
+  <p>Two kinds of numbers appear here. Decennial census figures are actual counts,
+  taken every ten years. Everything else comes from the American Community Survey&rsquo;s
+  5-year estimates, which are based on samples and carry a margin of error that can
+  be meaningful for a town of this size. Both cover the Town of Vienna exactly
+  (Census place 51-81072, the same boundary drawn on the elections map).</p>
+</section>
+
+<h2>Census counts by decade</h2>
+<table class="votes-table">
+  <thead><tr><th>Census</th><th>Population</th></tr></thead>
+  <tbody>
+  {% for d in pop.decennial %}
+    <tr><td data-label="Census">{{ d.year }}</td><td data-label="Population">{{ "{:,}".format(d['pop']) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Year by year <span class="muted">&middot; ACS estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Year</th><th>Population</th><th>Median age</th><th>Owner / renter households</th><th>Median home value</th><th>Median rent</th></tr></thead>
+  <tbody>
+  {% for r in pop.series %}
+    <tr>
+      <td data-label="Year">{{ r.year }}</td>
+      <td data-label="Population">{{ "{:,}".format(r['pop']) }}</td>
+      <td data-label="Median age">{{ r.median_age }}</td>
+      <td data-label="Owner / renter" class="nowrap">{{ "{:,}".format(r.owner) }} / {{ "{:,}".format(r.renter) }}</td>
+      <td data-label="Median home value" class="nowrap">{% if r.home_value %}${{ "{:,}".format(r.home_value) }}{% endif %}</td>
+      <td data-label="Median rent" class="nowrap">{% if r.rent %}${{ "{:,}".format(r.rent) }}{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% if pop.brackets %}
+<h2>Age <span class="muted">&middot; {{ pop.latest }} estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Age group</th><th>People</th></tr></thead>
+  <tbody>
+  {% for name, n in pop.brackets %}
+    <tr><td data-label="Age group">{{ name }}</td><td data-label="People">{{ "{:,}".format(n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pop.households %}
+<h2>Households <span class="muted">&middot; {{ pop.latest }} estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Household type</th><th>Households</th></tr></thead>
+  <tbody>
+  {% for name, n in pop.households %}
+    <tr><td data-label="Type">{{ name }}</td><td data-label="Households">{{ "{:,}".format(n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pop.year_built %}
+<h2>When Vienna&rsquo;s homes were built <span class="muted">&middot; {{ pop.latest }} estimates</span></h2>
+{% if pop.median_built %}<p>The median home in Vienna was built in {{ pop.median_built }}.</p>{% endif %}
+<table class="votes-table">
+  <thead><tr><th>Decade built</th><th>Housing units</th></tr></thead>
+  <tbody>
+  {% for name, n in pop.year_built %}
+    <tr><td data-label="Decade">{{ name }}</td><td data-label="Units">{{ "{:,}".format(n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pop.education %}
+<h2>Education <span class="muted">&middot; {{ pop.latest }} estimates, ages 25 and over</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Highest level completed</th><th>People</th></tr></thead>
+  <tbody>
+  {% for name, n in pop.education %}
+    <tr><td data-label="Level">{{ name }}</td><td data-label="People">{{ "{:,}".format(n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pop.travel %}
+<h2>Time to work <span class="muted">&middot; {{ pop.latest }} estimates, workers who commute</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Travel time</th><th>Workers</th></tr></thead>
+  <tbody>
+  {% for name, n in pop.travel %}
+    <tr><td data-label="Travel time">{{ name }}</td><td data-label="Workers">{{ "{:,}".format(n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pop.commute %}
+<h2>Getting to work <span class="muted">&middot; {{ pop.latest }} estimates</span></h2>
+<table class="votes-table">
+  <thead><tr><th>Means of transportation</th><th>Workers</th></tr></thead>
+  <tbody>
+  {% for name, n in pop.commute %}
+    <tr><td data-label="Means">{{ name }}</td><td data-label="Workers">{{ "{:,}".format(n) }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+<p class="muted provenance">From the U.S. Census Bureau API: decennial census and American
+Community Survey 5-year estimates for the Town of Vienna (place 51-81072). Retrieved
+{{ pop.meta.fetched_at_utc[:10] }}. Raw files are in the <a href="{{ repo }}">site repository</a>.</p>
+{% endblock %}

@@ -10,6 +10,7 @@ Department of Transportation&rsquo;s statewide crash records.</p>
   <div class="stat"><span class="stat-n">{{ "{:,}".format(crashes.crashes | length) }}</span><span class="stat-label">crashes since {{ crashes.years[0] }}</span></div>
   <div class="stat"><span class="stat-n">{{ crashes.n_injury }}</span><span class="stat-label">with injuries or deaths</span></div>
   <div class="stat"><span class="stat-n">{{ crashes.n_ped }}</span><span class="stat-label">involving pedestrians</span></div>
+  <div class="stat"><span class="stat-n">{{ crashes.n_bike }}</span><span class="stat-label">involving bicyclists</span></div>
 </div>
 
 <section class="method-note">

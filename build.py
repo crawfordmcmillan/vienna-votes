@@ -467,7 +467,8 @@ def load_crashes():
                          .date().isoformat() if a.get("CRASH_DT") else ""),
                 "sev": (a.get("CRASH_SEVERITY") or "O").strip() or "O",
                 "type": ctype,
-                "ped": (a.get("PED_NONPED") or "").startswith("1"),
+                "ped": a.get("PED_NONPED") == "Yes",
+                "bike": a.get("BIKE_NONBIKE") == "Yes",
                 "x": geom["x"], "y": geom["y"],
             })
     years = sorted({c["year"] for c in crashes})
@@ -485,6 +486,7 @@ def load_crashes():
         "by_year": by_year,
         "n_injury": n_injury,
         "n_ped": sum(1 for c in crashes if c["ped"]),
+        "n_bike": sum(1 for c in crashes if c["bike"]),
         "current_year": current_year,
         "default_year": default_year,
         "severity_labels": SEVERITY_LABELS,

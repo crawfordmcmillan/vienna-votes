@@ -12,7 +12,7 @@ import math
 import re
 import shutil
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -325,7 +325,7 @@ def point_in_ring(x, y, ring):
 UNIT_RE = re.compile(r"\s+(CND|STE|APT|UNIT|BLDG|FL|RM|#)\s*\S*$")
 
 
-def build_address_book():
+def build_address_book(timeline_addrs=None):
     """All town addresses with their precinct, for the in-browser checker."""
     precincts_file = GIS / "fairfax_precincts.geojson"
     if not precincts_file.exists():
@@ -355,7 +355,8 @@ def build_address_book():
                         precinct = int(MAP_PRECINCTS[ident][-1])
                         break
             book[base] = precinct
-    return sorted(book.items())
+    timeline_addrs = timeline_addrs or set()
+    return sorted([a, p, 1 if a in timeline_addrs else 0] for a, p in book.items())
 
 
 def load_houses():
@@ -654,6 +655,123 @@ def load_population():
     }
 
 
+PROPERTIES = ROOT / "data" / "properties"
+ADDR_WORDS = {"STREET": "ST", "AVENUE": "AVE", "ROAD": "RD", "DRIVE": "DR",
+              "LANE": "LN", "COURT": "CT", "PLACE": "PL", "CIRCLE": "CIR",
+              "TERRACE": "TER", "BOULEVARD": "BLVD", "HIGHWAY": "HWY",
+              "NORTHEAST": "NE", "NORTHWEST": "NW", "SOUTHEAST": "SE",
+              "SOUTHWEST": "SW"}
+ADDR_RE = re.compile(
+    r"\b(\d{1,5})\s+((?:[A-Za-z\.']+\s+){0,4}?"
+    r"(?:St|Street|Ave|Avenue|Rd|Road|Dr|Drive|Ln|Lane|Ct|Court|Pl|Place|"
+    r"Cir|Circle|Ter|Terrace|Blvd|Boulevard|Hwy|Pike|Way))"
+    r"\.?,?(?:\s+(NE|NW|SE|SW|N\.?|S\.?|E\.?|W\.?))?(?=[\s,.;:)\-]|$)",
+    re.IGNORECASE)
+
+
+def norm_address(s):
+    words = re.sub(r"[.,#]", " ", s.upper()).split()
+    return " ".join(ADDR_WORDS.get(w, w) for w in words)
+
+
+def addresses_in(text, book, book_no_dir):
+    """Find known town addresses mentioned in free text."""
+    found = set()
+    for m in ADDR_RE.finditer(text or ""):
+        candidate = norm_address(" ".join(p for p in m.groups() if p))
+        if candidate in book:
+            found.add(candidate)
+        elif candidate in book_no_dir:
+            found.add(book_no_dir[candidate])
+    return found
+
+
+def load_properties(boards, council_items):
+    meta_file = PROPERTIES / "properties_meta.json"
+    if not meta_file.exists():
+        return None
+    meta = json.loads(meta_file.read_text(encoding="utf-8"))
+
+    # PIN -> base address, plus lookup sets for text matching.
+    pin_addr = {}
+    for f in sorted(HOUSES.glob("addresses_*.json")):
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            a = feat["attributes"]
+            pin = (a.get("PARCEL_PIN") or "").strip()
+            base = UNIT_RE.sub("", (a.get("ADDRESS_1") or "").strip())
+            while UNIT_RE.search(base):
+                base = UNIT_RE.sub("", base)
+            if pin and base and pin not in pin_addr:
+                pin_addr[pin] = base
+    book = set(pin_addr.values())
+    directional = re.compile(r"\s+(NE|NW|SE|SW|N|S|E|W)$")
+    stripped = defaultdict(set)
+    for addr in book:
+        stripped[directional.sub("", addr)].add(addr)
+    book_no_dir = {k: next(iter(v)) for k, v in stripped.items() if len(v) == 1}
+
+    events = defaultdict(list)
+
+    # Sales: full parcel history joined by PIN.
+    seen_sales = set()
+    for f in sorted(PROPERTIES.glob("history_*.json")):
+        for feat in json.loads(f.read_text(encoding="utf-8"))["features"]:
+            s = feat["attributes"]
+            addr = pin_addr.get((s.get("PARID") or "").strip())
+            price = s.get("PRICE") or 0
+            if not addr or not s.get("SALEDT") or price <= 0:
+                continue
+            date = (datetime(1970, 1, 1, tzinfo=timezone.utc)
+                    + timedelta(milliseconds=s["SALEDT"])).date().isoformat()
+            key = (addr, date, price)
+            if key in seen_sales:
+                continue
+            seen_sales.add(key)
+            desc = (s.get("SALEVAL_DESC") or "").strip()
+            events[addr].append({
+                "date": date, "kind": "Sale",
+                "text": f"Sold for ${price:,}" + (f" ({desc.lower()})" if desc else ""),
+                "href": None, "href_label": None,
+            })
+
+    # Planning and land-use board cases, matched by address in the title.
+    if boards:
+        for c in boards["cases"]:
+            for addr in addresses_in(c["title"], book, book_no_dir):
+                events[addr].append({
+                    "date": c["date"], "kind": c["body"],
+                    "text": f"{c['case']}: {c['title']}",
+                    "href": c["minutes_pdf"] or c["source_url"],
+                    "href_label": "minutes" if c["minutes_pdf"] else "agenda",
+                })
+
+    # Council agenda items, matched the same way, linking to our item pages.
+    for item_id, entry in council_items.items():
+        title = entry["item"].get("EventItemTitle") or ""
+        for addr in addresses_in(title, book, book_no_dir):
+            result = entry["item"].get("EventItemPassedFlagName")
+            events[addr].append({
+                "date": entry["meeting"]["date"], "kind": "Town Council",
+                "text": title + (f" — {result}" if result else ""),
+                "href": f"item/{item_id}.html", "href_label": "details",
+                "internal": True,
+            })
+
+    properties = []
+    for addr, evs in events.items():
+        evs.sort(key=lambda e: e["date"], reverse=True)
+        properties.append({
+            "address": addr,
+            "slug": slugify(addr),
+            "events": evs,
+            "n_cases": sum(1 for e in evs if e["kind"] != "Sale"),
+            "n_sales": sum(1 for e in evs if e["kind"] == "Sale"),
+            "last": evs[0]["date"],
+        })
+    properties.sort(key=lambda p: p["last"], reverse=True)
+    return {"meta": meta, "properties": properties}
+
+
 def load_elections():
     meta_file = ELECTIONS / "elections_meta.json"
     if not meta_file.exists():
@@ -877,6 +995,12 @@ def main():
     boards = load_boards()
     if boards:
         render("planning.html", SITE / "planning.html", root="", boards=boards)
+    props = load_properties(boards, items_by_id)
+    if props:
+        render("properties.html", SITE / "properties.html", root="", props=props)
+        for prop in props["properties"]:
+            render("property.html", SITE / "property" / f"{prop['slug']}.html",
+                   root="../", prop=prop)
     crashes = load_crashes()
     if crashes:
         crashes["map_svg"] = build_precinct_map(
@@ -885,13 +1009,14 @@ def main():
     pop = load_population()
     if pop:
         render("population.html", SITE / "population.html", root="", pop=pop)
-    address_book = build_address_book()
+    address_book = build_address_book(
+        {p["address"] for p in props["properties"]} if props else None)
     if address_book:
         (SITE / "addresses.json").write_text(
             json.dumps(address_book, separators=(",", ":")), encoding="utf-8")
     render("index.html", SITE / "index.html", root="",
            stats=stats, election_stats=election_stats, houses=houses,
-           boards=boards, crashes=crashes, pop=pop,
+           boards=boards, crashes=crashes, pop=pop, props=props,
            address_book=bool(address_book),
            polling=(precinct_map or {}).get("polling"))
     if houses:

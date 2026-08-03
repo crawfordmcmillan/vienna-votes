@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ prop.address }}{% endblock %}
+{% block content %}
+<p class="eyebrow"><a href="../properties.html">Property timelines</a></p>
+<h1>{{ prop.address }}</h1>
+<p class="dek">{{ prop.events | length }} recorded events at this address, from town and
+county records.</p>
+
+<table class="votes-table">
+  <thead>
+    <tr><th>Date</th><th>What</th><th>Record</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for e in prop.events %}
+    <tr>
+      <td class="nowrap" data-label="Date"><time>{{ e.date }}</time></td>
+      <td data-label="What"><span class="vote{% if e.kind == 'Sale' %} nay{% endif %}">{{ e.kind }}</span></td>
+      <td data-label="Record">{{ e.text }}</td>
+      <td class="nowrap">{% if e.href %}<a class="source-link" href="{% if e.internal %}../{% endif %}{{ e.href }}">{{ e.href_label }}</a>{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<p class="muted">Sales are matched by parcel; cases and council items are matched by the
+address in each agenda title, so items that do not name the address are not shown.
+Sale prices include non-market transfers where the county recorded a price.</p>
+{% endblock %}

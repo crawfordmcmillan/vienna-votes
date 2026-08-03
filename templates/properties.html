@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Property timelines{% endblock %}
+{% block content %}
+<p class="eyebrow">Property timelines</p>
+<h1 class="hero">What happened at this address.</h1>
+<p class="dek">Sales, land-use cases, and council actions for {{ "{:,}".format(props.properties | length) }}
+Vienna addresses, joined into one timeline per property from town and county records.</p>
+
+<section class="method-note">
+  <h2>How these are put together</h2>
+  <p>Sales come from county tax records and are matched by parcel. Board cases and
+  council items are matched by the address written in each agenda title, so a case
+  that does not name the address in its title will not appear here. Condominium
+  buildings show all of their units&rsquo; sales on one page.</p>
+</section>
+
+<div class="table-controls" id="prop-controls" hidden>
+  <input type="search" id="prop-search" placeholder="Search by street or address" aria-label="Search properties">
+  <span class="muted" id="prop-count"></span>
+</div>
+
+<table class="votes-table" id="props-table">
+  <thead>
+    <tr><th>Address</th><th>Sales</th><th>Cases</th><th>Last activity</th></tr>
+  </thead>
+  <tbody>
+  {% for p in props.properties %}
+    <tr data-address="{{ p.address | lower }}">
+      <td data-label="Address"><a href="property/{{ p.slug }}.html">{{ p.address }}</a></td>
+      <td data-label="Sales">{{ p.n_sales }}</td>
+      <td data-label="Cases">{{ p.n_cases }}</td>
+      <td class="nowrap" data-label="Last activity"><time>{{ p.last }}</time></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<p class="muted provenance">Sales from the Fairfax County Department of Tax Administration;
+cases and council items from the Town of Vienna&rsquo;s public records. Retrieved
+{{ props.meta.fetched_at_utc[:10] }}. Raw files are in the <a href="{{ repo }}">site repository</a>.</p>
+
+<script>
+(function () {
+  var controls = document.getElementById("prop-controls");
+  var search = document.getElementById("prop-search");
+  var count = document.getElementById("prop-count");
+  var rows = Array.prototype.slice.call(document.querySelectorAll("#props-table tbody tr"));
+  controls.hidden = false;
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = !q || r.dataset.address.indexOf(q) !== -1;
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = shown + " of " + rows.length + " properties shown";
+  }
+  search.addEventListener("input", apply);
+  apply();
+})();
+</script>
+{% endblock %}

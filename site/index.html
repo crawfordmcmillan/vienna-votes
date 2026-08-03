@@ -65,6 +65,13 @@ records. Nothing is scored or ranked.</p>
     from county tax records.</span>
     <span class="dataset-stat">289 recorded sales &middot; $1,754,500 median</span>
   </a></li>
+  <li><a class="dataset-card" href="properties.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Property timelines</span>
+    <span class="dataset-desc">What happened at an address: sales, land-use cases,
+    and council actions on one page.</span>
+    <span class="dataset-stat">5,334 properties &middot; sales, cases &amp; council</span>
+  </a></li>
   <li><a class="dataset-card" href="population.html">
     <span class="dataset-status live">Live</span>
     <span class="dataset-name">Population</span>
@@ -119,6 +126,10 @@ entirely in your browser. Addresses you type are not sent anywhere or stored.</p
     var html = "<strong>Yes.</strong> " + entry[0] + " is in the Town of Vienna.";
     if (precinct && polling[precinct]) {
       html += " It votes in precinct Vienna #" + precinct + ", at " + polling[precinct] + ".";
+    }
+    if (entry[2]) {
+      var slug = entry[0].toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+      html += ' <a href="property/' + slug + '.html">See what has happened at this address.</a>';
     }
     return html;
   }

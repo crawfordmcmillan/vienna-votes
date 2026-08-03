@@ -907,10 +907,6 @@ def main():
         topics=topic_pages,
     )
     planned_pages_all = [
-        {"slug": "weather", "name": "Weather",
-         "pitch": "High and low temperatures in and around Vienna across the years.",
-         "source": "NOAA National Centers for Environmental Information (GHCN "
-                   "station records, nearest long-running station)"},
         {"slug": "population", "name": "Population",
          "pitch": "How many people call Vienna home, decade by decade.",
          "source": "U.S. Census Bureau — decennial census and American Community "

@@ -100,11 +100,14 @@ def parse_contest(contest):
             elif "Absentee" in name:
                 central_absentee += num(r, total_idx)
     totals = [sum(p["votes"][j] for p in precincts) for j in range(len(cols))]
+    denom = sum(totals)
+    pcts = [round(t / denom * 100, 1) if denom else None for t in totals]
     return {
         **contest,
         "candidates": candidates,
         "precincts": precincts,
         "totals": totals,
+        "pcts": pcts,
         "ballots": sum(p["total"] for p in precincts),
         "total_label": "ballots" if "Total Ballots Cast" in stripped else "total votes",
         "central_absentee": central_absentee,

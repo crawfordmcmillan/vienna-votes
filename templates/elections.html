@@ -49,7 +49,7 @@ Elections&rsquo; official records.</p>
   <h3>{{ contest.office }}{% if contest.district %} &mdash; District {{ contest.district }}{% endif %}</h3>
   <table class="votes-table">
     <thead>
-      <tr><th>Candidate</th><th>Party</th><th>Vienna precincts</th></tr>
+      <tr><th>Candidate</th><th>Party</th><th>Vienna precincts</th><th>Share</th></tr>
     </thead>
     <tbody>
     {% for cand in contest.candidates %}
@@ -57,6 +57,7 @@ Elections&rsquo; official records.</p>
         <td data-label="Candidate">{{ cand.name }}</td>
         <td data-label="Party" class="muted">{{ cand.party }}</td>
         <td data-label="Vienna precincts" class="nowrap">{{ "{:,}".format(contest.totals[loop.index0]) }}</td>
+        <td data-label="Share" class="nowrap">{% if contest.pcts[loop.index0] is not none %}{{ "%.1f" | format(contest.pcts[loop.index0]) }}%{% endif %}</td>
       </tr>
     {% endfor %}
     </tbody>

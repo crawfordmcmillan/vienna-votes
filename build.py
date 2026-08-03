@@ -54,7 +54,8 @@ def fmt_date(iso: str | None) -> str:
 
 ELECTIONS = ROOT / "data" / "elections"
 OFFICE_ORDER = ["President", "U.S. Senate", "U.S. House", "Governor",
-                "Lieutenant Governor", "Attorney General",
+                "Lieutenant Governor", "Attorney General", "State Senate",
+                "House of Delegates",
                 "Mayor, Town of Vienna", "Town Council, Town of Vienna"]
 
 

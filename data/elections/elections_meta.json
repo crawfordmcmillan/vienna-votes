@@ -17,6 +17,24 @@
       "office": "Attorney General"
     },
     {
+      "id": 43971,
+      "date": "2013-11-05",
+      "office": "House of Delegates",
+      "district": "35"
+    },
+    {
+      "id": 66271,
+      "date": "2015-11-03",
+      "office": "State Senate",
+      "district": "34"
+    },
+    {
+      "id": 66259,
+      "date": "2015-11-03",
+      "office": "House of Delegates",
+      "district": "35"
+    },
+    {
       "id": 44423,
       "date": "2014-11-04",
       "office": "U.S. Senate"
@@ -52,6 +70,24 @@
       "id": 87709,
       "date": "2017-11-07",
       "office": "Attorney General"
+    },
+    {
+      "id": 87866,
+      "date": "2017-11-07",
+      "office": "House of Delegates",
+      "district": "35"
+    },
+    {
+      "id": 134846,
+      "date": "2019-11-05",
+      "office": "State Senate",
+      "district": "34"
+    },
+    {
+      "id": 134855,
+      "date": "2019-11-05",
+      "office": "House of Delegates",
+      "district": "35"
     },
     {
       "id": 134055,
@@ -94,6 +130,24 @@
       "id": 147393,
       "date": "2021-11-02",
       "office": "Attorney General"
+    },
+    {
+      "id": 150494,
+      "date": "2021-11-02",
+      "office": "House of Delegates",
+      "district": "35"
+    },
+    {
+      "id": 164698,
+      "date": "2023-11-07",
+      "office": "State Senate",
+      "district": "37"
+    },
+    {
+      "id": 164711,
+      "date": "2023-11-07",
+      "office": "House of Delegates",
+      "district": "12"
     },
     {
       "id": 156424,
@@ -145,6 +199,12 @@
       "office": "Attorney General"
     },
     {
+      "id": 165204,
+      "date": "2025-11-04",
+      "office": "House of Delegates",
+      "district": "12"
+    },
+    {
       "id": 165205,
       "date": "2025-11-04",
       "office": "Mayor, Town of Vienna",
@@ -157,5 +217,5 @@
       "town": true
     }
   ],
-  "fetched_at_utc": "2026-07-28T12:48:24+00:00"
+  "fetched_at_utc": "2026-08-03T14:07:12+00:00"
 }

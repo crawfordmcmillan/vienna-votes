@@ -16,6 +16,15 @@ records. Nothing is scored or ranked.</p>
     shown as recorded and linked to the official minutes.</span>
     <span class="dataset-stat">{{ "{:,}".format(stats.votes) }} vote records &middot; {{ stats.meetings }} meetings &middot; since 2013</span>
   </a></li>
+  {% if props %}
+  <li><a class="dataset-card" href="properties.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Property timelines</span>
+    <span class="dataset-desc">What happened at an address: sales, land-use cases,
+    and council actions on one page.</span>
+    <span class="dataset-stat">{{ "{:,}".format(props.properties | length) }} properties &middot; sales, cases &amp; council</span>
+  </a></li>
+  {% endif %}
   <li><a class="dataset-card" href="elections.html">
     <span class="dataset-status live">Live</span>
     <span class="dataset-name">Elections</span>
@@ -54,15 +63,6 @@ records. Nothing is scored or ranked.</p>
     <span class="dataset-status">In the works</span>
     <span class="dataset-name">House prices</span>
     <span class="dataset-desc">What homes in Vienna have sold for over the years.</span>
-  </a></li>
-  {% endif %}
-  {% if props %}
-  <li><a class="dataset-card" href="properties.html">
-    <span class="dataset-status live">Live</span>
-    <span class="dataset-name">Property timelines</span>
-    <span class="dataset-desc">What happened at an address: sales, land-use cases,
-    and council actions on one page.</span>
-    <span class="dataset-stat">{{ "{:,}".format(props.properties | length) }} properties &middot; sales, cases &amp; council</span>
   </a></li>
   {% endif %}
   {% if pop %}

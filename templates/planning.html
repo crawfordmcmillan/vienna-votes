@@ -51,7 +51,7 @@ gets built. From the town&rsquo;s public records.</p>
       <td class="nowrap" data-label="Case">{{ c.case }}</td>
       <td data-label="Item">{{ c.title }}</td>
       <td data-label="Board" class="muted">{{ c.body }}</td>
-      <td class="nowrap"><a class="source-link" href="{{ c.source_url }}">agenda</a>{% if c.minutes_pdf %} <a class="source-link" href="{{ c.minutes_pdf }}">minutes</a>{% endif %}</td>
+      <td class="nowrap"><a class="source-link" href="{{ c.source_url }}">agenda</a>{% if c.minutes_pdf %} <a class="source-link" href="{{ c.minutes_pdf }}">minutes</a>{% endif %}{% for a, sl in c.props %} <a class="source-link" href="property/{{ sl }}.html" title="{{ a }}">property</a>{% endfor %}</td>
     </tr>
   {% endfor %}
   </tbody>

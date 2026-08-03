@@ -53,7 +53,7 @@ classification is shown with every row.</p>
   {% for s in houses.sales %}
     <tr data-address="{{ s.address | lower }}" data-type="{{ s.type }}" data-price="{{ s.price }}" data-date="{{ s.date }}" data-class="{{ s.classification | lower }}">
       <td class="nowrap" data-label="Date"><time>{{ s.date }}</time></td>
-      <td data-label="Address">{{ s.address }}</td>
+      <td data-label="Address">{% if s.prop_slug %}<a href="property/{{ s.prop_slug }}.html">{{ s.address }}</a>{% else %}{{ s.address }}{% endif %}</td>
       <td class="nowrap" data-label="Price">${{ "{:,}".format(s.price) }}</td>
       <td data-label="Type" class="muted">{{ s.type }}</td>
       <td data-label="Classification" class="muted">{{ s.classification }}</td>

@@ -738,7 +738,9 @@ def load_properties(boards, council_items):
     # Planning and land-use board cases, matched by address in the title.
     if boards:
         for c in boards["cases"]:
-            for addr in addresses_in(c["title"], book, book_no_dir):
+            found = addresses_in(c["title"], book, book_no_dir)
+            c["prop_addrs"] = sorted(found)
+            for addr in found:
                 events[addr].append({
                     "date": c["date"], "kind": c["body"],
                     "text": f"{c['case']}: {c['title']}",
@@ -994,14 +996,23 @@ def main():
     }
     houses = load_houses()
     boards = load_boards()
-    if boards:
-        render("planning.html", SITE / "planning.html", root="", boards=boards)
     props = load_properties(boards, items_by_id)
     if props:
+        # Cross-link sales rows and board cases to their property pages.
+        slug_of = {p["address"]: p["slug"] for p in props["properties"]}
+        if houses:
+            for s in houses["sales"]:
+                s["prop_slug"] = slug_of.get(s["address"].split(" #")[0])
+        if boards:
+            for c in boards["cases"]:
+                c["props"] = [(a, slug_of[a]) for a in c.get("prop_addrs", [])
+                              if a in slug_of][:2]
         render("properties.html", SITE / "properties.html", root="", props=props)
         for prop in props["properties"]:
             render("property.html", SITE / "property" / f"{prop['slug']}.html",
                    root="../", prop=prop)
+    if boards:
+        render("planning.html", SITE / "planning.html", root="", boards=boards)
     crashes = load_crashes()
     if crashes:
         crashes["map_svg"] = build_precinct_map(

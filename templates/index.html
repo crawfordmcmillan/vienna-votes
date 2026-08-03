@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block title %}Vienna, Virginia, in data{% endblock %}
 {% block content %}
 <h1 class="hero">Data about the Town of Vienna.</h1>
@@ -9,22 +9,13 @@ records. Nothing is scored or ranked.</p>
 
 <h2>The data</h2>
 <ul class="dataset-grid">
-  <li><a class="dataset-card" href="council.html">
+  <li class="featured"><a class="dataset-card" href="council.html">
     <span class="dataset-status live">Live</span>
     <span class="dataset-name">Town Council votes</span>
     <span class="dataset-desc">Recorded votes of the Vienna Town Council since 2013,
     shown as recorded and linked to the official minutes.</span>
     <span class="dataset-stat">{{ "{:,}".format(stats.votes) }} vote records &middot; {{ stats.meetings }} meetings &middot; since 2013</span>
   </a></li>
-  {% if props %}
-  <li><a class="dataset-card" href="properties.html">
-    <span class="dataset-status live">Live</span>
-    <span class="dataset-name">Property timelines</span>
-    <span class="dataset-desc">What happened at an address: sales, land-use cases,
-    and council actions on one page.</span>
-    <span class="dataset-stat">{{ "{:,}".format(props.properties | length) }} properties &middot; sales, cases &amp; council</span>
-  </a></li>
-  {% endif %}
   <li><a class="dataset-card" href="elections.html">
     <span class="dataset-status live">Live</span>
     <span class="dataset-name">Elections</span>
@@ -32,6 +23,15 @@ records. Nothing is scored or ranked.</p>
     and town elections, with a map of the precincts and polling places.</span>
     <span class="dataset-stat">{{ election_stats.contests }} contests &middot; {{ election_stats.elections }} elections &middot; 2013&ndash;2025</span>
   </a></li>
+  {% if props %}
+  <li class="featured"><a class="dataset-card" href="properties.html">
+    <span class="dataset-status live">Live</span>
+    <span class="dataset-name">Property timelines</span>
+    <span class="dataset-desc">What happened at an address: sales, land-use cases,
+    and council actions on one page.</span>
+    <span class="dataset-stat">{{ "{:,}".format(props.properties | length) }} properties &middot; sales, cases &amp; council</span>
+  </a></li>
+  {% endif %}
   {% if boards %}
   <li><a class="dataset-card" href="planning.html">
     <span class="dataset-status live">Live</span>

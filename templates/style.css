@@ -203,6 +203,10 @@ code { font-size: 0.9em; }
   color: var(--muted);
 }
 .dataset-card.planned { opacity: 0.82; border-style: dashed; }
+@media (min-width: 42rem) {
+  .dataset-grid { grid-template-columns: repeat(3, 1fr); }
+  .dataset-grid li.featured { grid-column: span 2; }
+}
 
 /* Member cards */
 .member-grid {

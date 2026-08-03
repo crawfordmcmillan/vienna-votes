@@ -72,7 +72,7 @@ Elections&rsquo; official records.</p>
       {% for p in contest.precincts %}
         <tr>
           <td data-label="Precinct">{{ p.name }}</td>
-          {% for v in p.votes %}<td data-label="{{ contest.candidates[loop.index0].name }}">{{ "{:,}".format(v) }}</td>{% endfor %}
+          {% for v in p.votes %}<td data-label="{{ contest.candidates[loop.index0].name }}">{{ "{:,}".format(v) }}{% if p.pcts[loop.index0] is not none %} <span class="muted">({{ "%.1f" | format(p.pcts[loop.index0]) }}%)</span>{% endif %}</td>{% endfor %}
           <td data-label="Total">{{ "{:,}".format(p.total) }}</td>
         </tr>
       {% endfor %}

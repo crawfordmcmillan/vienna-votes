@@ -92,9 +92,13 @@ def parse_contest(contest):
             in_scope = ("Fairfax County" in name) or (kind == "Town" and name == "Vienna")
         elif kind == "Precinct" and in_scope:
             if "Vienna #" in name or (is_town and name == "Provisional"):
+                votes = [num(r, i) for i in cols]
+                p_denom = sum(votes)
                 precincts.append({
                     "name": name,
-                    "votes": [num(r, i) for i in cols],
+                    "votes": votes,
+                    "pcts": [round(v / p_denom * 100, 1) if p_denom else None
+                             for v in votes],
                     "total": num(r, total_idx),
                 })
             elif "Absentee" in name:

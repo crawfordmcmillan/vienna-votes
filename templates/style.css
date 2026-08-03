@@ -484,6 +484,20 @@ pre.actiontext {
 .legend-b { color: #b06a38; font-weight: bold; }
 .legend-o { color: #6d6553; font-weight: bold; }
 
+/* Charts */
+.chart-figure { margin: 1.25rem 0 0.5rem; }
+.chart-figure svg { width: 100%; height: auto; display: block; }
+.chart-figure figcaption {
+  margin-top: 0.4rem;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  font-style: italic;
+}
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+@media (max-width: 42rem) {
+  .chart-row { grid-template-columns: 1fr; }
+}
+
 /* Precinct map */
 .precinct-map figure { margin: 1rem 0; }
 .precinct-map svg { width: 100%; height: auto; display: block; }

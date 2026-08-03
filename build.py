@@ -659,6 +659,109 @@ def load_population():
     }
 
 
+CHART_ACCENT = "#9c2f1d"
+CHART_INK = "#211d13"
+CHART_MUTED = "#6d6553"
+CHART_RULE = "#d5cab2"
+CHART_HALO = "#f5eedd"
+CHART_FONT = "Libre Franklin, Arial, sans-serif"
+
+
+def _chart_ticks(lo, hi):
+    """Three round tick values spanning the padded domain."""
+    span = hi - lo
+    step = 10 ** math.floor(math.log10(span / 2)) if span > 0 else 1
+    for mult in (5, 2.5, 2, 1):
+        if span / (step * mult) >= 2:
+            step *= mult
+            break
+    t0 = math.ceil(lo / step) * step
+    ticks = []
+    t = t0
+    while t <= hi and len(ticks) < 4:
+        ticks.append(t)
+        t += step
+    return ticks
+
+
+def svg_line_chart(points, fmt, w=740, h=220, aria=""):
+    """Single-series line: 2px stroke, recessive grid, first/last direct labels,
+    native-title hover targets on every point."""
+    pad_l, pad_r, pad_t, pad_b = 58, 16, 14, 26
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    lo = min(ys) - (max(ys) - min(ys) or max(ys) * 0.1) * 0.08
+    hi = max(ys) + (max(ys) - min(ys) or max(ys) * 0.1) * 0.08
+    px = lambda x: pad_l + (x - min(xs)) / (max(xs) - min(xs) or 1) * (w - pad_l - pad_r)
+    py = lambda y: pad_t + (hi - y) / (hi - lo) * (h - pad_t - pad_b)
+    s = [f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="{aria}" '
+         f'xmlns="http://www.w3.org/2000/svg" font-family="{CHART_FONT}">']
+    for t in _chart_ticks(lo, hi):
+        y = py(t)
+        s.append(f'<line x1="{pad_l}" y1="{y:.1f}" x2="{w - pad_r}" y2="{y:.1f}" '
+                 f'stroke="{CHART_RULE}" stroke-width="1"/>')
+        s.append(f'<text x="{pad_l - 8}" y="{y + 3.5:.1f}" text-anchor="end" '
+                 f'font-size="11" fill="{CHART_MUTED}">{fmt(t)}</text>')
+    label_every = max(1, len(xs) // 7)
+    for i, x in enumerate(xs):
+        if i % label_every == 0 or i == len(xs) - 1:
+            s.append(f'<text x="{px(x):.1f}" y="{h - 8}" text-anchor="middle" '
+                     f'font-size="11" fill="{CHART_MUTED}">{x}</text>')
+    path = "M" + "L".join(f"{px(x):.1f} {py(y):.1f}" for x, y in points)
+    s.append(f'<path d="{path}" fill="none" stroke="{CHART_ACCENT}" '
+             f'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>')
+    for i, (x, y) in enumerate(points):
+        s.append(f'<circle cx="{px(x):.1f}" cy="{py(y):.1f}" r="3" fill="{CHART_ACCENT}"/>')
+        s.append(f'<circle cx="{px(x):.1f}" cy="{py(y):.1f}" r="9" fill="transparent">'
+                 f'<title>{x}: {fmt(y)}</title></circle>')
+        if i in (0, len(points) - 1):
+            anchor = "start" if i == 0 else "end"
+            s.append(f'<text x="{px(x):.1f}" y="{py(y) - 9:.1f}" text-anchor="{anchor}" '
+                     f'font-size="12" font-weight="700" fill="{CHART_INK}" '
+                     f'stroke="{CHART_HALO}" stroke-width="3" paint-order="stroke">{fmt(y)}</text>')
+    s.append("</svg>")
+    return "".join(s)
+
+
+def svg_bar_chart(labels, values, fmt, w=740, h=220, partial_idx=None, aria=""):
+    """Single-series bars: zero baseline, 2px gaps, rounded data-ends,
+    native-title hover per bar; a partial period renders lighter."""
+    pad_l, pad_r, pad_t, pad_b = 48, 16, 14, 26
+    hi = max(values) * 1.08
+    plot_w = w - pad_l - pad_r
+    plot_h = h - pad_t - pad_b
+    n = len(values)
+    gap = max(2, plot_w * 0.012)
+    bw = (plot_w - gap * (n - 1)) / n
+    py = lambda v: pad_t + (hi - v) / hi * plot_h
+    s = [f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="{aria}" '
+         f'xmlns="http://www.w3.org/2000/svg" font-family="{CHART_FONT}">']
+    for t in _chart_ticks(0, hi):
+        y = py(t)
+        s.append(f'<line x1="{pad_l}" y1="{y:.1f}" x2="{w - pad_r}" y2="{y:.1f}" '
+                 f'stroke="{CHART_RULE}" stroke-width="1"/>')
+        s.append(f'<text x="{pad_l - 8}" y="{y + 3.5:.1f}" text-anchor="end" '
+                 f'font-size="11" fill="{CHART_MUTED}">{fmt(t)}</text>')
+    base = py(0)
+    for i, (label, v) in enumerate(zip(labels, values)):
+        x = pad_l + i * (bw + gap)
+        top = py(v)
+        r = min(4, bw / 2, (base - top) / 2)
+        opacity = "0.45" if i == partial_idx else "1"
+        title = f"{label}: {fmt(v)}" + (" (partial year)" if i == partial_idx else "")
+        s.append(
+            f'<path d="M{x:.1f} {base:.1f}L{x:.1f} {top + r:.1f}'
+            f'Q{x:.1f} {top:.1f} {x + r:.1f} {top:.1f}L{x + bw - r:.1f} {top:.1f}'
+            f'Q{x + bw:.1f} {top:.1f} {x + bw:.1f} {top + r:.1f}L{x + bw:.1f} {base:.1f}Z" '
+            f'fill="{CHART_ACCENT}" fill-opacity="{opacity}"><title>{title}</title></path>')
+        s.append(f'<text x="{x + bw / 2:.1f}" y="{h - 8}" text-anchor="middle" '
+                 f'font-size="11" fill="{CHART_MUTED}">{label}</text>')
+    s.append(f'<line x1="{pad_l}" y1="{base:.1f}" x2="{w - pad_r}" y2="{base:.1f}" '
+             f'stroke="{CHART_INK}" stroke-width="1.5"/>')
+    s.append("</svg>")
+    return "".join(s)
+
+
 PROPERTIES = ROOT / "data" / "properties"
 ADDR_WORDS = {"STREET": "ST", "AVENUE": "AVE", "ROAD": "RD", "DRIVE": "DR",
               "LANE": "LN", "COURT": "CT", "PLACE": "PL", "CIRCLE": "CIR",
@@ -1020,9 +1123,28 @@ def main():
     if crashes:
         crashes["map_svg"] = build_precinct_map(
             crashes=crashes["crashes"], include_polling=False)["svg"]
+        year_totals = [sum(crashes["by_year"][y].values()) for y in crashes["years"]]
+        crashes["chart_years"] = svg_bar_chart(
+            crashes["years"], year_totals, lambda v: f"{v:,.0f}",
+            partial_idx=len(crashes["years"]) - 1,
+            aria="Reportable crashes per year")
         render("crashes.html", SITE / "crashes.html", root="", crashes=crashes)
     pop = load_population()
     if pop:
+        fmt_k = lambda v: f"{v / 1000:.1f}k" if v >= 10000 else f"{v:,.0f}"
+        fmt_money = lambda v: (f"${v / 1000000:.1f}M" if v >= 1000000
+                               else f"${v / 1000:.0f}k" if v >= 10000 else f"${v:,.0f}")
+        pop["chart_pop"] = svg_line_chart(
+            [(r["year"], r["pop"]) for r in pop["series"]], fmt_k,
+            aria="Population estimate by year")
+        value_pts = [(r["year"], r["home_value"]) for r in pop["series"] if r["home_value"]]
+        rent_pts = [(r["year"], r["rent"]) for r in pop["series"] if r["rent"]]
+        if value_pts:
+            pop["chart_value"] = svg_line_chart(value_pts, fmt_money, w=360, h=200,
+                                                aria="Median home value by year")
+        if rent_pts:
+            pop["chart_rent"] = svg_line_chart(rent_pts, fmt_money, w=360, h=200,
+                                               aria="Median rent by year")
         render("population.html", SITE / "population.html", root="", pop=pop)
     address_book = build_address_book(
         {p["address"] for p in props["properties"]} if props else None)

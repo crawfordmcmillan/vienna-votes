@@ -37,6 +37,24 @@ and how people get to work.</p>
 </table>
 
 <h2>Year by year <span class="muted">&middot; ACS estimates</span></h2>
+{% if pop.chart_pop %}
+<figure class="chart-figure">
+  {{ pop.chart_pop | safe }}
+  <figcaption>Population estimate, {{ pop.series[0].year }}&ndash;{{ pop.latest }}. Hover a point for the value.</figcaption>
+</figure>
+{% endif %}
+{% if pop.chart_value and pop.chart_rent %}
+<div class="chart-row">
+  <figure class="chart-figure">
+    {{ pop.chart_value | safe }}
+    <figcaption>Median home value</figcaption>
+  </figure>
+  <figure class="chart-figure">
+    {{ pop.chart_rent | safe }}
+    <figcaption>Median gross rent</figcaption>
+  </figure>
+</div>
+{% endif %}
 <table class="votes-table">
   <thead><tr><th>Year</th><th>Population</th><th>Median age</th><th>Owner / renter households</th><th>Median home value</th><th>Median rent</th></tr></thead>
   <tbody>

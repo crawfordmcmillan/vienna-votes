@@ -45,6 +45,12 @@ Department of Transportation&rsquo;s statewide crash records.</p>
 </figure>
 
 <h2>By year</h2>
+{% if crashes.chart_years %}
+<figure class="chart-figure">
+  {{ crashes.chart_years | safe }}
+  <figcaption>Reportable crashes per year; the lighter bar is the current partial year.</figcaption>
+</figure>
+{% endif %}
 <table class="votes-table">
   <thead>
     <tr><th>Year</th><th>Fatal (K)</th><th>Severe injury (A)</th><th>Minor injury (B)</th><th>Possible injury (C)</th><th>Property only (O)</th><th>Total</th></tr>

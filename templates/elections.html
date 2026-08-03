@@ -62,6 +62,15 @@ Elections&rsquo; official records.</p>
     {% endfor %}
     </tbody>
   </table>
+  {% if contest.multi_seat %}
+    {% if contest.share_basis == 'ballots' %}
+    <p class="muted">Voters may choose more than one candidate in this race. Each share is the
+    percentage of ballots that included that candidate, so shares do not add up to 100%.</p>
+    {% else %}
+    <p class="muted">Voters may choose more than one candidate in this race, and ballot counts
+    are not available for it, so vote shares are not shown.</p>
+    {% endif %}
+  {% endif %}
   <details>
     <summary class="muted">By precinct ({{ "{:,}".format(contest.ballots) }} {{ contest.total_label }})</summary>
     <div class="table-wrap"><table class="votes-table keep-table">

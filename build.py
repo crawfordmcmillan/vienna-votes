@@ -81,6 +81,11 @@ def parse_contest(contest):
         return int(s) if s else 0
 
     is_town = contest.get("town", False)
+    # Council races let a voter choose several candidates, so share-of-votes
+    # is the wrong denominator. Use share-of-ballots when the county reported
+    # ballot counts; otherwise show no shares for that race.
+    multi_seat = contest.get("office", "").startswith("Town Council")
+    has_ballots = "Total Ballots Cast" in stripped
     in_scope = False
     precincts = []
     central_absentee = 0
@@ -92,26 +97,42 @@ def parse_contest(contest):
             in_scope = ("Fairfax County" in name) or (kind == "Town" and name == "Vienna")
         elif kind == "Precinct" and in_scope:
             if "Vienna #" in name or (is_town and name == "Provisional"):
-                votes = [num(r, i) for i in cols]
-                p_denom = sum(votes)
                 precincts.append({
                     "name": name,
-                    "votes": votes,
-                    "pcts": [round(v / p_denom * 100, 1) if p_denom else None
-                             for v in votes],
+                    "votes": [num(r, i) for i in cols],
                     "total": num(r, total_idx),
                 })
             elif "Absentee" in name:
                 central_absentee += num(r, total_idx)
     totals = [sum(p["votes"][j] for p in precincts) for j in range(len(cols))]
-    denom = sum(totals)
-    pcts = [round(t / denom * 100, 1) if denom else None for t in totals]
+    if multi_seat:
+        # A real ballot count must be smaller than the votes cast in a
+        # choose-several race; some county files just duplicate the votes
+        # column under the ballots heading, which is unusable.
+        ballots = sum(p["total"] for p in precincts)
+        valid_ballots = has_ballots and 0 < ballots < sum(totals)
+        pcts = [round(t / ballots * 100, 1) if valid_ballots else None
+                for t in totals]
+        for p in precincts:
+            p["pcts"] = [round(v / p["total"] * 100, 1)
+                         if valid_ballots and p["total"] else None
+                         for v in p["votes"]]
+    else:
+        valid_ballots = False
+        denom = sum(totals)
+        pcts = [round(t / denom * 100, 1) if denom else None for t in totals]
+        for p in precincts:
+            p_denom = sum(p["votes"])
+            p["pcts"] = [round(v / p_denom * 100, 1) if p_denom else None
+                         for v in p["votes"]]
     return {
         **contest,
         "candidates": candidates,
         "precincts": precincts,
         "totals": totals,
         "pcts": pcts,
+        "multi_seat": multi_seat,
+        "share_basis": "ballots" if (multi_seat and valid_ballots) else None,
         "ballots": sum(p["total"] for p in precincts),
         "total_label": "ballots" if "Total Ballots Cast" in stripped else "total votes",
         "central_absentee": central_absentee,

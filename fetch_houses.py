@@ -20,6 +20,19 @@ import requests
 
 DATA = Path(__file__).parent / "data" / "houses"
 SLEEP_SECONDS = 0.1
+RETRIES = 3
+
+
+def get_retry(session, url, **kwargs):
+    """Public GIS servers stall occasionally; retry before giving up."""
+    for attempt in range(RETRIES):
+        try:
+            return session.get(url, **kwargs)
+        except requests.RequestException:
+            if attempt == RETRIES - 1:
+                raise
+            print(f"retry   attempt {attempt + 2} after a failed request")
+            time.sleep(15)
 CUTOFF = (date.today() - timedelta(days=365)).isoformat()
 
 ADDRESS_URL = ("https://services1.arcgis.com/ioennV6PpG5Xodq0/ArcGIS/rest/"
@@ -41,7 +54,7 @@ def fetch_pages(session, name, url, params, page_size):
             page = {**params, "resultOffset": offset, "resultRecordCount": page_size,
                     "orderByFields": "OBJECTID", "f": "json"}
             print(f"GET     {url} offset={offset}")
-            resp = session.get(url, params=page, timeout=120)
+            resp = get_retry(session, url, params=page, timeout=120)
             resp.raise_for_status()
             data = resp.json()
             if "error" in data:
@@ -90,7 +103,7 @@ def main():
             continue
         chunk = "','".join(p.replace("'", "''") for p in sold_pins[i:i + 50])
         print(f"GET     {PARCEL_URL} chunk {i}")
-        resp = session.get(PARCEL_URL, params={
+        resp = get_retry(session, PARCEL_URL, params={
             "where": f"PARID IN ('{chunk}')",
             "outFields": "PARID,TAXYR,LUC_DESC,LIVUNIT",
             "returnGeometry": "false", "f": "json",

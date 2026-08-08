@@ -20,6 +20,19 @@ SALES_URL = ("https://services1.arcgis.com/ioennV6PpG5Xodq0/ArcGIS/rest/"
              "services/OpenData_A5/FeatureServer/1/query")
 SLEEP_SECONDS = 0.15
 CHUNK = 50
+RETRIES = 3
+
+
+def get_retry(session, url, **kwargs):
+    """Public GIS servers stall occasionally; retry before giving up."""
+    for attempt in range(RETRIES):
+        try:
+            return session.get(url, **kwargs)
+        except requests.RequestException:
+            if attempt == RETRIES - 1:
+                raise
+            print(f"retry   attempt {attempt + 2} after a failed request")
+            time.sleep(15)
 
 
 def main():
@@ -44,7 +57,7 @@ def main():
             continue
         chunk = "','".join(p.replace("'", "''") for p in pins[i:i + CHUNK])
         print(f"GET     sales history chunk {i}")
-        resp = session.get(SALES_URL, params={
+        resp = get_retry(session, SALES_URL, params={
             "where": f"PARID IN ('{chunk}')",
             "outFields": "PARID,SALEDT,PRICE,SALEVAL_DESC,TAXYR",
             "returnGeometry": "false",

@@ -11,10 +11,25 @@ Raw GeoJSON sources, cached verbatim in data/gis/:
 """
 import json
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+
+RETRIES = 3
+
+
+def get_retry(session, url, **kwargs):
+    """Public GIS servers stall occasionally; retry before giving up."""
+    for attempt in range(RETRIES):
+        try:
+            return session.get(url, **kwargs)
+        except requests.RequestException:
+            if attempt == RETRIES - 1:
+                raise
+            print(f"retry   attempt {attempt + 2} after a failed request")
+            time.sleep(15)
 
 DATA = Path(__file__).parent / "data" / "gis"
 
@@ -53,13 +68,14 @@ SOURCES = {
 
 def main():
     DATA.mkdir(parents=True, exist_ok=True)
+    session = requests.Session()
     for name, url in SOURCES.items():
         out = DATA / name
         if out.exists():
             print(f"cached  {name}")
             continue
         print(f"GET     {url}")
-        resp = requests.get(url, timeout=120)
+        resp = get_retry(session, url, timeout=120)
         resp.raise_for_status()
         # Strip a UTF-8 BOM if present so downstream json.load is simple.
         out.write_bytes(resp.content.lstrip(b"\xef\xbb\xbf"))

@@ -19,6 +19,19 @@ import requests
 
 DATA = Path(__file__).parent / "data" / "crashes"
 SLEEP_SECONDS = 0.1
+RETRIES = 3
+
+
+def get_retry(session, url, **kwargs):
+    """Public GIS servers stall occasionally; retry before giving up."""
+    for attempt in range(RETRIES):
+        try:
+            return session.get(url, **kwargs)
+        except requests.RequestException:
+            if attempt == RETRIES - 1:
+                raise
+            print(f"retry   attempt {attempt + 2} after a failed request")
+            time.sleep(15)
 URL = ("https://services.arcgis.com/p5v98VHDX9Atv3l7/arcgis/rest/services/"
        "CrashData_test/FeatureServer/2/query")
 PAGE = 2000
@@ -35,7 +48,7 @@ def main():
             data = json.loads(out.read_text(encoding="utf-8"))
         else:
             print(f"GET     {URL} offset={offset}")
-            resp = session.get(URL, params={
+            resp = get_retry(session, URL, params={
                 "where": "PHYSICAL_JURIS = '153. Town of Vienna'",
                 "outFields": "*",
                 "returnGeometry": "true",

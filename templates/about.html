@@ -6,11 +6,12 @@
 
 <h2>What this is</h2>
 <p>Vienna VA Data collects public records about the Town of Vienna, Virginia in
-one place. Right now it has two datasets: recorded votes of the Town Council
-going back to October 2013, and precinct-level election results. These records
-already exist on town and state websites, but they are spread across hundreds
-of meeting pages, PDFs, and databases. This site puts them in one place and
-links back to the originals.</p>
+one place: recorded votes of the Town Council going back to October 2013,
+precinct-level election results, planning and zoning dockets, property sales
+and timelines, crash records, and population figures. These records already
+exist on government websites, but they are spread across hundreds of meeting
+pages, PDFs, and databases. This site puts them in one place and links back to
+the originals.</p>
 
 <h2>Where the data comes from</h2>
 <p>Council data comes from the town&rsquo;s public records system
@@ -52,4 +53,18 @@ bottom of every page.</p>
 <p>The site counts visits with
 <a href="https://www.goatcounter.com/">GoatCounter</a>, which uses no cookies
 and collects no personal data.</p>
+
+<h2>Downloads</h2>
+<p>The record is also available as plain files for anyone who wants to work
+with the data directly:
+<a href="data/council-items.csv">council-items.csv</a> (one row per agenda
+item), <a href="data/council-votes.csv">council-votes.csv</a> (one row per
+recorded vote), <a href="data/planning-cases.csv">planning-cases.csv</a> (one
+row per planning board case), and
+<a href="data/council-record.md">council-record.md</a> (the whole council
+record as a single text file).</p>
+<p>The text file is meant for AI tools. Load it into NotebookLM, ChatGPT, or
+Claude and ask questions in plain English, like &ldquo;what has the council
+discussed about sidewalks this year?&rdquo; AI tools can make mistakes, so
+check the linked meeting pages before relying on an answer.</p>
 {% endblock %}

@@ -922,6 +922,119 @@ def load_elections():
     return meta, elections
 
 
+def write_exports(meetings, boards, aliases, today):
+    """Machine-readable copies of the record: CSVs for spreadsheets, one
+    markdown file sized for AI tools (NotebookLM and the like), and llms.txt
+    describing the site. Linked from the About page only."""
+    out = SITE / "data"
+    out.mkdir(parents=True, exist_ok=True)
+
+    def canon(vote):
+        # Same duplicate-person merge the member pages apply.
+        alias = aliases.get(vote["VotePersonId"])
+        return alias["canonical_name"] if alias else vote["VotePersonName"].strip()
+
+    def value(vote):
+        return vote["VoteValueName"] or "(no value recorded)"
+
+    with (out / "council-items.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["meeting_date", "item_id", "title", "topic_unofficial",
+                    "vote_tally", "meeting_url"])
+        for m in meetings:
+            for e in m["items"]:
+                w.writerow([m["date"], e["item"]["EventItemId"],
+                            (e["item"].get("EventItemTitle") or "").strip(),
+                            e["category"] or "", e["tally"],
+                            f"{BASE_URL}/meeting/{m['slug']}.html"])
+
+    with (out / "council-votes.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["meeting_date", "item_id", "item_title", "member", "vote"])
+        for m in meetings:
+            for e in m["items"]:
+                title = (e["item"].get("EventItemTitle") or "").strip()
+                for v in e["votes"]:
+                    w.writerow([m["date"], e["item"]["EventItemId"], title,
+                                canon(v), value(v)])
+
+    if boards:
+        with (out / "planning-cases.csv").open("w", encoding="utf-8", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["meeting_date", "body", "case", "title"])
+            for c in boards["cases"]:
+                w.writerow([c["date"], c["body"], c["case"], c["title"]])
+
+    lines = [
+        "# Town of Vienna, Virginia: the Town Council record",
+        "",
+        f"Compiled by Vienna VA Data ({BASE_URL}) from the town's public records "
+        f"system (Legistar). Data as of {today}. Meetings are listed most recent "
+        "first.",
+        "Vote values are exactly as the town recorded them: Aye, Nay, Absent, "
+        "Abstain. A few records have no vote value entered in the town's system.",
+        "Topic labels are unofficial, added by the site to make browsing easier.",
+        f"Each item has a page at {BASE_URL}/item/<item id>.html with links to "
+        "the official meeting record.",
+        "",
+    ]
+    for m in meetings:
+        lines.append(f"## {m['event']['EventBodyName']}, {m['date']}")
+        lines.append(f"Meeting page: {BASE_URL}/meeting/{m['slug']}.html")
+        for e in m["items"]:
+            title = (e["item"].get("EventItemTitle") or "").strip() or "(untitled)"
+            topic = f" [topic: {e['category']}]" if e["category"] else ""
+            lines.append(f"- Item {e['item']['EventItemId']}: {title}{topic}")
+            if e["votes"]:
+                roll = "; ".join(f"{canon(v)}: {value(v)}" for v in e["votes"])
+                lines.append(f"  Result: {e['tally']}. Roll call: {roll}.")
+        lines.append("")
+    (out / "council-record.md").write_text("\n".join(lines) + "\n",
+                                           encoding="utf-8")
+
+    (SITE / "llms.txt").write_text(f"""# Vienna VA Data
+
+> Public records about the Town of Vienna, Virginia, in one place: every
+> recorded Town Council vote since October 2013, planning and land-use board
+> dockets, precinct-level election results, property sales and per-property
+> timelines, crash records, and population figures. Everything comes from
+> official sources, links back to the originals, and refreshes weekly.
+
+Vote values are shown exactly as recorded (Aye, Nay, Absent, Abstain) and are
+never scored, ranked, or interpreted. Topic categories are the one unofficial
+layer, and they are labeled as such wherever they appear.
+
+## Pages
+
+- [Council votes]({BASE_URL}/council.html): members, meetings, and every
+  recorded vote since 2013, browsable by member, meeting, and topic
+- [Elections]({BASE_URL}/elections.html): how Vienna's four precincts voted
+  in every November election since 2013
+- [Planning and zoning]({BASE_URL}/planning.html): the case dockets of the
+  town's planning and land-use boards
+- [Property timelines]({BASE_URL}/properties.html): sales history, planning
+  cases, and council items joined per address
+- [House prices]({BASE_URL}/house-prices.html): the last 12 months of
+  recorded sales
+- [Crashes]({BASE_URL}/crashes.html): VDOT-reported crashes in town since 2017
+- [Population]({BASE_URL}/population.html): census counts and estimates
+- [About]({BASE_URL}/about.html): sources, methods, and corrections
+
+## Machine-readable data
+
+- [council-record.md]({BASE_URL}/data/council-record.md): the full council
+  record as one markdown file, suited to AI tools
+- [council-items.csv]({BASE_URL}/data/council-items.csv): one row per agenda
+  item
+- [council-votes.csv]({BASE_URL}/data/council-votes.csv): one row per
+  recorded vote
+- [planning-cases.csv]({BASE_URL}/data/planning-cases.csv): one row per
+  planning board case
+- [Raw source files]({REPO}): the verbatim API responses the site is built
+  from, in the public repository
+""", encoding="utf-8")
+
+
 def main():
     meta = load("fetch_meta.json")
     today = meta["fetched_at_utc"][:10]
@@ -1127,6 +1240,7 @@ def main():
     }
     houses = load_houses()
     boards = load_boards()
+    write_exports(meetings, boards, aliases, today)
     props = load_properties(boards, items_by_id)
     if props:
         # Cross-link sales rows and board cases to their property pages.

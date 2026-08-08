@@ -1,0 +1,40 @@
+# Vienna VA Data
+
+> Public records about the Town of Vienna, Virginia, in one place: every
+> recorded Town Council vote since October 2013, planning and land-use board
+> dockets, precinct-level election results, property sales and per-property
+> timelines, crash records, and population figures. Everything comes from
+> official sources, links back to the originals, and refreshes weekly.
+
+Vote values are shown exactly as recorded (Aye, Nay, Absent, Abstain) and are
+never scored, ranked, or interpreted. Topic categories are the one unofficial
+layer, and they are labeled as such wherever they appear.
+
+## Pages
+
+- [Council votes](https://viennavadata.org/council.html): members, meetings, and every
+  recorded vote since 2013, browsable by member, meeting, and topic
+- [Elections](https://viennavadata.org/elections.html): how Vienna's four precincts voted
+  in every November election since 2013
+- [Planning and zoning](https://viennavadata.org/planning.html): the case dockets of the
+  town's planning and land-use boards
+- [Property timelines](https://viennavadata.org/properties.html): sales history, planning
+  cases, and council items joined per address
+- [House prices](https://viennavadata.org/house-prices.html): the last 12 months of
+  recorded sales
+- [Crashes](https://viennavadata.org/crashes.html): VDOT-reported crashes in town since 2017
+- [Population](https://viennavadata.org/population.html): census counts and estimates
+- [About](https://viennavadata.org/about.html): sources, methods, and corrections
+
+## Machine-readable data
+
+- [council-record.md](https://viennavadata.org/data/council-record.md): the full council
+  record as one markdown file, suited to AI tools
+- [council-items.csv](https://viennavadata.org/data/council-items.csv): one row per agenda
+  item
+- [council-votes.csv](https://viennavadata.org/data/council-votes.csv): one row per
+  recorded vote
+- [planning-cases.csv](https://viennavadata.org/data/planning-cases.csv): one row per
+  planning board case
+- [Raw source files](https://github.com/crawfordmcmillan/viennavadata): the verbatim API responses the site is built
+  from, in the public repository
